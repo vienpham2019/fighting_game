@@ -1,61 +1,46 @@
-import { c, canvas } from "../js/main.js";
-
-const gravity = 0.7;
+import { c, canvas } from "./main.js";
 export class Sprite {
-  constructor({ position, velocity, offset }) {
+  constructor({
+    position,
+    imageSrc,
+    scale = 1,
+    framesMax = 1,
+    framesHold = 1,
+  }) {
     this.position = position;
-    this.velocity = velocity;
-    this.height = 150;
     this.width = 50;
-    this.last_key;
-    this.is_jump = false;
-    this.attack_box = {
-      position: {
-        x: this.position.x,
-        y: this.position.y,
-      },
-      width: 100,
-      height: 50,
-      offset,
-    };
-    this.is_attacking = false;
+    this.height = 150;
+    this.image = new Image();
+    this.image.src = imageSrc;
+    this.scale = scale;
+    this.framesMax = framesMax;
+    this.frameCurrent = 0;
+    this.framesElapsed = 0;
+    this.framesHold = framesHold;
   }
 
   draw() {
-    let { x, y } = this.position;
-    c.fillStyle = "red";
-    c.fillRect(x, y, this.width, this.height);
-
-    // attack box
-    if (this.is_attacking) {
-      c.fillStyle = "green";
-      c.fillRect(
-        this.attack_box.position.x,
-        this.attack_box.position.y,
-        this.attack_box.width,
-        this.attack_box.height
-      );
-    }
+    c.drawImage(
+      this.image,
+      // crop image
+      this.frameCurrent * (this.image.width / this.framesMax),
+      0,
+      this.image.width / this.framesMax,
+      this.image.height,
+      // crop image
+      this.position.x,
+      this.position.y,
+      (this.image.width / this.framesMax) * this.scale,
+      this.image.height * this.scale
+    );
   }
 
   update() {
     this.draw();
-    this.attack_box.position.x = this.position.x + this.attack_box.offset.x;
-    this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
-
-    this.position.y += this.velocity.y;
-    this.position.x += this.velocity.x;
-
-    if (this.position.y + this.height + this.velocity.y >= canvas.height) {
-      this.velocity.y = 0;
-      this.is_jump = false;
-    } else this.velocity.y += gravity;
-  }
-
-  attack() {
-    this.is_attacking = true;
-    setTimeout(() => {
-      this.is_attacking = false;
-    }, 100);
+    this.framesElapsed++;
+    if (this.framesElapsed % this.framesHold === 0) {
+      if (this.frameCurrent < this.framesMax - 1) this.frameCurrent++;
+      else this.frameCurrent = 0;
+    }
   }
 }

@@ -1,4 +1,5 @@
-import { Sprite } from "../js/Sprite.js";
+import { Character } from "./Character.js";
+import { Sprite } from "./Sprite.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -8,15 +9,32 @@ canvas.height = 576;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const player = new Sprite({
+const background = new Sprite({
+  position: { x: 0, y: 0 },
+  imageSrc: "./img/background.png",
+});
+
+const shop = new Sprite({
+  position: { x: 630, y: 127 },
+  imageSrc: "./img/shop_anim.png",
+  scale: 2.75,
+  framesMax: 6,
+  framesHold: 5,
+});
+
+const player = new Character({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 10 },
   offset: { x: 0, y: 0 },
+  imageSrc: "./img/player/Idle.png",
+  scale: 2.7,
+  framesMax: 8,
+  framesHold: 1,
 });
 
 player.draw();
 
-const enemy = new Sprite({
+const enemy = new Character({
   position: { x: 400, y: 100 },
   velocity: { x: 0, y: 0 },
   offset: { x: -50, y: 0 },
@@ -60,6 +78,8 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
 
+  background.update();
+  shop.update();
   player.update();
   enemy.update();
 
