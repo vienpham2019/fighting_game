@@ -1,4 +1,4 @@
-import { Character } from "./Character.js";
+import { Player } from "./Player.js";
 import { Sprite } from "./Sprite.js";
 
 export const canvas = document.querySelector("#canvas");
@@ -22,7 +22,7 @@ const shop = new Sprite({
   framesHold: 5,
 });
 
-const player = new Character({
+const player = new Player({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
@@ -81,7 +81,7 @@ const player = new Character({
   },
 });
 
-const enemy = new Character({
+const enemy = new Player({
   position: { x: 400, y: 100 },
   velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
@@ -147,50 +147,6 @@ const enemy = new Character({
   },
 });
 
-const speed = {
-  x: 5,
-  y: 18,
-};
-
-const keys = {
-  a: {
-    pressed: false,
-  },
-  d: {
-    pressed: false,
-  },
-
-  ArrowLeft: {
-    pressed: false,
-  },
-  ArrowRight: {
-    pressed: false,
-  },
-};
-
-function character_move(char, m) {
-  if (keys[m.left].pressed && char.last_key[0] === m.left) {
-    char.velocity.x = -speed.x;
-    char.flip = -1;
-    if (!char.is_jump) char.updateSprite(char.sprites["run"]);
-  } else if (keys[m.right].pressed && char.last_key[0] === m.right) {
-    char.velocity.x = speed.x;
-    char.flip = 1;
-    if (!char.is_jump) char.updateSprite(char.sprites["run"]);
-  } else {
-    if (!char.is_jump && !char.get_hit) {
-      char.velocity.x = 0;
-      char.updateSprite(char.sprites["idle"]);
-    }
-  }
-
-  if (char.velocity.y < 0) {
-    char.updateSprite(char.sprites["jump"]);
-  } else if (char.velocity.y > 0) {
-    char.updateSprite(char.sprites["fall"]);
-  }
-}
-
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -198,16 +154,16 @@ function animate() {
 
   player.enemy = enemy;
   enemy.enemy = player;
-  background.update();
-  shop.update();
+  // background.update();
+  // shop.update();
   player.update();
   enemy.update();
 
   // player move
-  character_move(player, { left: "a", right: "d" });
+  player.move({ left: "a", right: "d" });
 
   // enemy move
-  character_move(enemy, { left: "ArrowLeft", right: "ArrowRight" });
+  enemy.move({ left: "ArrowLeft", right: "ArrowRight" });
 }
 
 animate();
@@ -216,18 +172,15 @@ window.addEventListener("keydown", (e) => {
   if (player.health > 0) {
     switch (e.key) {
       case "d":
-        keys.d.pressed = true;
+        player.keys.d.pressed = true;
         if (player.last_key[0] !== "d") player.last_key.unshift("d");
         break;
       case "a":
-        keys.a.pressed = true;
+        player.keys.a.pressed = true;
         if (player.last_key[0] !== "a") player.last_key.unshift("a");
         break;
       case "w":
-        if (!player.is_jump) {
-          player.velocity.y = -speed.y;
-          player.is_jump = true;
-        }
+        player.jump();
         break;
       case " ":
         player.attack();
@@ -240,12 +193,12 @@ window.addEventListener("keyup", (e) => {
   if (player.health > 0) {
     switch (e.key) {
       case "d":
-        keys.d.pressed = false;
+        player.keys.d.pressed = false;
         if (player.last_key[0] === "d") player.last_key.shift();
         else player.last_key.pop();
         break;
       case "a":
-        keys.a.pressed = false;
+        player.keys.a.pressed = false;
         if (player.last_key[0] === "a") player.last_key.shift();
         else player.last_key.pop();
         break;
@@ -257,20 +210,17 @@ window.addEventListener("keydown", (e) => {
   if (enemy.health > 0) {
     switch (e.key) {
       case "ArrowLeft":
-        keys.ArrowLeft.pressed = true;
+        enemy.keys.ArrowLeft.pressed = true;
         if (enemy.last_key[0] !== "ArrowLeft")
           enemy.last_key.unshift("ArrowLeft");
         break;
       case "ArrowRight":
-        keys.ArrowRight.pressed = true;
+        enemy.keys.ArrowRight.pressed = true;
         if (enemy.last_key[0] !== "ArrowRight")
           enemy.last_key.unshift("ArrowRight");
         break;
       case "ArrowUp":
-        if (!enemy.is_jump) {
-          enemy.velocity.y = -speed.y;
-          enemy.is_jump = true;
-        }
+        enemy.jump();
         break;
 
       case "ArrowDown":
@@ -284,12 +234,12 @@ window.addEventListener("keyup", (e) => {
   if (enemy.health > 0) {
     switch (e.key) {
       case "ArrowLeft":
-        keys.ArrowLeft.pressed = false;
+        enemy.keys.ArrowLeft.pressed = false;
         if (enemy.last_key[0] === "ArrowLeft") enemy.last_key.shift();
         else enemy.last_key.pop();
         break;
       case "ArrowRight":
-        keys.ArrowRight.pressed = false;
+        enemy.keys.ArrowRight.pressed = false;
         if (enemy.last_key[0] === "ArrowRight") enemy.last_key.shift();
         else enemy.last_key.pop();
         break;

@@ -1,6 +1,6 @@
 import { c, canvas } from "./main.js";
 import { Sprite } from "./Sprite.js";
-const gravity = 0.7;
+
 export class Character extends Sprite {
   constructor({
     position,
@@ -28,8 +28,6 @@ export class Character extends Sprite {
     this.velocity = velocity;
     this.height = height;
     this.width = width;
-    this.last_key = [];
-    this.is_jump = false;
     this.attack_box = attack_box;
     this.sprites = sprites;
     this.attack_sprite_count = 0;
@@ -104,10 +102,14 @@ export class Character extends Sprite {
     );
   }
 
-  update() {
-    super.update();
+  attack() {
+    if (this.attack_sprite_count === 0 && !this.is_attacking) {
+      this.is_attacking = true;
+      this.attack_sprite_count = this.sprites.attack.length;
+    }
+  }
 
-    // attack
+  handelAttack() {
     if (this.attack_sprite_count > 0) {
       let sprite =
         this.sprites.attack[
@@ -136,6 +138,13 @@ export class Character extends Sprite {
         this.attack_sprite_count--;
       }
     } else this.is_attacking = false;
+  }
+
+  update() {
+    super.update();
+
+    // attack
+    this.handelAttack();
 
     this.attack_box.offset.x =
       this.flip === -1 ? -(this.attack_box.width - 5) : this.width;
@@ -146,21 +155,5 @@ export class Character extends Sprite {
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
     // this.hitboxdraw();
-
-    if (this.position.y + this.height + this.velocity.y >= canvas.height - 97) {
-      this.velocity.y = 0;
-      this.is_jump = false;
-      this.position.y = canvas.height - 97 - this.height - this.velocity.y;
-    } else {
-      this.is_jump = true;
-      this.velocity.y += gravity;
-    }
-  }
-
-  attack() {
-    if (this.attack_sprite_count === 0 && !this.is_attacking) {
-      this.is_attacking = true;
-      this.attack_sprite_count = this.sprites.attack.length;
-    }
   }
 }
