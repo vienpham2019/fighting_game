@@ -21,6 +21,7 @@ export class Sprite {
     this.framesHold = framesHold;
     this.offset = offset;
     this.flip = flip;
+    this.stop_animation = false;
   }
 
   draw() {
@@ -44,6 +45,7 @@ export class Sprite {
 
   update() {
     this.draw();
+    if (this.stop_animation === true) return;
     this.framesElapsed++;
     if (this.framesElapsed % this.framesHold === 0) {
       if (this.frameCurrent < this.framesMax - 1) this.frameCurrent++;

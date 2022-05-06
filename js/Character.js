@@ -14,6 +14,7 @@ export class Character extends Sprite {
     offset = { x: 0, y: 0 },
     sprites,
     flip = 1,
+    attack_box,
   }) {
     super({
       position,
@@ -29,21 +30,24 @@ export class Character extends Sprite {
     this.width = width;
     this.last_key = [];
     this.is_jump = false;
-    this.attack_box = {
-      position: {
-        x: this.position.x,
-        y: this.position.y,
-      },
-      width: 100,
-      height: 50,
-      offset,
-    };
-    this.is_attacking = false;
+    this.attack_box = attack_box;
     this.sprites = sprites;
+    this.attack_sprite_count = 0;
+    this.attack_sprite = false;
+    this.enemy;
+    this.get_hit = false;
+    this.health = 100;
 
     for (const sprite in sprites) {
-      sprites[sprite].image = new Image();
-      sprites[sprite].image.src = sprites[sprite].imageSrc;
+      if (Array.isArray(sprites[sprite])) {
+        for (let index in sprites[sprite]) {
+          sprites[sprite][index].image = new Image();
+          sprites[sprite][index].image.src = sprites[sprite][index].imageSrc;
+        }
+      } else {
+        sprites[sprite].image = new Image();
+        sprites[sprite].image.src = sprites[sprite].imageSrc;
+      }
     }
   }
 
@@ -66,14 +70,23 @@ export class Character extends Sprite {
     }
   }
 
-  updateSprite(s) {
-    let sprite = this.sprites[s];
+  updateSprite(sprite) {
+    // override death
+    if (this.image === this.sprites.death.image) {
+      if (this.frameCurrent === this.sprites.death.framesMax - 1)
+        this.stop_animation = true;
+      return;
+    }
 
+    // override take hit
     if (
-      this.image === this.sprites.attack1.image &&
-      this.frameCurrent < this.sprites.attack1.framesMax - 1
+      this.image === this.sprites.takeHit.image &&
+      this.frameCurrent < this.sprites.takeHit.framesMax - 1
     )
       return;
+
+    //override attack
+    if (this.attack_sprite) return;
 
     if (sprite.image !== this.image) {
       this.image = sprite.image;
@@ -82,15 +95,57 @@ export class Character extends Sprite {
     }
   }
 
+  rectCollition(enemy) {
+    return (
+      this.attack_box.position.x + this.attack_box.width >= enemy.position.x &&
+      this.attack_box.position.x <= enemy.position.x + enemy.width &&
+      this.attack_box.position.y + this.attack_box.height >= enemy.position.y &&
+      this.attack_box.position.y <= enemy.position.y + enemy.height
+    );
+  }
+
   update() {
     super.update();
-    this.hitboxdraw();
+
+    // attack
+    if (this.attack_sprite_count > 0) {
+      let sprite =
+        this.sprites.attack[
+          this.sprites.attack.length - this.attack_sprite_count
+        ];
+
+      this.updateSprite(sprite);
+      this.attack_sprite = true;
+      if (
+        !this.enemy.get_hit &&
+        this.frameCurrent === sprite.hitFrame &&
+        this.rectCollition(this.enemy)
+      ) {
+        this.enemy.get_hit = true;
+        if (this.enemy.health <= 0)
+          this.enemy.updateSprite(this.enemy.sprites.death);
+        else {
+          this.enemy.health -= sprite.damge;
+          this.enemy.updateSprite(this.enemy.sprites.takeHit);
+        }
+      }
+
+      if (this.frameCurrent === this.framesMax - 1) {
+        this.attack_sprite = false;
+        this.enemy.get_hit = false;
+        this.attack_sprite_count--;
+      }
+    } else this.is_attacking = false;
+
+    this.attack_box.offset.x =
+      this.flip === -1 ? -(this.attack_box.width - 5) : this.width;
 
     this.attack_box.position.x = this.position.x + this.attack_box.offset.x;
     this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
 
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
+    // this.hitboxdraw();
 
     if (this.position.y + this.height + this.velocity.y >= canvas.height - 97) {
       this.velocity.y = 0;
@@ -103,10 +158,9 @@ export class Character extends Sprite {
   }
 
   attack() {
-    this.updateSprite("attack1");
-    this.is_attacking = true;
-    setTimeout(() => {
-      this.is_attacking = false;
-    }, 100);
+    if (this.attack_sprite_count === 0 && !this.is_attacking) {
+      this.is_attacking = true;
+      this.attack_sprite_count = this.sprites.attack.length;
+    }
   }
 }
