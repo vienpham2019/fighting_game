@@ -6,6 +6,8 @@ export class Sprite {
     scale = 1,
     framesMax = 1,
     framesHold = 1,
+    offset = { x: 0, y: 0 },
+    flip = 1,
   }) {
     this.position = position;
     this.width = 50;
@@ -17,9 +19,13 @@ export class Sprite {
     this.frameCurrent = 0;
     this.framesElapsed = 0;
     this.framesHold = framesHold;
+    this.offset = offset;
+    this.flip = flip;
   }
 
   draw() {
+    c.save();
+    c.scale(this.flip, 1);
     c.drawImage(
       this.image,
       // crop image
@@ -28,11 +34,12 @@ export class Sprite {
       this.image.width / this.framesMax,
       this.image.height,
       // crop image
-      this.position.x,
-      this.position.y,
-      (this.image.width / this.framesMax) * this.scale,
+      (this.position.x - this.offset.x) * this.flip,
+      this.position.y - this.offset.y,
+      (this.image.width / this.framesMax) * this.scale * this.flip,
       this.image.height * this.scale
     );
+    c.restore();
   }
 
   update() {

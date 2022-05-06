@@ -24,25 +24,86 @@ const shop = new Sprite({
 
 const player = new Character({
   position: { x: 0, y: 0 },
-  velocity: { x: 0, y: 10 },
+  velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
-  imageSrc: "./img/player/Idle.png",
-  scale: 2.7,
+  height: 133,
+  width: 65,
+  imageSrc: "./img/swordsman/Idle.png",
+  scale: 2.5,
   framesMax: 8,
-  framesHold: 1,
+  framesHold: 4,
+  offset: { x: 215, y: 171 },
+  sprites: {
+    idle: {
+      imageSrc: "./img/swordsman/Idle.png",
+      framesMax: 8,
+    },
+    run: {
+      imageSrc: "./img/swordsman/Run.png",
+      framesMax: 8,
+    },
+    jump: {
+      imageSrc: "./img/swordsman/Jump.png",
+      framesMax: 2,
+    },
+    fall: {
+      imageSrc: "./img/swordsman/Fall.png",
+      framesMax: 2,
+    },
+    attack1: {
+      imageSrc: "./img/swordsman/Attack1.png",
+      framesMax: 6,
+    },
+    attack2: {
+      imageSrc: "./img/swordsman/Attack2.png",
+      framesMax: 6,
+    },
+  },
 });
-
-player.draw();
 
 const enemy = new Character({
   position: { x: 400, y: 100 },
   velocity: { x: 0, y: 0 },
-  offset: { x: -50, y: 0 },
+  offset: { x: 0, y: 0 },
+  flip: -1,
+  height: 133,
+  width: 60,
+  imageSrc: "./img/warior/Idle.png",
+  scale: 2.9,
+  framesMax: 10,
+  framesHold: 4,
+  offset: { x: 200, y: 160 },
+  sprites: {
+    idle: {
+      imageSrc: "./img/warior/Idle.png",
+      framesMax: 10,
+    },
+    run: {
+      imageSrc: "./img/warior/Run.png",
+      framesMax: 8,
+    },
+    jump: {
+      imageSrc: "./img/warior/Jump.png",
+      framesMax: 3,
+    },
+    fall: {
+      imageSrc: "./img/warior/Fall.png",
+      framesMax: 3,
+    },
+    attack1: {
+      imageSrc: "./img/warior/Attack1.png",
+      framesMax: 7,
+    },
+    attack2: {
+      imageSrc: "./img/warior/Attack2.png",
+      framesMax: 7,
+    },
+  },
 });
 
 const speed = {
   x: 5,
-  y: 20,
+  y: 18,
 };
 
 enemy.draw();
@@ -53,9 +114,7 @@ const keys = {
   d: {
     pressed: false,
   },
-  w: {
-    pressed: false,
-  },
+
   ArrowLeft: {
     pressed: false,
   },
@@ -73,6 +132,29 @@ function rectCollition(box_1, box_2) {
   );
 }
 
+function character_move(char, m) {
+  if (keys[m.left].pressed && char.last_key[0] === m.left) {
+    char.velocity.x = -speed.x;
+    char.flip = -1;
+    if (!char.is_jump) char.updateSprite("run");
+  } else if (keys[m.right].pressed && char.last_key[0] === m.right) {
+    char.velocity.x = speed.x;
+    char.flip = 1;
+    if (!char.is_jump) char.updateSprite("run");
+  } else {
+    if (!char.is_jump) {
+      char.velocity.x = 0;
+      char.updateSprite("idle");
+    }
+  }
+
+  if (char.velocity.y < 0) {
+    char.updateSprite("jump");
+  } else if (char.velocity.y > 0) {
+    char.updateSprite("fall");
+  }
+}
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -83,19 +165,11 @@ function animate() {
   player.update();
   enemy.update();
 
-  player.velocity.x =
-    keys.a.pressed && player.last_key === "a"
-      ? -speed.x
-      : keys.d.pressed && player.last_key === "d"
-      ? speed.x
-      : 0;
+  // player move
+  character_move(player, { left: "a", right: "d" });
 
-  enemy.velocity.x =
-    keys.ArrowLeft.pressed && enemy.last_key === "ArrowLeft"
-      ? -speed.x
-      : keys.ArrowRight.pressed && enemy.last_key === "ArrowRight"
-      ? speed.x
-      : 0;
+  // enemy move
+  character_move(enemy, { left: "ArrowLeft", right: "ArrowRight" });
 
   //   Detect colition
   if (rectCollition(player, enemy) && player.is_attacking) {
@@ -115,11 +189,11 @@ window.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "d":
       keys.d.pressed = true;
-      player.last_key = "d";
+      if (player.last_key[0] !== "d") player.last_key.unshift("d");
       break;
     case "a":
       keys.a.pressed = true;
-      player.last_key = "a";
+      if (player.last_key[0] !== "a") player.last_key.unshift("a");
       break;
     case "w":
       if (!player.is_jump) {
@@ -133,11 +207,13 @@ window.addEventListener("keydown", (e) => {
 
     case "ArrowLeft":
       keys.ArrowLeft.pressed = true;
-      enemy.last_key = "ArrowLeft";
+      if (enemy.last_key[0] !== "ArrowLeft")
+        enemy.last_key.unshift("ArrowLeft");
       break;
     case "ArrowRight":
       keys.ArrowRight.pressed = true;
-      enemy.last_key = "ArrowRight";
+      if (enemy.last_key[0] !== "ArrowRight")
+        enemy.last_key.unshift("ArrowRight");
       break;
     case "ArrowUp":
       if (!enemy.is_jump) {
@@ -156,16 +232,24 @@ window.addEventListener("keyup", (e) => {
   switch (e.key) {
     case "d":
       keys.d.pressed = false;
+      if (player.last_key[0] === "d") player.last_key.shift();
+      else player.last_key.pop();
       break;
     case "a":
       keys.a.pressed = false;
+      if (player.last_key[0] === "a") player.last_key.shift();
+      else player.last_key.pop();
       break;
 
     case "ArrowLeft":
       keys.ArrowLeft.pressed = false;
+      if (enemy.last_key[0] === "ArrowLeft") enemy.last_key.shift();
+      else enemy.last_key.pop();
       break;
     case "ArrowRight":
       keys.ArrowRight.pressed = false;
+      if (enemy.last_key[0] === "ArrowRight") enemy.last_key.shift();
+      else enemy.last_key.pop();
       break;
   }
 });
