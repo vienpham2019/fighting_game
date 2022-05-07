@@ -148,17 +148,35 @@ const enemy = new Player({
   },
 });
 
-const platform = new Platform({
-  position: { x: 100, y: 450 },
-  width: 300,
-  height: 100,
-});
+const platforms = [
+  new Platform({
+    position: { x: -4, y: 0 },
+    width: 4,
+    height: canvas.height,
+  }),
+  new Platform({
+    position: { x: 0, y: 450 },
+    width: 300,
+    height: 100,
+  }),
+  new Platform({
+    position: { x: 300, y: 500 },
+    width: 500,
+    height: 50,
+  }),
+  new Platform({
+    position: { x: 800, y: 390 },
+    width: 300,
+    height: 160,
+  }),
+  new Platform({
+    position: { x: 1100, y: 0 },
+    width: 4,
+    height: canvas.height,
+  }),
+];
 
-const platform2 = new Platform({
-  position: { x: 400, y: 500 },
-  width: 300,
-  height: 50,
-});
+player.platforms = platforms;
 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -169,9 +187,9 @@ function animate() {
   enemy.enemy = player;
   // background.update();
   // shop.update();
-  platform.update();
-  platform2.update();
-  player.platform = platform;
+
+  platforms.forEach((p) => p.update());
+
   player.update();
   // enemy.update();
 

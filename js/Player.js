@@ -34,7 +34,8 @@ export class Player extends Character {
     });
     this.last_key = [];
     this.is_jump = false;
-    this.platform;
+    this.platforms = [];
+    this.currentPlatformIndex = 1;
     this.floor;
     this.keys = {
       a: {
@@ -60,32 +61,44 @@ export class Player extends Character {
   //   check collition with side of platform
   sideColition() {
     let left = this.velocity.x < 0;
-    let { x1, x2, y1, y2, p_x1, p_x2, p_y1, p_y2 } = getCoordinate(
-      this,
-      this.platform
+    let [x1, x2, y1, y2] = getCoordinate(this);
+
+    let [lp_x1, lp_x2, lp_y1, lp_y2] = getCoordinate(
+      this.platforms[this.currentPlatformIndex - 1]
     );
 
-    let check_go_right = !left && x2 >= p_x1 && x1 < p_x1;
-    let check_go_left = left && x1 <= p_x2 && x2 > p_x2;
+    let [rp_x1, rp_x2, rp_y1, rp_y2] = getCoordinate(
+      this.platforms[this.currentPlatformIndex + 1]
+    );
 
-    let check_y = (y1 < p_y1 && y2 > p_y2) || (y2 > p_y1 && y2 < p_y2);
+    let check_go_right = !left && x2 >= rp_x1 && x1 < rp_x1;
+    let check_go_left = left && x1 <= lp_x2 && x2 > lp_x2;
 
-    if ((check_go_left || check_go_right) && check_y) {
+    let check_y_left = (y1 < lp_y1 && y2 > lp_y2) || (y2 > lp_y1 && y2 < lp_y2);
+    let check_y_right =
+      (y1 < rp_y1 && y2 > rp_y2) || (y2 > rp_y1 && y2 < rp_y2);
+
+    if ((check_go_left && check_y_left) || (check_go_right && check_y_right)) {
       this.velocity.x = 0;
     }
   }
 
   //   check collition with floor of platform
   floorColition() {
-    let { x1, x2, y1, y2, p_x1, p_x2, p_y1 } = getCoordinate(
-      this,
-      this.platform
-    );
+    let curr_p = this.platforms[this.currentPlatformIndex];
+    let [x1, x2, y1, y2] = getCoordinate(this);
 
-    if (y2 <= p_y1 && y1 < p_y1 && x2 > p_x1 && x1 < p_x2) {
-      this.floor = p_y1;
+    let [cp_x1, cp_x2, cp_y1] = getCoordinate(curr_p);
+
+    if (y2 <= cp_y1 && y1 < cp_y1 && x2 > cp_x1 && x1 < cp_x2) {
+      this.floor = cp_y1;
     } else {
-      this.floor = canvas.height;
+      if (this.velocity.x > 0) {
+        this.floor = this.platforms[this.currentPlatformIndex++].position.y;
+      }
+      if (this.velocity.x < 0) {
+        this.floor = this.platforms[this.currentPlatformIndex--].position.y;
+      }
     }
   }
 
