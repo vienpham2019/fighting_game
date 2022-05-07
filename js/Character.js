@@ -154,6 +154,6 @@ export class Character extends Sprite {
 
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
-    // this.hitboxdraw();
+    this.hitboxdraw();
   }
 }

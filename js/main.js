@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { Sprite } from "./Sprite.js";
+import { Platform } from "./Platform.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -147,6 +148,18 @@ const enemy = new Player({
   },
 });
 
+const platform = new Platform({
+  position: { x: 100, y: 450 },
+  width: 300,
+  height: 100,
+});
+
+const platform2 = new Platform({
+  position: { x: 400, y: 500 },
+  width: 300,
+  height: 50,
+});
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -156,14 +169,17 @@ function animate() {
   enemy.enemy = player;
   // background.update();
   // shop.update();
+  platform.update();
+  platform2.update();
+  player.platform = platform;
   player.update();
-  enemy.update();
+  // enemy.update();
 
   // player move
   player.move({ left: "a", right: "d" });
 
   // enemy move
-  enemy.move({ left: "ArrowLeft", right: "ArrowRight" });
+  // enemy.move({ left: "ArrowLeft", right: "ArrowRight" });
 }
 
 animate();
