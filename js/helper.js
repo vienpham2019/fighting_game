@@ -21,18 +21,16 @@ export function createPlayer({ position, velocity, moveSpeed, player_name }) {
 }
 
 export function createPlatform(arr) {
-  let x = -4;
   let result = [];
   for (let e of arr) {
-    let { width, height } = e;
+    let { x, y, width, height } = e;
     result.push(
       new Platform({
-        position: { x, y: canvas.height - height },
+        position: { x, y },
         width,
         height,
       })
     );
-    x += width;
   }
   return result;
 }

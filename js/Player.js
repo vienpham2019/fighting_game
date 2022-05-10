@@ -36,8 +36,8 @@ export class Player extends Character {
     this.last_key = [];
     this.is_jump = false;
     this.platforms = [];
-    this.currentPlatformIndex = 1;
-    this.floor;
+    this.walls = [];
+    this.floor = canvas.height;
     this.keys = {
       a: {
         pressed: false,
@@ -54,71 +54,77 @@ export class Player extends Character {
       },
     };
     this.speed = moveSpeed;
+    this.gameCurrentX = 0;
+    this.gameVelocity = { x: 0, y: 0 };
+    this.changeScreen = { x1: 300, x2: 500, y1: 0, y2: 0 };
+    this.floorImage = {
+      w: 0,
+    };
   }
 
   //   check collition with side of platform
-  sideColition() {
+  sideColition(w) {
     let left = this.velocity.x < 0;
     let [x1, x2, y1, y2] = getCoordinate(this);
-    let p_left = getCoordinate(this.platforms[this.currentPlatformIndex - 1]);
 
-    let p_right = getCoordinate(this.platforms[this.currentPlatformIndex + 1]);
-
-    if (!p_left || !p_right)
-      console.log(p_left, p_right, this.currentPlatformIndex);
-    let [lp_x1, lp_x2, lp_y1, lp_y2] = p_left;
-
-    let [rp_x1, rp_x2, rp_y1, rp_y2] = p_right;
-
-    let check_go_right = !left && x2 >= rp_x1 && x1 < rp_x1;
-    let check_go_left = left && x1 <= lp_x2 && x2 > lp_x2;
-
-    let check_y_left = (y1 < lp_y1 && y2 > lp_y2) || (y2 > lp_y1 && y2 < lp_y2);
-    let check_y_right =
-      (y1 < rp_y1 && y2 > rp_y2) || (y2 > rp_y1 && y2 < rp_y2);
-
-    if ((check_go_left && check_y_left) || (check_go_right && check_y_right)) {
+    let [p_x1, p_x2, p_y1, p_y2] = getCoordinate(w);
+    let check_go_right = !left && x2 >= p_x1 && x1 < p_x1;
+    let check_go_left = left && x1 <= p_x2 && x2 > p_x2;
+    let check_y = y2 > p_y1 && y2 < p_y2;
+    if ((check_go_left || check_go_right) && check_y) {
       this.velocity.x = 0;
+      this.gameVelocity.x = 0;
     }
   }
 
   //   check collition with floor of platform
-  floorColition() {
-    let curr_p = this.platforms[this.currentPlatformIndex];
+  floorColition(platform) {
+    if (!platform) return;
     let [x1, x2, y1, y2] = getCoordinate(this);
 
-    let [cp_x1, cp_x2, cp_y1] = getCoordinate(curr_p);
-    this.platforms[this.currentPlatformIndex].color = "blue";
+    let [cp_x1, cp_x2, cp_y1, cp_y2] = getCoordinate(platform);
 
-    if (y2 <= cp_y1 && y1 < cp_y1 && x2 > cp_x1 && x1 < cp_x2) {
+    if (
+      y2 <= cp_y1 &&
+      y2 + this.velocity.y >= cp_y1 &&
+      ((cp_x1 <= x1 && cp_x2 >= x2) ||
+        (x1 > cp_x1 && x1 < cp_x2) ||
+        (x1 < cp_x1 && x2 > cp_x1))
+    ) {
       this.floor = cp_y1;
-    } else {
-      if (this.velocity.x > 0) {
-        this.floor = this.platforms[this.currentPlatformIndex].position.y;
-        if (this.currentPlatformIndex + 1 < this.platforms.length)
-          this.currentPlatformIndex++;
-      }
-      if (this.velocity.x < 0) {
-        this.floor = this.platforms[this.currentPlatformIndex].position.y;
-        if (this.currentPlatformIndex - 1 > 0) this.currentPlatformIndex--;
-      }
     }
-
-    this.platforms[this.currentPlatformIndex].color = "red";
   }
 
-  move(m) {
+  move(m, obj) {
     if (this.keys[m.left].pressed && this.last_key[0] === m.left) {
-      this.velocity.x = -this.speed.x;
+      if (
+        this.gameCurrentX >= this.changeScreen.x1 &&
+        this.position.x <= this.changeScreen.x1
+      ) {
+        this.velocity.x = 0;
+      } else this.velocity.x = -this.speed.x;
+
+      this.gameVelocity.x = -this.speed.x;
+
       this.flip = -1;
       if (!this.is_jump) this.updateSprite(this.sprites["run"]);
     } else if (this.keys[m.right].pressed && this.last_key[0] === m.right) {
-      this.velocity.x = this.speed.x;
+      if (
+        this.gameCurrentX <=
+          this.floorImage.x - this.changeScreen.x2 - this.width &&
+        this.position.x >= this.changeScreen.x2
+      ) {
+        this.velocity.x = 0;
+      } else this.velocity.x = this.speed.x;
+
+      this.gameVelocity.x = this.speed.x;
+
       this.flip = 1;
       if (!this.is_jump) this.updateSprite(this.sprites["run"]);
     } else {
       if (!this.is_jump && !this.get_hit) {
         this.velocity.x = 0;
+        this.gameVelocity.x = 0;
         this.updateSprite(this.sprites["idle"]);
       }
     }
@@ -131,8 +137,6 @@ export class Player extends Character {
 
     let y_pos = this.position.y + this.height + this.velocity.y;
 
-    this.floorColition();
-
     if (y_pos >= this.floor) {
       this.velocity.y = 0;
       this.is_jump = false;
@@ -141,8 +145,6 @@ export class Player extends Character {
       this.is_jump = true;
       this.velocity.y += gravity;
     }
-
-    this.sideColition();
   }
 
   jump() {
