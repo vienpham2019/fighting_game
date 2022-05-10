@@ -17,6 +17,7 @@ export class Player extends Character {
     sprites,
     flip = 1,
     attack_box,
+    moveSpeed,
   }) {
     super({
       position,
@@ -52,24 +53,22 @@ export class Player extends Character {
         pressed: false,
       },
     };
-    this.speed = {
-      x: 5,
-      y: 19,
-    };
+    this.speed = moveSpeed;
   }
 
   //   check collition with side of platform
   sideColition() {
     let left = this.velocity.x < 0;
     let [x1, x2, y1, y2] = getCoordinate(this);
+    let p_left = getCoordinate(this.platforms[this.currentPlatformIndex - 1]);
 
-    let [lp_x1, lp_x2, lp_y1, lp_y2] = getCoordinate(
-      this.platforms[this.currentPlatformIndex - 1]
-    );
+    let p_right = getCoordinate(this.platforms[this.currentPlatformIndex + 1]);
 
-    let [rp_x1, rp_x2, rp_y1, rp_y2] = getCoordinate(
-      this.platforms[this.currentPlatformIndex + 1]
-    );
+    if (!p_left || !p_right)
+      console.log(p_left, p_right, this.currentPlatformIndex);
+    let [lp_x1, lp_x2, lp_y1, lp_y2] = p_left;
+
+    let [rp_x1, rp_x2, rp_y1, rp_y2] = p_right;
 
     let check_go_right = !left && x2 >= rp_x1 && x1 < rp_x1;
     let check_go_left = left && x1 <= lp_x2 && x2 > lp_x2;
@@ -89,17 +88,23 @@ export class Player extends Character {
     let [x1, x2, y1, y2] = getCoordinate(this);
 
     let [cp_x1, cp_x2, cp_y1] = getCoordinate(curr_p);
+    this.platforms[this.currentPlatformIndex].color = "blue";
 
     if (y2 <= cp_y1 && y1 < cp_y1 && x2 > cp_x1 && x1 < cp_x2) {
       this.floor = cp_y1;
     } else {
       if (this.velocity.x > 0) {
-        this.floor = this.platforms[this.currentPlatformIndex++].position.y;
+        this.floor = this.platforms[this.currentPlatformIndex].position.y;
+        if (this.currentPlatformIndex + 1 < this.platforms.length)
+          this.currentPlatformIndex++;
       }
       if (this.velocity.x < 0) {
-        this.floor = this.platforms[this.currentPlatformIndex--].position.y;
+        this.floor = this.platforms[this.currentPlatformIndex].position.y;
+        if (this.currentPlatformIndex - 1 > 0) this.currentPlatformIndex--;
       }
     }
+
+    this.platforms[this.currentPlatformIndex].color = "red";
   }
 
   move(m) {

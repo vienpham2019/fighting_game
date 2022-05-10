@@ -5,14 +5,11 @@ export class Platform {
     this.position = position;
     this.width = width;
     this.height = height;
+    this.color = "blue";
   }
 
   draw() {
-    c.fillStyle = "blue";
+    c.fillStyle = this.color;
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
-  }
-
-  update() {
-    this.draw();
   }
 }

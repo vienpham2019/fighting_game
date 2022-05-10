@@ -1,6 +1,7 @@
 import { Player } from "./Player.js";
 import { Sprite } from "./Sprite.js";
 import { Platform } from "./Platform.js";
+import { createPlatform, createPlayer } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -12,7 +13,9 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const background = new Sprite({
   position: { x: 0, y: 0 },
-  imageSrc: "./img/background.png",
+  offset: { x: 0, y: 290 },
+  imageSrc: "./img/Forest copy.png",
+  scale: 1.5,
 });
 
 const shop = new Sprite({
@@ -23,63 +26,11 @@ const shop = new Sprite({
   framesHold: 5,
 });
 
-const player = new Player({
+const player = createPlayer({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
-  offset: { x: 0, y: 0 },
-  height: 133,
-  width: 65,
-  imageSrc: "./img/swordsman/Idle.png",
-  scale: 2.5,
-  framesMax: 8,
-  framesHold: 4,
-  offset: { x: 215, y: 171 },
-  attack_box: {
-    position: { x: 0, y: 0 },
-    width: 187,
-    height: 50,
-    offset: { x: 65, y: 20 },
-  },
-  sprites: {
-    idle: {
-      imageSrc: "./img/swordsman/Idle.png",
-      framesMax: 8,
-    },
-    run: {
-      imageSrc: "./img/swordsman/Run.png",
-      framesMax: 8,
-    },
-    jump: {
-      imageSrc: "./img/swordsman/Jump.png",
-      framesMax: 2,
-    },
-    fall: {
-      imageSrc: "./img/swordsman/Fall.png",
-      framesMax: 2,
-    },
-    takeHit: {
-      imageSrc: "./img/swordsman/Take Hit - white silhouette.png",
-      framesMax: 4,
-    },
-    death: {
-      imageSrc: "./img/swordsman/Death.png",
-      framesMax: 6,
-    },
-    attack: [
-      {
-        imageSrc: "./img/swordsman/Attack1.png",
-        hitFrame: 5,
-        framesMax: 6,
-        damge: 6,
-      },
-      {
-        imageSrc: "./img/swordsman/Attack2.png",
-        hitFrame: 5,
-        framesMax: 6,
-        damge: 6,
-      },
-    ],
-  },
+  moveSpeed: { x: 5, y: 13 },
+  player_name: "swordsman",
 });
 
 const enemy = new Player({
@@ -148,33 +99,15 @@ const enemy = new Player({
   },
 });
 
-const platforms = [
-  new Platform({
-    position: { x: -4, y: 0 },
-    width: 4,
-    height: canvas.height,
-  }),
-  new Platform({
-    position: { x: 0, y: 450 },
-    width: 300,
-    height: 100,
-  }),
-  new Platform({
-    position: { x: 300, y: 500 },
-    width: 500,
-    height: 50,
-  }),
-  new Platform({
-    position: { x: 800, y: 390 },
-    width: 300,
-    height: 160,
-  }),
-  new Platform({
-    position: { x: 1100, y: 0 },
-    width: 4,
-    height: canvas.height,
-  }),
-];
+const platforms = createPlatform([
+  { width: 4, height: canvas.height },
+  { width: 95, height: 192 },
+  { width: 44, height: 152 },
+  { width: 59, height: 109 },
+  { width: 540, height: 68 },
+  { width: 286, height: 132 },
+  { width: 4, height: canvas.height },
+]);
 
 player.platforms = platforms;
 
@@ -185,11 +118,9 @@ function animate() {
 
   player.enemy = enemy;
   enemy.enemy = player;
-  // background.update();
+  background.update();
   // shop.update();
-
-  platforms.forEach((p) => p.update());
-
+  platforms.forEach((p) => p.draw());
   player.update();
   // enemy.update();
 
