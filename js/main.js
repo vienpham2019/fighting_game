@@ -17,16 +17,43 @@ const floorImage = new Sprite({
   scale: 1.5,
 });
 
+const tree1BG = new Sprite({
+  position: { x: 0, y: 0 },
+  offset: { x: 0, y: 0 },
+  imageSrc: "./img/background/tree1BG.png",
+  scale: 1,
+});
+const tree2BG = new Sprite({
+  position: { x: 0, y: 0 },
+  offset: { x: 0, y: 0 },
+  imageSrc: "./img/background/tree2BG.png",
+  scale: 1,
+});
+const tree3BG = new Sprite({
+  position: { x: 0, y: 0 },
+  offset: { x: 0, y: 0 },
+  imageSrc: "./img/background/tree3BG.png",
+  scale: 1,
+});
+
+const tree4BG = new Sprite({
+  position: { x: 0, y: 0 },
+  offset: { x: 0, y: 0 },
+  imageSrc: "./img/background/tree4BG.png",
+  scale: 1,
+});
+
 const mountainBG = new Sprite({
   position: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
-  imageSrc: "./img/background/mountaninBG.png",
+  imageSrc: "./img/background/mountainBG.png",
   scale: 1,
 });
-const cloundBG = new Sprite({
+
+const cloudBG = new Sprite({
   position: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
-  imageSrc: "./img/background/cloundBG.png",
+  imageSrc: "./img/background/cloudBG.png",
   scale: 1,
 });
 
@@ -142,8 +169,12 @@ function animate() {
   player.enemy = enemy;
   enemy.enemy = player;
 
-  cloundBG.update();
+  cloudBG.update();
   mountainBG.update();
+  tree4BG.update();
+  tree3BG.update();
+  tree2BG.update();
+  tree1BG.update();
 
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
@@ -174,8 +205,12 @@ function animate() {
     );
     player.walls.forEach((w) => (w.position.x += player.gameVelocity.x * -1));
     floorImage.position.x += player.gameVelocity.x * -1;
-    cloundBG.position.x += player.gameVelocity.x * -1 * 0.4;
-    mountainBG.position.x += player.gameVelocity.x * -1 * 0.6;
+    cloudBG.position.x += player.gameVelocity.x * -0.1;
+    mountainBG.position.x += player.gameVelocity.x * -0.1;
+    tree4BG.position.x += player.gameVelocity.x * -0.2;
+    tree3BG.position.x += player.gameVelocity.x * -0.3;
+    tree2BG.position.x += player.gameVelocity.x * -0.5;
+    tree1BG.position.x += player.gameVelocity.x * -0.7;
   }
   // enemy move
   // enemy.move({ left: "ArrowLeft", right: "ArrowRight" });
