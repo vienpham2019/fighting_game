@@ -95,7 +95,7 @@ export class Player extends Character {
     }
   }
 
-  move(m, obj) {
+  move(m) {
     if (this.keys[m.left].pressed && this.last_key[0] === m.left) {
       if (
         this.gameCurrentX >= this.changeScreen.x1 &&
@@ -145,6 +145,45 @@ export class Player extends Character {
       this.is_jump = true;
       this.velocity.y += gravity;
     }
+  }
+
+  attack() {
+    if (this.attack_sprite_count === 0 && !this.is_attacking) {
+      this.is_attacking = true;
+      this.attack_sprite_count = this.sprites.attack.length;
+    }
+  }
+
+  handelAttack() {
+    if (this.attack_sprite_count > 0) {
+      let sprite =
+        this.sprites.attack[
+          this.sprites.attack.length - this.attack_sprite_count
+        ];
+
+      this.updateSprite(sprite);
+      this.attack_sprite = true;
+      if (
+        !this.enemy.get_hit &&
+        this.frameCurrent === sprite.hitFrame &&
+        this.rectCollition(this.enemy)
+      ) {
+        this.enemy.get_hit = true;
+        if (this.enemy.health <= 0)
+          this.enemy.updateSprite(this.enemy.sprites.death);
+        else {
+          this.damgeEffect(this.enemy, sprite.damge);
+          this.enemy.health -= sprite.damge;
+          this.enemy.updateSprite(this.enemy.sprites.takeHit);
+        }
+      }
+
+      if (this.frameCurrent === this.framesMax - 1) {
+        this.attack_sprite = false;
+        this.enemy.get_hit = false;
+        this.attack_sprite_count--;
+      }
+    } else this.is_attacking = false;
   }
 
   jump() {

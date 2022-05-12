@@ -18,6 +18,7 @@ export class Enemy extends Character {
     attack_box,
     moveSpeed,
     platform,
+    health,
   }) {
     super({
       position,
@@ -32,7 +33,7 @@ export class Enemy extends Character {
       sprites,
       flip,
       attack_box,
-      health: 1000,
+      health,
     });
     this.platform = platform;
     this.floor = canvas.height;

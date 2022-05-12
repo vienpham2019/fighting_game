@@ -33,9 +33,9 @@ export class Worm extends Enemy {
       sprites,
       flip,
       attack_box,
-      health: 1000,
       moveSpeed,
       platform,
+      health: 100,
     });
     this.fire_ball = {
       move: new Sprite({
@@ -49,6 +49,8 @@ export class Worm extends Enemy {
     };
     this.fireBallSpeed = 8;
     this.start_attack = false;
+    this.in_attack_range = false;
+    this.enemy_get_hit = false;
   }
 
   updateFireBallLocation() {
@@ -64,7 +66,12 @@ export class Worm extends Enemy {
   hitCollition() {
     let [x1, x2, y1, y2] = getCoordinate(this.fire_ball.move);
     let [e_x1, e_x2, e_y1, e_y2] = getCoordinate(this.enemy);
-    return x2 >= e_x1 && x1 <= e_x2 && y2 >= e_y1 && y1 <= e_y2;
+    let check_x =
+      (e_x1 <= x1 && e_x2 >= x2) ||
+      (x1 > e_x1 && x1 <= e_x2) ||
+      (x1 < e_x1 && x2 >= e_x1);
+
+    return check_x && y2 >= e_y1 && y1 <= e_y2;
   }
 
   fireballMove() {
@@ -86,17 +93,16 @@ export class Worm extends Enemy {
           this.fire_ball.explosion.framesMax - 1
         ) {
           if (
-            !this.enemy.get_hit &&
+            this.enemy_get_hit === false &&
             this.hitCollition() &&
             this.fire_ball.explosion.frameCurrent === 0
           ) {
+            this.enemy_get_hit = true;
+            this.enemy.flip = this.flip * -1;
             this.enemy.get_hit = true;
-            if (this.enemy.health <= 0)
-              this.enemy.updateSprite(this.enemy.sprites.death);
-            else {
-              this.enemy.health -= this.sprites.attack[0].damge;
-              this.enemy.updateSprite(this.enemy.sprites.takeHit);
-            }
+            this.enemy.health -= this.sprites.attack[0].damge;
+            this.damgeEffect(this.enemy, this.sprites.attack[0].damge);
+            this.enemy.updateSprite(this.enemy.sprites.takeHit);
           }
           this.enemy.get_hit = false;
           this.fire_ball.explosion.position.x = this.fire_ball.move.position.x;
@@ -110,15 +116,24 @@ export class Worm extends Enemy {
           this.fire_ball.explosion.update();
         } else {
           this.updateFireBallLocation();
+          if (this.enemy_get_hit === true) this.enemy_get_hit = false;
           this.attack_again = true;
           this.start_attack = false;
+          this.in_attack_range = false;
         }
       }
     }
   }
 
   detect_attack() {
-    if (this.rectCollition(this.enemy)) {
+    if (this.enemy.health <= 0)
+      this.enemy.updateSprite(this.enemy.sprites.death);
+
+    if (
+      (this.rectCollition(this.enemy) || this.in_attack_range) &&
+      this.enemy.health > 0
+    ) {
+      this.in_attack_range = true;
       this.velocity.x = 0;
       if (this.attack_again) {
         if (this.image === this.sprites.attack[0].image) {
