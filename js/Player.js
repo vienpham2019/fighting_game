@@ -54,7 +54,7 @@ export class Player extends Character {
       },
     };
     this.speed = moveSpeed;
-    this.gameCurrentX = 0;
+    this.gameCurrentX = position.x;
     this.gameVelocity = { x: 0, y: 0 };
     this.changeScreen = { x1: 300, x2: 500, y1: 0, y2: 0 };
     this.floorImage = {
@@ -155,6 +155,7 @@ export class Player extends Character {
   }
 
   update() {
+    this.handelAttack();
     super.update();
   }
 }

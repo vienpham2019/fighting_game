@@ -8,10 +8,12 @@ export class Sprite {
     framesHold = 1,
     offset = { x: 0, y: 0 },
     flip = 1,
+    width = 50,
+    height = 150,
   }) {
     this.position = position;
-    this.width = 50;
-    this.height = 150;
+    this.width = width;
+    this.height = height;
     this.image = new Image();
     this.image.src = imageSrc;
     this.scale = scale;
@@ -43,13 +45,17 @@ export class Sprite {
     c.restore();
   }
 
-  update() {
-    this.draw();
+  frame_animate() {
     if (this.stop_animation === true) return;
     this.framesElapsed++;
     if (this.framesElapsed % this.framesHold === 0) {
       if (this.frameCurrent < this.framesMax - 1) this.frameCurrent++;
       else this.frameCurrent = 0;
     }
+  }
+
+  update() {
+    this.draw();
+    this.frame_animate();
   }
 }

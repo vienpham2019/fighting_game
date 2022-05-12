@@ -15,6 +15,7 @@ export class Character extends Sprite {
     sprites,
     flip = 1,
     attack_box,
+    health = 100,
   }) {
     super({
       position,
@@ -34,7 +35,7 @@ export class Character extends Sprite {
     this.attack_sprite = false;
     this.enemy;
     this.get_hit = false;
-    this.health = 100;
+    this.health = health;
 
     for (const sprite in sprites) {
       if (Array.isArray(sprites[sprite])) {
@@ -143,9 +144,6 @@ export class Character extends Sprite {
   update() {
     super.update();
 
-    // attack
-    this.handelAttack();
-
     this.attack_box.offset.x =
       this.flip === -1 ? -(this.attack_box.width - 5) : this.width;
 
@@ -154,5 +152,7 @@ export class Character extends Sprite {
 
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
+
+    this.hitboxdraw();
   }
 }

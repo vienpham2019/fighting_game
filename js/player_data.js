@@ -1,4 +1,4 @@
-let swordsman = {
+const swordsman = {
   height: 88,
   width: 52,
   imageSrc: "./img/swordsman/Idle.png",
@@ -54,4 +54,66 @@ let swordsman = {
   },
 };
 
-export let player_data = { swordsman };
+const warior = {
+  height: 88,
+  width: 52,
+  imageSrc: "./img/warior/Idle.png",
+  scale: 1.9,
+  framesMax: 10,
+  framesHold: 4,
+  offset: { x: 130, y: 104 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 110,
+    height: 50,
+    offset: { x: 60, y: 30 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/warior/Idle.png",
+      framesMax: 10,
+    },
+    run: {
+      imageSrc: "./img/warior/Run.png",
+      framesMax: 8,
+    },
+    jump: {
+      imageSrc: "./img/warior/Jump.png",
+      framesMax: 3,
+    },
+    fall: {
+      imageSrc: "./img/warior/Fall.png",
+      framesMax: 3,
+    },
+    takeHit: {
+      imageSrc: "./img/warior/Take hit.png",
+      framesMax: 3,
+    },
+    death: {
+      imageSrc: "./img/warior/Death.png",
+      framesMax: 7,
+    },
+    attack: [
+      {
+        imageSrc: "./img/warior/Attack1.png",
+        hitFrame: 5,
+        framesMax: 7,
+        damge: 5,
+      },
+      {
+        imageSrc: "./img/warior/Attack2.png",
+        hitFrame: 3,
+        framesMax: 7,
+        damge: 5,
+      },
+      {
+        imageSrc: "./img/warior/Attack3.png",
+        hitFrame: 5,
+        framesMax: 8,
+        damge: 10,
+      },
+    ],
+  },
+};
+
+export let player_data = { swordsman, warior };
