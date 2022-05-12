@@ -93,13 +93,10 @@ const enemy = createEnemy({
 });
 const enemy2 = createEnemy({
   velocity: { x: 0, y: 0 },
-  moveSpeed: { x: 2, y: 0 },
+  moveSpeed: { x: 1, y: 0 },
   platform: platforms[3],
-  enemy_name: "worm",
+  enemy_name: "skeleton",
 });
-
-enemy.name = "worm1";
-enemy2.name = "worm2";
 
 let enemys = [enemy, enemy2];
 

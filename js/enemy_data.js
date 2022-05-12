@@ -60,4 +60,46 @@ const worm = {
   },
 };
 
-export let enemy_data = { worm };
+const skeleton = {
+  height: 90,
+  width: 50,
+  imageSrc: "./img/bot/Skeleton/Idle.png",
+  scale: 1.7,
+  framesMax: 4,
+  framesHold: 6,
+  offset: { x: 105, y: 82 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 85,
+    height: 0,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/Skeleton/Idle.png",
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: "./img/bot/Skeleton/Walk.png",
+      framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/Skeleton/Take Hit.png",
+      framesMax: 4,
+    },
+    death: {
+      imageSrc: "./img/bot/Skeleton/Death.png",
+      framesMax: 4,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/Skeleton/Attack.png",
+        framesMax: 8,
+        hitFrame: 7,
+        damge: 10,
+      },
+    ],
+  },
+};
+
+export let enemy_data = { worm, skeleton };

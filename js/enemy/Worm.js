@@ -53,7 +53,6 @@ export class Worm extends Enemy {
     this.enemy_get_hit = false;
     this.enemy;
     this.attack_again = true;
-    this.name;
     this.color = "green";
   }
 
@@ -173,7 +172,6 @@ export class Worm extends Enemy {
 
   update() {
     this.detect_attack();
-    this.drawHitBox();
     this.drawHealthBar();
     super.update();
   }

@@ -3,6 +3,7 @@ import { canvas } from "./main.js";
 import { Platform } from "./Platform.js";
 import { Player } from "./Player.js";
 import { Worm } from "./enemy/Worm.js";
+import { Skeleton } from "./enemy/Skeleton.js";
 
 import { player_data } from "./player_data.js";
 import { enemy_data } from "./enemy_data.js";
@@ -49,6 +50,15 @@ export function createEnemy({ velocity, moveSpeed, platform, enemy_name }) {
   switch (enemy_name) {
     case "worm":
       return new Worm({
+        ...enemy,
+        position,
+        flip,
+        platform,
+        velocity,
+        moveSpeed,
+      });
+    case "skeleton":
+      return new Skeleton({
         ...enemy,
         position,
         flip,

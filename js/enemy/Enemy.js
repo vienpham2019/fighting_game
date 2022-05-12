@@ -51,15 +51,19 @@ export class Enemy extends Character {
       this.width * (this.health / 100) > 0
         ? this.width * (this.health / 100)
         : 0;
-    c.fillStyle = "red";
+    c.fillStyle = "#FF1C1C";
+
     c.fillRect(
       this.position.x + health_bar_width,
       this.position.y - 10,
       this.width - health_bar_width,
       4
     );
-    c.fillStyle = "green";
+    c.fillStyle = "#1FFF1C";
     c.fillRect(this.position.x, this.position.y - 10, health_bar_width, 4);
+
+    c.strokeStyle = "black";
+    c.strokeRect(this.position.x, this.position.y - 10, this.width, 4);
   }
 
   move() {
@@ -87,14 +91,14 @@ export class Enemy extends Character {
   attackBoxCollition() {
     let [x1, x2, y1, y2] = getCoordinate(this);
     let b_x1 = this.flip === 1 ? x2 : x1 - this.attack_box.width;
-    let b_x2 = this.flip === 1 ? x2 + this.attack_box.width : x2;
+    let b_x2 = this.flip === 1 ? x2 + this.attack_box.width : x1;
     let b_y1 = y1;
     let b_y2 = y2;
     let [e_x1, e_x2, e_y1, e_y2] = getCoordinate(this.enemy);
     let check_x =
       (e_x1 <= b_x1 && e_x2 >= b_x2) ||
-      (b_x1 > e_x1 && b_x1 <= e_x2) ||
-      (b_x1 < e_x1 && b_x2 >= e_x1);
+      (b_x1 > e_x1 && b_x1 < e_x2) ||
+      (b_x1 < e_x1 && b_x2 > e_x1);
 
     return check_x && b_y2 >= e_y1 && b_y1 <= e_y2;
   }
