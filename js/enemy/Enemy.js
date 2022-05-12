@@ -38,38 +38,34 @@ export class Enemy extends Character {
     this.platform = platform;
     this.floor = canvas.height;
     this.speed = moveSpeed;
-    this.attack_again = true;
-    this.enemy;
     this.velocity = {
       x: 0,
       y: 0,
     };
+    this.is_death = false;
+    this.stop_animation_delay = 20;
   }
 
-  drawAttackRange() {
+  drawHealthBar() {
+    let health_bar_width =
+      this.width * (this.health / 100) > 0
+        ? this.width * (this.health / 100)
+        : 0;
+    c.fillStyle = "red";
+    c.fillRect(
+      this.position.x + health_bar_width,
+      this.position.y - 10,
+      this.width - health_bar_width,
+      4
+    );
     c.fillStyle = "green";
-    c.fillRect(
-      this.attack_box.position.x,
-      this.attack_box.position.y,
-      this.attack_box.width,
-      this.attack_box.height
-    );
-  }
-
-  drawTrackRange() {
-    c.fillStyle = "blue";
-    c.fillRect(
-      this.attack_box.position.x,
-      this.attack_box.position.y,
-      this.attack_box.width + 50,
-      this.attack_box.height
-    );
+    c.fillRect(this.position.x, this.position.y - 10, health_bar_width, 4);
   }
 
   move() {
-    let [x1, x2, y1, y2] = getCoordinate(this);
+    let [x1, x2] = getCoordinate(this);
 
-    let [p_x1, p_x2, p_y1, p_y2] = getCoordinate(this.platform);
+    let [p_x1, p_x2] = getCoordinate(this.platform);
 
     if (x1 <= p_x1 || x2 >= p_x2) {
       this.velocity.x *= -1;
@@ -88,7 +84,25 @@ export class Enemy extends Character {
     }
   }
 
+  attackBoxCollition() {
+    let [x1, x2, y1, y2] = getCoordinate(this);
+    let b_x1 = this.flip === 1 ? x2 : x1 - this.attack_box.width;
+    let b_x2 = this.flip === 1 ? x2 + this.attack_box.width : x2;
+    let b_y1 = y1;
+    let b_y2 = y2;
+    let [e_x1, e_x2, e_y1, e_y2] = getCoordinate(this.enemy);
+    let check_x =
+      (e_x1 <= b_x1 && e_x2 >= b_x2) ||
+      (b_x1 > e_x1 && b_x1 <= e_x2) ||
+      (b_x1 < e_x1 && b_x2 >= e_x1);
+
+    return check_x && b_y2 >= e_y1 && b_y1 <= e_y2;
+  }
+
   update() {
+    if (this.stop_animation) {
+      if (--this.stop_animation_delay <= 0) this.is_death = true;
+    }
     super.update();
   }
 }

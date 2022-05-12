@@ -91,9 +91,20 @@ const enemy = createEnemy({
   platform: platforms[3],
   enemy_name: "worm",
 });
+const enemy2 = createEnemy({
+  velocity: { x: 0, y: 0 },
+  moveSpeed: { x: 2, y: 0 },
+  platform: platforms[3],
+  enemy_name: "worm",
+});
 
-player.enemy = enemy;
-enemy.enemy = player;
+enemy.name = "worm1";
+enemy2.name = "worm2";
+
+let enemys = [enemy, enemy2];
+
+player.enemys = enemys;
+enemys.forEach((e) => (e.enemy = player));
 
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
@@ -113,7 +124,8 @@ function animate() {
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
   player.update();
-  enemy.update();
+  enemys.forEach((e) => !e.is_death && e.update());
+
   // platforms.forEach((p) => p.draw());
   // walls.forEach((p) => p.draw());
 
@@ -143,7 +155,7 @@ function animate() {
     tree3BG.position.x += player.gameVelocity.x * -0.3;
     tree2BG.position.x += player.gameVelocity.x * -0.5;
     tree1BG.position.x += player.gameVelocity.x * -0.7;
-    enemy.position.x += player.gameVelocity.x * -1;
+    enemys.forEach((e) => (e.position.x += player.gameVelocity.x * -1));
   }
 }
 

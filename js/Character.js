@@ -33,7 +33,6 @@ export class Character extends Sprite {
     this.sprites = sprites;
     this.attack_sprite_count = 0;
     this.attack_sprite = false;
-    this.enemy;
     this.get_hit = false;
     this.health = health;
     this.damges = [];
@@ -106,28 +105,13 @@ export class Character extends Sprite {
     }
   }
 
-  rectCollition(enemy) {
-    return (
-      this.attack_box.position.x + this.attack_box.width >= enemy.position.x &&
-      this.attack_box.position.x <= enemy.position.x + enemy.width &&
-      this.attack_box.position.y + this.attack_box.height >= enemy.position.y &&
-      this.attack_box.position.y <= enemy.position.y + enemy.height
-    );
-  }
-
   update() {
     super.update();
-
-    this.attack_box.offset.x =
-      this.flip === -1 ? -(this.attack_box.width - 5) : this.width;
-
-    this.attack_box.position.x = this.position.x + this.attack_box.offset.x;
-    this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
 
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
 
-    this.hitboxdraw();
+    // this.hitboxdraw();
     this.damges.forEach((d, i) => {
       c.font = "bold 18px Arial";
       c.fillStyle = "rgba(161, 0, 0, " + d.alpha + ")";

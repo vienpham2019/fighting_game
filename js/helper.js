@@ -36,13 +36,7 @@ export function createPlayer({
   });
 }
 
-export function createEnemy({
-  velocity,
-  moveSpeed,
-  flip = 1,
-  platform,
-  enemy_name,
-}) {
+export function createEnemy({ velocity, moveSpeed, platform, enemy_name }) {
   let enemy = enemy_data[enemy_name];
   let position = {
     x: getRandomArbitrary(
@@ -51,6 +45,7 @@ export function createEnemy({
     ),
     y: platform.position.y - enemy.height,
   };
+  let flip = Math.random() > 0.5 ? -1 : 1;
   switch (enemy_name) {
     case "worm":
       return new Worm({

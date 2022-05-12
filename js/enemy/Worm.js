@@ -51,6 +51,10 @@ export class Worm extends Enemy {
     this.start_attack = false;
     this.in_attack_range = false;
     this.enemy_get_hit = false;
+    this.enemy;
+    this.attack_again = true;
+    this.name;
+    this.color = "green";
   }
 
   updateFireBallLocation() {
@@ -98,7 +102,7 @@ export class Worm extends Enemy {
             this.fire_ball.explosion.frameCurrent === 0
           ) {
             this.enemy_get_hit = true;
-            this.enemy.flip = this.flip * -1;
+            if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
             this.enemy.get_hit = true;
             this.enemy.health -= this.sprites.attack[0].damge;
             this.damgeEffect(this.enemy, this.sprites.attack[0].damge);
@@ -126,13 +130,15 @@ export class Worm extends Enemy {
   }
 
   detect_attack() {
-    if (this.enemy.health <= 0)
+    if (this.enemy.health <= 0) {
       this.enemy.updateSprite(this.enemy.sprites.death);
+    }
 
     if (
-      (this.rectCollition(this.enemy) || this.in_attack_range) &&
+      (this.attackBoxCollition() || this.in_attack_range) &&
       this.enemy.health > 0
     ) {
+      this.color = "red";
       this.in_attack_range = true;
       this.velocity.x = 0;
       if (this.attack_again) {
@@ -153,11 +159,22 @@ export class Worm extends Enemy {
       this.attack_again = true;
       this.start_attack = false;
       this.move();
+      this.color = "green";
     }
+  }
+
+  drawHitBox() {
+    let { x, y } = this.position;
+    c.beginPath();
+    c.strokeStyle = this.color;
+    c.rect(x, y, this.width, this.height);
+    c.stroke();
   }
 
   update() {
     this.detect_attack();
+    this.drawHitBox();
+    this.drawHealthBar();
     super.update();
   }
 }

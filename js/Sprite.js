@@ -29,6 +29,8 @@ export class Sprite {
   draw() {
     c.save();
     c.scale(this.flip, 1);
+    c.globalAlpha = 1;
+    if (this.stop_animation) c.globalAlpha -= 0.2;
     c.drawImage(
       this.image,
       // crop image

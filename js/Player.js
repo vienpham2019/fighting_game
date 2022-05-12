@@ -60,12 +60,23 @@ export class Player extends Character {
     this.floorImage = {
       w: 0,
     };
+    this.enemys;
+  }
+
+  // attack box colition
+  rectCollition(enemy) {
+    return (
+      this.attack_box.position.x + this.attack_box.width >= enemy.position.x &&
+      this.attack_box.position.x <= enemy.position.x + enemy.width &&
+      this.attack_box.position.y + this.attack_box.height >= enemy.position.y &&
+      this.attack_box.position.y <= enemy.position.y + enemy.height
+    );
   }
 
   //   check collition with side of platform
   sideColition(w) {
     let left = this.velocity.x < 0;
-    let [x1, x2, y1, y2] = getCoordinate(this);
+    let [x1, x2, _, y2] = getCoordinate(this);
 
     let [p_x1, p_x2, p_y1, p_y2] = getCoordinate(w);
     let check_go_right = !left && x2 >= p_x1 && x1 < p_x1;
@@ -80,9 +91,9 @@ export class Player extends Character {
   //   check collition with floor of platform
   floorColition(platform) {
     if (!platform) return;
-    let [x1, x2, y1, y2] = getCoordinate(this);
+    let [x1, x2, _, y2] = getCoordinate(this);
 
-    let [cp_x1, cp_x2, cp_y1, cp_y2] = getCoordinate(platform);
+    let [cp_x1, cp_x2, cp_y1] = getCoordinate(platform);
 
     if (
       y2 <= cp_y1 &&
@@ -163,24 +174,28 @@ export class Player extends Character {
 
       this.updateSprite(sprite);
       this.attack_sprite = true;
-      if (
-        !this.enemy.get_hit &&
-        this.frameCurrent === sprite.hitFrame &&
-        this.rectCollition(this.enemy)
-      ) {
-        this.enemy.get_hit = true;
-        if (this.enemy.health <= 0)
-          this.enemy.updateSprite(this.enemy.sprites.death);
-        else {
-          this.damgeEffect(this.enemy, sprite.damge);
-          this.enemy.health -= sprite.damge;
-          this.enemy.updateSprite(this.enemy.sprites.takeHit);
-        }
-      }
+      this.enemys.forEach((e) => {
+        if (
+          !e.get_hit &&
+          this.frameCurrent === sprite.hitFrame &&
+          this.rectCollition(e)
+        ) {
+          e.get_hit = true;
 
+          e.health -= sprite.damge;
+          if (e.health > 0) {
+            this.damgeEffect(e, sprite.damge);
+            e.updateSprite(e.sprites.takeHit);
+          }
+          if (e.health <= 0) e.updateSprite(e.sprites.death);
+        }
+
+        if (this.frameCurrent === this.framesMax - 1) {
+          e.get_hit = false;
+        }
+      });
       if (this.frameCurrent === this.framesMax - 1) {
         this.attack_sprite = false;
-        this.enemy.get_hit = false;
         this.attack_sprite_count--;
       }
     } else this.is_attacking = false;
@@ -194,6 +209,12 @@ export class Player extends Character {
   }
 
   update() {
+    this.attack_box.offset.x =
+      this.flip === -1 ? -(this.attack_box.width - 5) : this.width;
+
+    this.attack_box.position.x = this.position.x + this.attack_box.offset.x;
+    this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
+
     this.handelAttack();
     super.update();
   }
