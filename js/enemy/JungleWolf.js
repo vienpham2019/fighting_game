@@ -2,8 +2,9 @@ import { c } from "../main.js";
 import { getCoordinate } from "../helper.js";
 
 import { Enemy } from "./Enemy.js";
+import { Sprite } from "../Sprite.js";
 
-export class Skeleton extends Enemy {
+export class JungleWolf extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,7 +18,7 @@ export class Skeleton extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 0.7, y: 0 },
+    moveSpeed = { x: 1.1, y: 0 },
     platform,
   }) {
     super({
@@ -35,10 +36,14 @@ export class Skeleton extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 150,
+      health: 300,
     });
-    this.attack_cool_down = 50;
-    this.maxHealth = 150;
+    this.attack_cool_down = 10;
+    this.maxHealth = 300;
+    this.attack_effect = new Sprite({
+      position: { x: position.x, y: position.y + 10 },
+      ...sprites.attack_effect,
+    });
   }
 
   drawHitBox() {
@@ -52,13 +57,32 @@ export class Skeleton extends Enemy {
     c.stroke();
 
     this.updateSprite(this.sprites.attack[0]);
+    // this.updateSprite(this.sprites.death);
     c.fillStyle = "green";
     c.fillRect(b_x1, y1, this.attack_box.width, this.height);
   }
 
+  deteckAttackEffect() {
+    if (
+      this.image === this.sprites.attack[0].image &&
+      this.frameCurrent === this.sprites.attack_effect.trigger_frame
+    ) {
+      let [x1, x2, y1] = getCoordinate(this);
+      this.attack_effect.flip = this.flip * -1;
+      let x = this.flip === 1 ? x2 + 50 : x1;
+      this.attack_effect.position = {
+        x,
+        y: y1 + 10,
+      };
+      this.attack_effect.update();
+    }
+  }
+
   update() {
+    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
+    this.deteckAttackEffect();
     super.update();
   }
 }

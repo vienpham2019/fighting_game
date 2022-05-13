@@ -4,6 +4,11 @@ import { Platform } from "./Platform.js";
 import { Player } from "./Player.js";
 import { Worm } from "./enemy/Worm.js";
 import { Skeleton } from "./enemy/Skeleton.js";
+import { Mushroom } from "./enemy/Mushroom.js";
+import { Goblin } from "./enemy/Goblin.js";
+import { FlyingEye } from "./enemy/FlyingEye.js";
+import { JungleWolf } from "./enemy/JungleWolf.js";
+import { WhiteWolf } from "./enemy/WhiteWolf.js";
 
 import { player_data } from "./player_data.js";
 import { enemy_data } from "./enemy_data.js";
@@ -37,7 +42,7 @@ export function createPlayer({
   });
 }
 
-export function createEnemy({ velocity, moveSpeed, platform, enemy_name }) {
+export function createEnemy({ platform, enemy_name }) {
   let enemy = enemy_data[enemy_name];
   let position = {
     x: getRandomArbitrary(
@@ -47,26 +52,64 @@ export function createEnemy({ velocity, moveSpeed, platform, enemy_name }) {
     y: platform.position.y - enemy.height,
   };
   let flip = Math.random() > 0.5 ? -1 : 1;
+  let obj_val = {
+    ...enemy,
+    position,
+    flip,
+    platform,
+  };
   switch (enemy_name) {
     case "worm":
       return new Worm({
-        ...enemy,
-        position,
-        flip,
-        platform,
-        velocity,
-        moveSpeed,
+        ...obj_val,
       });
     case "skeleton":
       return new Skeleton({
-        ...enemy,
-        position,
-        flip,
-        platform,
-        velocity,
-        moveSpeed,
+        ...obj_val,
+      });
+    case "mushroom":
+      return new Mushroom({
+        ...obj_val,
+      });
+    case "goblin":
+      return new Goblin({
+        ...obj_val,
+      });
+    case "flying_eye":
+      return new FlyingEye({
+        ...obj_val,
+      });
+    case "jungle_wolf":
+      return new JungleWolf({
+        ...obj_val,
+      });
+    case "white_wolf":
+      return new WhiteWolf({
+        ...obj_val,
       });
   }
+}
+
+export function createEnemyByPlatform(platforms) {
+  let result = [];
+  let enemyOptionLV1 = ["worm", "skeleton", "mushroom", "goblin", "flying_eye"];
+  let enemyOptionLV2 = ["jungle_wolf", "white_wolf"];
+
+  let enemyOption = enemyOptionLV2;
+  platforms.forEach((p) => {
+    if (p.width >= 200) {
+      let number_of_enemy = Math.min(
+        getRandomArbitrary(1, Math.floor(p.width / 100)),
+        3
+      );
+
+      for (let i = 0; i < number_of_enemy; i++) {
+        let enemy_name = enemyOption[getRandomArbitrary(0, enemyOption.length)];
+        result.push(createEnemy({ platform: p, enemy_name }));
+      }
+    }
+  });
+  return result;
 }
 
 export function createPlatform(arr) {

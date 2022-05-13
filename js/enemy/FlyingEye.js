@@ -3,7 +3,7 @@ import { getCoordinate } from "../helper.js";
 
 import { Enemy } from "./Enemy.js";
 
-export class Skeleton extends Enemy {
+export class FlyingEye extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,11 +17,11 @@ export class Skeleton extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 0.7, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
-      position,
+      position: { x: position.x, y: position.y - 50 },
       velocity,
       width,
       height,
@@ -35,10 +35,10 @@ export class Skeleton extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 150,
+      health: 70,
     });
-    this.attack_cool_down = 50;
-    this.maxHealth = 150;
+    this.attack_cool_down = 10;
+    this.maxHealth = 70;
   }
 
   drawHitBox() {
@@ -57,6 +57,7 @@ export class Skeleton extends Enemy {
   }
 
   update() {
+    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
     super.update();

@@ -44,12 +44,15 @@ export class Enemy extends Character {
     };
     this.is_death = false;
     this.stop_animation_delay = 20;
+    this.attack_again = true;
+    this.enemy_get_hit = false;
+    this.in_attack_range = false;
   }
 
   drawHealthBar() {
     let health_bar_width =
-      this.width * (this.health / 100) > 0
-        ? this.width * (this.health / 100)
+      this.width * (this.health / this.maxHealth) > 0
+        ? this.width * (this.health / this.maxHealth)
         : 0;
     c.fillStyle = "#FF1C1C";
 
@@ -67,6 +70,11 @@ export class Enemy extends Character {
   }
 
   move() {
+    if (this.get_hit) {
+      this.velocity.x = 0;
+      this.flip = this.enemy.flip * -1;
+    }
+
     let [x1, x2] = getCoordinate(this);
 
     let [p_x1, p_x2] = getCoordinate(this.platform);
@@ -81,10 +89,6 @@ export class Enemy extends Character {
       } else {
         this.velocity.x = -this.speed.x;
       }
-    }
-
-    if (this.get_hit) {
-      this.flip = this.enemy.flip * -1;
     }
   }
 
@@ -101,6 +105,55 @@ export class Enemy extends Character {
       (b_x1 < e_x1 && b_x2 > e_x1);
 
     return check_x && b_y2 >= e_y1 && b_y1 <= e_y2;
+  }
+
+  detect_attack() {
+    if (this.enemy.health <= 0) {
+      this.enemy.updateSprite(this.enemy.sprites.death);
+    }
+
+    if (
+      (this.attackBoxCollition() || this.in_attack_range) &&
+      this.enemy.health > 0
+    ) {
+      this.in_attack_range = true;
+      this.color = "red";
+      this.velocity.x = 0;
+      if (this.attack_again) {
+        if (this.image === this.sprites.attack[0].image) {
+          if (this.sprites.attack[0].hitFrame[this.frameCurrent]) {
+            this.start_attack = true;
+
+            if (this.enemy_get_hit === false && this.attackBoxCollition()) {
+              this.enemy_get_hit = true;
+              if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
+              this.enemy.get_hit = true;
+              this.enemy.health -= this.sprites.attack[0].damge;
+              this.damgeEffect(this.enemy, this.sprites.attack[0].damge);
+              this.enemy.updateSprite(this.enemy.sprites.takeHit);
+            } else {
+              this.in_attack_range = false;
+            }
+            this.enemy.get_hit = false;
+          }
+          this.attack_again = this.frameCurrent < this.framesMax - 1;
+        }
+        this.updateSprite(this.sprites.attack[0]);
+      } else {
+        this.updateSprite(this.sprites.idle);
+        if (this.attack_cool_down-- <= 0) {
+          this.attack_again = true;
+          this.enemy_get_hit = false;
+          this.attack_cool_down = 50;
+        }
+      }
+    } else {
+      this.updateSprite(this.sprites.run);
+      this.attack_again = true;
+      this.move();
+      this.color = "green";
+      this.in_attack_range = false;
+    }
   }
 
   update() {

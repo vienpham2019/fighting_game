@@ -1,5 +1,10 @@
 import { Sprite } from "./Sprite.js";
-import { createPlatform, createPlayer, createEnemy } from "./helper.js";
+import {
+  createPlatform,
+  createPlayer,
+  createEnemyByPlatform,
+  createEnemy,
+} from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -63,7 +68,7 @@ const shop = new Sprite({
 const player = createPlayer({
   position: { x: 500, y: 0 },
   velocity: { x: 0, y: 0 },
-  moveSpeed: { x: 4, y: 12 },
+  moveSpeed: { x: 4, y: 15 },
   player_name: "warior",
 });
 
@@ -85,20 +90,7 @@ const walls = createPlatform([
 player.platforms = platforms;
 player.walls = walls;
 
-const enemy = createEnemy({
-  velocity: { x: 0, y: 0 },
-  moveSpeed: { x: 1, y: 0 },
-  platform: platforms[3],
-  enemy_name: "worm",
-});
-const enemy2 = createEnemy({
-  velocity: { x: 0, y: 0 },
-  moveSpeed: { x: 1, y: 0 },
-  platform: platforms[3],
-  enemy_name: "skeleton",
-});
-
-let enemys = [enemy, enemy2];
+let enemys = createEnemyByPlatform(platforms);
 
 player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));

@@ -6,7 +6,7 @@ import { getCoordinate } from "../helper.js";
 export class Worm extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
-    velocity,
+    velocity = { x: 0, y: 0 },
     width = 60,
     height = 150,
     imageSrc,
@@ -17,7 +17,7 @@ export class Worm extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed,
+    moveSpeed = { x: 1, y: 0 },
     platform,
   }) {
     super({
@@ -48,12 +48,10 @@ export class Worm extends Enemy {
       }),
     };
     this.fireBallSpeed = 8;
-    this.start_attack = false;
-    this.in_attack_range = false;
     this.enemy_get_hit = false;
     this.enemy;
-    this.attack_again = true;
     this.color = "green";
+    this.maxHealth = 100;
   }
 
   updateFireBallLocation() {

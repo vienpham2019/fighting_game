@@ -3,7 +3,7 @@ import { getCoordinate } from "../helper.js";
 
 import { Enemy } from "./Enemy.js";
 
-export class Skeleton extends Enemy {
+export class Goblin extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,7 +17,7 @@ export class Skeleton extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 0.7, y: 0 },
+    moveSpeed = { x: 1.3, y: 0 },
     platform,
   }) {
     super({
@@ -35,10 +35,10 @@ export class Skeleton extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 150,
+      health: 100,
     });
-    this.attack_cool_down = 50;
-    this.maxHealth = 150;
+    this.attack_cool_down = 10;
+    this.maxHealth = 100;
   }
 
   drawHitBox() {
@@ -57,6 +57,7 @@ export class Skeleton extends Enemy {
   }
 
   update() {
+    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
     super.update();
