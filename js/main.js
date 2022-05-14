@@ -95,6 +95,11 @@ let enemys = createEnemyByPlatform(platforms);
 player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));
 
+// let enemy = createEnemy({
+//   platform: platforms[2],
+//   enemy_name: "green_cornian",
+// });
+
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
 // platforms.forEach((p) => (p.position.x -= canvas.width + d));
@@ -113,6 +118,7 @@ function animate() {
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
   player.update();
+  // enemy.update();
   enemys.forEach((e) => !e.is_death && e.update());
 
   // platforms.forEach((p) => p.draw());

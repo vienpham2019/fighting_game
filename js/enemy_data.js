@@ -267,16 +267,18 @@ const jungle_wolf = {
         damge: 15,
       },
     ],
-    attack_effect: {
-      height: 10,
-      width: 10,
-      imageSrc: "./img/bot/JungleWolf/Attack effect.png",
-      framesMax: 3,
-      framesHold: 4,
-      offset: { x: 70, y: 5 },
-      scale: 0.3,
-      trigger_frame: 7,
-    },
+    attack_effect: [
+      {
+        height: 10,
+        width: 10,
+        imageSrc: "./img/bot/JungleWolf/Attack effect.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 70, y: 5 },
+        scale: 0.3,
+        trigger_frame: 7,
+      },
+    ],
   },
 };
 
@@ -344,6 +346,60 @@ const white_wolf = {
   },
 };
 
+const green_cornian = {
+  height: 90,
+  width: 80,
+  imageSrc: "./img/bot/GreenCornian/Idle.png",
+  scale: 1.3,
+  framesMax: 6,
+  framesHold: 10,
+  offset: { x: 90, y: 157 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 30,
+    height: 0,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/GreenCornian/Idle.png",
+      framesMax: 6,
+    },
+    run: {
+      imageSrc: "./img/bot/GreenCornian/Walk.png",
+      framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/GreenCornian/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/GreenCornian/Death.png",
+      framesMax: 5,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/GreenCornian/Attack1.png",
+        framesMax: 6,
+        hitFrame: { [3]: true },
+        damge: 8,
+      },
+    ],
+    attack_effect: [
+      {
+        height: 10,
+        width: 10,
+        imageSrc: "./img/bot/GreenCornian/Attack Effect1.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 130, y: 130 },
+        scale: 1,
+        trigger_frame: 3,
+      },
+    ],
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -352,4 +408,5 @@ export let enemy_data = {
   flying_eye,
   jungle_wolf,
   white_wolf,
+  green_cornian,
 };

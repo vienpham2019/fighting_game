@@ -164,6 +164,24 @@ export class Enemy extends Character {
     }
   }
 
+  deteckAttackEffect(offset = { x1: 0, x2: 50 }) {
+    for (let a of this.sprites.attack) {
+      if (this.image === a.image) {
+        let [x1, x2, y1] = getCoordinate(this);
+        for (let i = 0; i < this.attack_effects.length; i++) {
+          this.attack_effects[i].flip = this.flip * -1;
+          let x = this.flip === 1 ? x2 + offset.x2 : x1 + offset.x1;
+          this.attack_effects[i].position = {
+            x,
+            y: y1 + 10,
+          };
+          if (this.frameCurrent === this.sprites.attack_effect[i].trigger_frame)
+            this.attack_effects[i].update();
+        }
+      }
+    }
+  }
+
   update() {
     if (this.stop_animation) {
       if (--this.stop_animation_delay <= 0) this.is_death = true;

@@ -43,14 +43,15 @@ export class WhiteWolf extends Enemy {
     this.canStuntWhenAttack = false;
     this.level = 3;
 
-    this.attack_effect1 = new Sprite({
-      position: { x: position.x, y: position.y + 10 },
-      ...sprites.attack_effect[0],
-    });
-    this.attack_effect2 = new Sprite({
-      position: { x: position.x, y: position.y + 10 },
-      ...sprites.attack_effect[1],
-    });
+    this.attack_effects = [];
+    for (let a of sprites.attack_effect) {
+      this.attack_effects.push(
+        new Sprite({
+          position: { x: position.x, y: position.y + 10 },
+          ...a,
+        })
+      );
+    }
   }
 
   drawHitBox() {
@@ -67,26 +68,6 @@ export class WhiteWolf extends Enemy {
     // this.updateSprite(this.sprites.run);
     c.fillStyle = "green";
     c.fillRect(b_x1, y1, this.attack_box.width, this.height);
-  }
-
-  deteckAttackEffect() {
-    if (this.image === this.sprites.attack[0].image) {
-      let [x1, x2, y1] = getCoordinate(this);
-      this.attack_effect1.flip = this.flip * -1;
-      let x = this.flip === 1 ? x2 + 50 : x1;
-      this.attack_effect1.position = {
-        x,
-        y: y1 + 10,
-      };
-      this.attack_effect2.position = {
-        x,
-        y: y1 + 10,
-      };
-      if (this.frameCurrent === this.sprites.attack_effect[0].trigger_frame)
-        this.attack_effect1.update();
-      if (this.frameCurrent === this.sprites.attack_effect[1].trigger_frame)
-        this.attack_effect2.update();
-    }
   }
 
   update() {

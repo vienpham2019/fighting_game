@@ -12,6 +12,7 @@ import { WhiteWolf } from "./enemy/WhiteWolf.js";
 
 import { player_data } from "./player_data.js";
 import { enemy_data } from "./enemy_data.js";
+import { GreenCornian } from "./enemy/GreenCornian.js";
 
 export function getCoordinate(p) {
   return [
@@ -87,15 +88,20 @@ export function createEnemy({ platform, enemy_name }) {
       return new WhiteWolf({
         ...obj_val,
       });
+    case "green_cornian":
+      return new GreenCornian({
+        ...obj_val,
+      });
   }
 }
 
 export function createEnemyByPlatform(platforms) {
   let result = [];
-  let enemyOptionLV1 = ["worm", "skeleton", "mushroom", "goblin", "flying_eye"];
-  let enemyOptionLV2 = ["jungle_wolf", "white_wolf"];
+  let enemyOptionLV1 = ["skeleton", "mushroom", "goblin", "flying_eye"];
+  let enemyOptionLV2 = ["worm"];
+  let enemyOptionLV3 = ["jungle_wolf", "white_wolf", "green_cornian"];
 
-  let enemyOption = enemyOptionLV2;
+  let enemyOption = enemyOptionLV3;
   platforms.forEach((p) => {
     if (p.width >= 200) {
       let number_of_enemy = Math.min(

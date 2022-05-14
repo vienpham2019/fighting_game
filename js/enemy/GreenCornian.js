@@ -4,7 +4,7 @@ import { getCoordinate } from "../helper.js";
 import { Enemy } from "./Enemy.js";
 import { Sprite } from "../Sprite.js";
 
-export class JungleWolf extends Enemy {
+export class GreenCornian extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -18,7 +18,7 @@ export class JungleWolf extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.1, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
@@ -36,10 +36,10 @@ export class JungleWolf extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 300,
+      health: 200,
     });
-    this.attack_cool_down = 10;
-    this.maxHealth = 300;
+    this.attack_cool_down = 8;
+    this.maxHealth = 200;
     this.canStuntWhenAttack = false;
     this.level = 3;
 
@@ -64,14 +64,13 @@ export class JungleWolf extends Enemy {
     c.rect(x, y, this.width, this.height);
     c.stroke();
 
-    this.updateSprite(this.sprites.attack[0]);
-    // this.updateSprite(this.sprites.death);
+    // this.updateSprite(this.sprites.attack[0]);
+    this.updateSprite(this.sprites.death);
     c.fillStyle = "green";
     c.fillRect(b_x1, y1, this.attack_box.width, this.height);
   }
 
   update() {
-    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
     this.deteckAttackEffect();
