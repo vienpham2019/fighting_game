@@ -40,6 +40,8 @@ export class WhiteWolf extends Enemy {
     });
     this.attack_cool_down = 8;
     this.maxHealth = 250;
+    this.canStuntWhenAttack = false;
+    this.level = 3;
 
     this.attack_effect1 = new Sprite({
       position: { x: position.x, y: position.y + 10 },

@@ -316,7 +316,7 @@ const white_wolf = {
         imageSrc: "./img/bot/WhiteWolf/Attack.png",
         framesMax: 12,
         hitFrame: { [5]: true, [9]: true },
-        damge: 10,
+        damge: 8,
       },
     ],
     attack_effect: [

@@ -39,6 +39,7 @@ export class FlyingEye extends Enemy {
     });
     this.attack_cool_down = 10;
     this.maxHealth = 70;
+    this.level = 1;
   }
 
   drawHitBox() {

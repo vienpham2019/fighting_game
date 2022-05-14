@@ -39,6 +39,7 @@ export class Goblin extends Enemy {
     });
     this.attack_cool_down = 10;
     this.maxHealth = 100;
+    this.level = 1;
   }
 
   drawHitBox() {

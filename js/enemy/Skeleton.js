@@ -39,6 +39,7 @@ export class Skeleton extends Enemy {
     });
     this.attack_cool_down = 50;
     this.maxHealth = 150;
+    this.level = 1;
   }
 
   drawHitBox() {

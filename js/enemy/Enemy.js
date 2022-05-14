@@ -45,7 +45,10 @@ export class Enemy extends Character {
     this.is_death = false;
     this.stop_animation_delay = 20;
     this.attack_again = true;
-    this.enemy_get_hit = false;
+    this.enemy_get_hit = {};
+    for (let hf in sprites.attack[0].hitFrame) {
+      this.enemy_get_hit[hf] = false;
+    }
     this.in_attack_range = false;
   }
 
@@ -124,8 +127,11 @@ export class Enemy extends Character {
           if (this.sprites.attack[0].hitFrame[this.frameCurrent]) {
             this.start_attack = true;
 
-            if (this.enemy_get_hit === false && this.attackBoxCollition()) {
-              this.enemy_get_hit = true;
+            if (
+              this.enemy_get_hit[this.frameCurrent] === false &&
+              this.attackBoxCollition()
+            ) {
+              this.enemy_get_hit[this.frameCurrent] = true;
               if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
               this.enemy.get_hit = true;
               this.enemy.health -= this.sprites.attack[0].damge;
@@ -143,8 +149,10 @@ export class Enemy extends Character {
         this.updateSprite(this.sprites.idle);
         if (this.attack_cool_down-- <= 0) {
           this.attack_again = true;
-          this.enemy_get_hit = false;
           this.attack_cool_down = 50;
+          for (let hf in this.sprites.attack[0].hitFrame) {
+            this.enemy_get_hit[hf] = false;
+          }
         }
       }
     } else {

@@ -40,6 +40,9 @@ export class JungleWolf extends Enemy {
     });
     this.attack_cool_down = 10;
     this.maxHealth = 300;
+    this.canStuntWhenAttack = false;
+    this.level = 3;
+
     this.attack_effect = new Sprite({
       position: { x: position.x, y: position.y + 10 },
       ...sprites.attack_effect,

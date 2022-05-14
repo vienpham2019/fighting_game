@@ -61,7 +61,7 @@ export class Player extends Character {
       w: 0,
     };
     this.enemys;
-    this.health = 1000;
+    this.health = 10000;
   }
 
   // attack box colition
@@ -186,7 +186,12 @@ export class Player extends Character {
           e.health -= sprite.damge;
           if (e.health > 0) {
             this.damgeEffect(e, sprite.damge);
-            e.updateSprite(e.sprites.takeHit);
+            if (e.level < 3) {
+              e.updateSprite(e.sprites.takeHit);
+            } else {
+              if (e.in_attack_range === false)
+                e.updateSprite(e.sprites.takeHit);
+            }
           }
           if (e.health <= 0) e.updateSprite(e.sprites.death);
         }

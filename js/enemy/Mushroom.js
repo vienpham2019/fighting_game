@@ -39,6 +39,7 @@ export class Mushroom extends Enemy {
     });
     this.attack_cool_down = 20;
     this.maxHealth = 100;
+    this.level = 1;
   }
 
   drawHitBox() {

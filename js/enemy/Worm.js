@@ -52,6 +52,7 @@ export class Worm extends Enemy {
     this.enemy;
     this.color = "green";
     this.maxHealth = 100;
+    this.level = 1;
   }
 
   updateFireBallLocation() {
