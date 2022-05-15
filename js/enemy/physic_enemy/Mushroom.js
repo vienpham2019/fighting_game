@@ -1,9 +1,9 @@
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-import { Enemy } from "./Enemy.js";
+import { PhysicEnemy } from "./PhysicEnemy.js";
 
-export class FlyingEye extends Enemy {
+export class Mushroom extends PhysicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,11 +17,11 @@ export class FlyingEye extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.5, y: 0 },
+    moveSpeed = { x: 1.2, y: 0 },
     platform,
   }) {
     super({
-      position: { x: position.x, y: position.y - 50 },
+      position,
       velocity,
       width,
       height,
@@ -35,10 +35,12 @@ export class FlyingEye extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 70,
+      health: 100,
     });
-    this.attack_cool_down = 10;
-    this.maxHealth = 70;
+    this.attack_cool_down = 20;
+    this.attack_cool_down_max = 20;
+
+    this.maxHealth = 100;
     this.level = 1;
   }
 

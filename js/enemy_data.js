@@ -9,7 +9,7 @@ const worm = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 200,
-    height: 40,
+    height: 20,
     offset: { x: 0, y: 10 },
   },
   sprites: {
@@ -33,11 +33,11 @@ const worm = {
       {
         imageSrc: "./img/bot/Worm/Attack.png",
         framesMax: 16,
-        hitFrame: 11,
+        hitFrame: { [10]: true },
         damge: 12,
       },
     ],
-    fire_ball: {
+    magic_obj: {
       move: {
         height: 20,
         width: 20,
@@ -71,7 +71,7 @@ const skeleton = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 85,
-    height: 0,
+    height: 90,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -113,7 +113,7 @@ const mushroom = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 20,
-    height: 0,
+    height: 50,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -155,7 +155,7 @@ const goblin = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 33,
-    height: 0,
+    height: 60,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -197,7 +197,7 @@ const flying_eye = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: -33,
-    height: 0,
+    height: 25,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -239,7 +239,7 @@ const jungle_wolf = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 30,
-    height: 0,
+    height: 100,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -293,7 +293,7 @@ const white_wolf = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 30,
-    height: 0,
+    height: 90,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -357,7 +357,7 @@ const green_cornian = {
   attack_box: {
     position: { x: 0, y: 0 },
     width: 30,
-    height: 0,
+    height: 80,
     offset: { x: 0, y: 0 },
   },
   sprites: {
@@ -400,6 +400,122 @@ const green_cornian = {
   },
 };
 
+const dark_cornian = {
+  height: 90,
+  width: 80,
+  imageSrc: "./img/bot/DarkCornian/Idle.png",
+  scale: 1.3,
+  framesMax: 6,
+  framesHold: 10,
+  offset: { x: 90, y: 150 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 30,
+    height: 80,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/DarkCornian/Idle.png",
+      framesMax: 6,
+    },
+    run: {
+      imageSrc: "./img/bot/DarkCornian/Walk.png",
+      framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/DarkCornian/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/DarkCornian/Death.png",
+      framesMax: 5,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/DarkCornian/Attack.png",
+        framesMax: 13,
+        hitFrame: { [10]: true },
+        damge: 15,
+      },
+    ],
+    attack_effect: [
+      {
+        height: 10,
+        width: 10,
+        imageSrc: "./img/bot/DarkCornian/Attack Effect.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 130, y: 122 },
+        scale: 1,
+        trigger_frame: 10,
+      },
+    ],
+  },
+};
+
+const dark_drake = {
+  height: 60,
+  width: 80,
+  imageSrc: "./img/bot/DarkDrake/Idle.png",
+  scale: 1.3,
+  framesMax: 5,
+  framesHold: 7,
+  offset: { x: 90, y: 184 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 150,
+    height: 60,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/DarkDrake/Idle.png",
+      framesMax: 5,
+    },
+    run: {
+      imageSrc: "./img/bot/DarkDrake/Walk.png",
+      framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/DarkDrake/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/DarkDrake/Death.png",
+      framesMax: 6,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/DarkDrake/Attack.png",
+        framesMax: 13,
+        hitFrame: { [10]: true },
+        damge: 15,
+      },
+    ],
+    magic_obj: {
+      move: {
+        height: 20,
+        width: 20,
+        imageSrc: "./img/bot/DarkDrake/ElectricBall.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 130, y: 190 },
+        scale: 1.3,
+      },
+      explosion: {
+        height: 20,
+        width: 20,
+        imageSrc: "./img/bot/DarkDrake/Attack Effect.png",
+        framesMax: 7,
+        framesHold: 4,
+        offset: { x: 130, y: 190 },
+        scale: 1.3,
+      },
+    },
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -409,4 +525,6 @@ export let enemy_data = {
   jungle_wolf,
   white_wolf,
   green_cornian,
+  dark_cornian,
+  dark_drake,
 };

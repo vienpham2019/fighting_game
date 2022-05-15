@@ -95,10 +95,10 @@ let enemys = createEnemyByPlatform(platforms);
 player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));
 
-// let enemy = createEnemy({
-//   platform: platforms[2],
-//   enemy_name: "green_cornian",
-// });
+let enemy = createEnemy({
+  platform: platforms[3],
+  enemy_name: "dark_drake",
+});
 
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
@@ -150,7 +150,14 @@ function animate() {
     tree3BG.position.x += player.gameVelocity.x * -0.3;
     tree2BG.position.x += player.gameVelocity.x * -0.5;
     tree1BG.position.x += player.gameVelocity.x * -0.7;
-    enemys.forEach((e) => (e.position.x += player.gameVelocity.x * -1));
+    enemys.forEach((e) => {
+      e.position.x += player.gameVelocity.x * -1;
+
+      if (e.enemy_type === "magic") {
+        e.magic_obj.move.position.x += player.gameVelocity.x * -1;
+        e.magic_obj.explosion.position.x += player.gameVelocity.x * -1;
+      }
+    });
   }
 }
 

@@ -1,10 +1,9 @@
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-import { Enemy } from "./Enemy.js";
-import { Sprite } from "../Sprite.js";
+import { PhysicEnemy } from "./PhysicEnemy.js";
 
-export class WhiteWolf extends Enemy {
+export class FlyingEye extends PhysicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -18,11 +17,11 @@ export class WhiteWolf extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.3, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
-      position,
+      position: { x: position.x, y: position.y - 50 },
       velocity,
       width,
       height,
@@ -36,22 +35,13 @@ export class WhiteWolf extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 250,
+      health: 70,
     });
-    this.attack_cool_down = 8;
-    this.maxHealth = 250;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
+    this.attack_cool_down = 10;
+    this.attack_cool_down_max = 10;
 
-    this.attack_effects = [];
-    for (let a of sprites.attack_effect) {
-      this.attack_effects.push(
-        new Sprite({
-          position: { x: position.x, y: position.y + 10 },
-          ...a,
-        })
-      );
-    }
+    this.maxHealth = 70;
+    this.level = 1;
   }
 
   drawHitBox() {
@@ -65,15 +55,14 @@ export class WhiteWolf extends Enemy {
     c.stroke();
 
     this.updateSprite(this.sprites.attack[0]);
-    // this.updateSprite(this.sprites.run);
     c.fillStyle = "green";
     c.fillRect(b_x1, y1, this.attack_box.width, this.height);
   }
 
   update() {
+    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
-    this.deteckAttackEffect();
     super.update();
   }
 }

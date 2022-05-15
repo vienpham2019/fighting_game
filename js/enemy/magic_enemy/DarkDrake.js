@@ -1,10 +1,10 @@
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-import { Enemy } from "./Enemy.js";
-import { Sprite } from "../Sprite.js";
+import { MagicEnemy } from "./MagicEnemy.js";
+import { Sprite } from "../../Sprite.js";
 
-export class JungleWolf extends Enemy {
+export class DarkDrake extends MagicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -18,7 +18,7 @@ export class JungleWolf extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.1, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
@@ -36,22 +36,26 @@ export class JungleWolf extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 300,
+      health: 200,
     });
-    this.attack_cool_down = 10;
-    this.maxHealth = 300;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
 
-    this.attack_effects = [];
-    for (let a of sprites.attack_effect) {
-      this.attack_effects.push(
-        new Sprite({
-          position: { x: position.x, y: position.y + 10 },
-          ...a,
-        })
-      );
-    }
+    this.magic_obj = {
+      move: new Sprite({
+        position: { x: position.x, y: position.y },
+        ...sprites.magic_obj.move,
+      }),
+      explosion: new Sprite({
+        position: { x: position.x, y: position.y },
+        ...sprites.magic_obj.explosion,
+      }),
+    };
+
+    this.magicObjSpeed = { x: 15, y: 0 };
+
+    this.attack_cool_down = 7;
+    this.maxHealth = 200;
+    this.canStuntWhenAttack = false;
+    this.level = 2;
   }
 
   drawHitBox() {
@@ -64,17 +68,15 @@ export class JungleWolf extends Enemy {
     c.rect(x, y, this.width, this.height);
     c.stroke();
 
-    this.updateSprite(this.sprites.attack[0]);
+    // this.updateSprite(this.sprites.attack[0]);
     // this.updateSprite(this.sprites.death);
     c.fillStyle = "green";
-    c.fillRect(b_x1, y1, this.attack_box.width, this.height);
+    c.fillRect(b_x1, y1, this.attack_box.width, this.attack_box.height);
   }
 
   update() {
-    // this.drawHitBox();
     this.drawHealthBar();
     this.detect_attack();
-    this.deteckAttackEffect();
     super.update();
   }
 }

@@ -1,10 +1,10 @@
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-import { Enemy } from "./Enemy.js";
-import { Sprite } from "../Sprite.js";
+import { PhysicEnemy } from "./PhysicEnemy.js";
+import { Sprite } from "../../Sprite.js";
 
-export class GreenCornian extends Enemy {
+export class GreenCornian extends PhysicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -38,7 +38,9 @@ export class GreenCornian extends Enemy {
       platform,
       health: 200,
     });
-    this.attack_cool_down = 8;
+    this.attack_cool_down = 50;
+    this.attack_cool_down_max = 50;
+
     this.maxHealth = 200;
     this.canStuntWhenAttack = false;
     this.level = 3;

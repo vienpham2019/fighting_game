@@ -72,8 +72,12 @@ export class Character extends Sprite {
   damgeEffect(target, text) {
     let metrics = c.measureText(text);
     this.damges.push({
+      target,
+      width: metrics.width,
       x: target.position.x + target.width / 2 - metrics.width / 2,
       y: target.position.y - 6,
+      width: Math.floor(metrics.width),
+      height: Math.floor(metrics.height),
       text,
       alpha: 1,
       time: 30,
@@ -113,8 +117,20 @@ export class Character extends Sprite {
 
     // this.hitboxdraw();
     this.damges.forEach((d, i) => {
-      c.font = "bold 18px Arial";
-      c.fillStyle = "rgba(161, 0, 0, " + d.alpha + ")";
+      (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
+        (c.font = "bold 20px Arial");
+      c.strokeStyle = "white";
+      c.lineWidth = 5;
+      c.strokeText(d.text, d.x, d.y);
+      let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 10);
+
+      // Add three color stops
+      gradient.addColorStop(0, "rgba(255, 0, 0 , " + d.alpha + ")");
+      gradient.addColorStop(0.5, "rgba(0, 0, 0 , " + d.alpha + ")");
+      gradient.addColorStop(1, "rgba(255, 0, 0 , " + d.alpha + ")");
+
+      c.fillStyle = gradient;
+      // c.fillStyle = "rgba(161, 0, 0, " + d.alpha + ")";
       c.fillText(d.text, d.x, d.y--);
       d.time--;
       d.alpha -= 0.03;

@@ -1,9 +1,10 @@
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-import { Enemy } from "./Enemy.js";
+import { PhysicEnemy } from "./PhysicEnemy.js";
+import { Sprite } from "../../Sprite.js";
 
-export class Skeleton extends Enemy {
+export class DarkCornian extends PhysicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,7 +18,7 @@ export class Skeleton extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 0.7, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
@@ -35,11 +36,23 @@ export class Skeleton extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 150,
+      health: 300,
     });
-    this.attack_cool_down = 50;
-    this.maxHealth = 150;
-    this.level = 1;
+    this.attack_cool_down = 70;
+    this.attack_cool_down_max = 70;
+    this.maxHealth = 300;
+    this.canStuntWhenAttack = false;
+    this.level = 3;
+
+    this.attack_effects = [];
+    for (let a of sprites.attack_effect) {
+      this.attack_effects.push(
+        new Sprite({
+          position: { x: position.x, y: position.y + 10 },
+          ...a,
+        })
+      );
+    }
   }
 
   drawHitBox() {
@@ -53,6 +66,7 @@ export class Skeleton extends Enemy {
     c.stroke();
 
     this.updateSprite(this.sprites.attack[0]);
+    // this.updateSprite(this.sprites.takeHit);
     c.fillStyle = "green";
     c.fillRect(b_x1, y1, this.attack_box.width, this.height);
   }
@@ -60,6 +74,7 @@ export class Skeleton extends Enemy {
   update() {
     this.drawHealthBar();
     this.detect_attack();
+    this.deteckAttackEffect();
     super.update();
   }
 }

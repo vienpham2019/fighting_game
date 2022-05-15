@@ -2,17 +2,23 @@ import { canvas } from "./main.js";
 
 import { Platform } from "./Platform.js";
 import { Player } from "./Player.js";
-import { Worm } from "./enemy/Worm.js";
-import { Skeleton } from "./enemy/Skeleton.js";
-import { Mushroom } from "./enemy/Mushroom.js";
-import { Goblin } from "./enemy/Goblin.js";
-import { FlyingEye } from "./enemy/FlyingEye.js";
-import { JungleWolf } from "./enemy/JungleWolf.js";
-import { WhiteWolf } from "./enemy/WhiteWolf.js";
+
+// Physic Enemy
+import { Skeleton } from "./enemy/physic_enemy/Skeleton.js";
+import { Mushroom } from "./enemy/physic_enemy/Mushroom.js";
+import { Goblin } from "./enemy/physic_enemy/Goblin.js";
+import { FlyingEye } from "./enemy/physic_enemy/FlyingEye.js";
+import { JungleWolf } from "./enemy/physic_enemy/JungleWolf.js";
+import { WhiteWolf } from "./enemy/physic_enemy/WhiteWolf.js";
+import { GreenCornian } from "./enemy/physic_enemy/GreenCornian.js";
+import { DarkCornian } from "./enemy/physic_enemy/DarkCornian.js";
+
+// magic Enemy
+import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
+import { Worm } from "./enemy/magic_enemy/Worm.js";
 
 import { player_data } from "./player_data.js";
 import { enemy_data } from "./enemy_data.js";
-import { GreenCornian } from "./enemy/GreenCornian.js";
 
 export function getCoordinate(p) {
   return [
@@ -92,14 +98,29 @@ export function createEnemy({ platform, enemy_name }) {
       return new GreenCornian({
         ...obj_val,
       });
+    case "dark_cornian":
+      return new DarkCornian({
+        ...obj_val,
+      });
+    case "dark_drake":
+      return new DarkDrake({
+        ...obj_val,
+      });
   }
 }
 
 export function createEnemyByPlatform(platforms) {
   let result = [];
   let enemyOptionLV1 = ["skeleton", "mushroom", "goblin", "flying_eye"];
-  let enemyOptionLV2 = ["worm"];
-  let enemyOptionLV3 = ["jungle_wolf", "white_wolf", "green_cornian"];
+  let enemyOptionLV2 = ["worm", "dark_drake"];
+  let enemyOptionLV3 = [
+    // "jungle_wolf",
+    // "white_wolf",
+    // "green_cornian",
+    // "dark_cornian",
+    "worm",
+    "dark_drake",
+  ];
 
   let enemyOption = enemyOptionLV3;
   platforms.forEach((p) => {

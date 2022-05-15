@@ -1,9 +1,9 @@
-import { Enemy } from "./Enemy.js";
-import { Sprite } from "../Sprite.js";
-import { c } from "../main.js";
-import { getCoordinate } from "../helper.js";
+import { c } from "../../main.js";
+import { getCoordinate } from "../../helper.js";
 
-export class Worm extends Enemy {
+import { Enemy } from "../Enemy.js";
+
+export class MagicEnemy extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -17,8 +17,9 @@ export class Worm extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
+    health,
   }) {
     super({
       position,
@@ -35,38 +36,24 @@ export class Worm extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 100,
+      health,
     });
-    this.fire_ball = {
-      move: new Sprite({
-        position: { x: position.x, y: position.y + 10 },
-        ...sprites.fire_ball.move,
-      }),
-      explosion: new Sprite({
-        position: { x: position.x, y: position.y + 10 },
-        ...sprites.fire_ball.explosion,
-      }),
-    };
-    this.fireBallSpeed = 8;
+    this.enemy_type = "magic";
     this.enemy_get_hit = false;
-    this.enemy;
-    this.color = "green";
-    this.maxHealth = 100;
-    this.level = 1;
   }
 
-  updateFireBallLocation() {
-    this.fire_ball.move.position.x = this.position.x;
-    this.fire_ball.move.flip = this.flip;
+  updateMagicObjLocation() {
+    this.magic_obj.move.position.x = this.position.x;
+    this.magic_obj.move.flip = this.flip;
     if (this.flip === 1) {
-      this.fire_ball.move.position.x += this.width;
-      this.fire_ball.explosion.position.x += this.width;
+      this.magic_obj.move.position.x += this.width;
+      this.magic_obj.explosion.position.x += this.width;
     }
-    this.fire_ball.explosion.frameCurrent = 0;
+    this.magic_obj.explosion.frameCurrent = 0;
   }
 
   hitCollition() {
-    let [x1, x2, y1, y2] = getCoordinate(this.fire_ball.move);
+    let [x1, x2, y1, y2] = getCoordinate(this.magic_obj.move);
     let [e_x1, e_x2, e_y1, e_y2] = getCoordinate(this.enemy);
     let check_x =
       (e_x1 <= x1 && e_x2 >= x2) ||
@@ -76,28 +63,28 @@ export class Worm extends Enemy {
     return check_x && y2 >= e_y1 && y1 <= e_y2;
   }
 
-  fireballMove() {
+  magicObjMove() {
     if (this.start_attack) {
       if (
         !this.hitCollition() &&
         ((this.flip === -1 &&
-          this.fire_ball.move.position.x >
+          this.magic_obj.move.position.x >
             this.position.x - this.attack_box.width) ||
           (this.flip === 1 &&
-            this.fire_ball.move.position.x <
+            this.magic_obj.move.position.x <
               this.position.x + this.width + this.attack_box.width))
       ) {
-        this.fire_ball.move.position.x += this.fireBallSpeed * this.flip;
-        this.fire_ball.move.update();
+        this.magic_obj.move.position.x += this.magicObjSpeed.x * this.flip;
+        this.magic_obj.move.update();
       } else {
         if (
-          this.fire_ball.explosion.frameCurrent <
-          this.fire_ball.explosion.framesMax - 1
+          this.magic_obj.explosion.frameCurrent <
+          this.magic_obj.explosion.framesMax - 1
         ) {
           if (
             this.enemy_get_hit === false &&
             this.hitCollition() &&
-            this.fire_ball.explosion.frameCurrent === 0
+            this.magic_obj.explosion.frameCurrent === 0
           ) {
             this.enemy_get_hit = true;
             if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
@@ -107,18 +94,19 @@ export class Worm extends Enemy {
             this.enemy.updateSprite(this.enemy.sprites.takeHit);
           }
           this.enemy.get_hit = false;
-          this.fire_ball.explosion.position.x = this.fire_ball.move.position.x;
+          this.magic_obj.explosion.position.x = this.magic_obj.move.position.x;
           this.flip === 1
-            ? this.fire_ball.move.position.x +
-              this.fire_ball.move.width +
+            ? this.magic_obj.move.position.x +
+              this.magic_obj.move.width +
               this.attack_box.width
-            : this.fire_ball.move.position.x - this.attack_box.width;
+            : this.magic_obj.move.position.x - this.attack_box.width;
 
-          this.fire_ball.explosion.flip = this.flip;
-          this.fire_ball.explosion.update();
+          this.magic_obj.explosion.flip = this.flip;
+          this.magic_obj.explosion.update();
         } else {
-          this.updateFireBallLocation();
+          this.updateMagicObjLocation();
           if (this.enemy_get_hit === true) this.enemy_get_hit = false;
+
           this.attack_again = true;
           this.start_attack = false;
           this.in_attack_range = false;
@@ -141,8 +129,8 @@ export class Worm extends Enemy {
       this.velocity.x = 0;
       if (this.attack_again) {
         if (this.image === this.sprites.attack[0].image) {
-          if (this.frameCurrent === this.sprites.attack[0].hitFrame) {
-            this.updateFireBallLocation();
+          if (this.sprites.attack[0].hitFrame[this.frameCurrent]) {
+            this.updateMagicObjLocation();
             this.start_attack = true;
           }
           this.attack_again = this.frameCurrent < this.framesMax - 1;
@@ -151,7 +139,7 @@ export class Worm extends Enemy {
       } else {
         this.updateSprite(this.sprites.idle);
       }
-      this.fireballMove();
+      this.magicObjMove();
     } else {
       this.updateSprite(this.sprites.run);
       this.attack_again = true;
@@ -161,17 +149,7 @@ export class Worm extends Enemy {
     }
   }
 
-  drawHitBox() {
-    let { x, y } = this.position;
-    c.beginPath();
-    c.strokeStyle = this.color;
-    c.rect(x, y, this.width, this.height);
-    c.stroke();
-  }
-
   update() {
-    this.detect_attack();
-    this.drawHealthBar();
     super.update();
   }
 }
