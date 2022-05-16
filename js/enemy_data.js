@@ -516,6 +516,68 @@ const dark_drake = {
   },
 };
 
+const ice_drake = {
+  height: 60,
+  width: 80,
+  imageSrc: "./img/bot/IceDrake/Idle.png",
+  scale: 1.4,
+  framesMax: 5,
+  framesHold: 7,
+  offset: { x: 100, y: 196 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 150,
+    height: 60,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/IceDrake/Idle.png",
+      framesMax: 5,
+    },
+    run: {
+      imageSrc: "./img/bot/IceDrake/Walk.png",
+      framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/IceDrake/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/IceDrake/Death.png",
+      framesMax: 6,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/IceDrake/Attack.png",
+        framesMax: 14,
+        hitFrame: { [11]: true },
+        damge: 18,
+      },
+    ],
+    magic_obj: {
+      move: {
+        height: 20,
+        width: 20,
+        imageSrc: "./img/bot/IceDrake/Ice.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 130, y: 190 },
+        scale: 1.3,
+      },
+      explosion: {
+        height: 20,
+        width: 20,
+        imageSrc: "./img/bot/iceDrake/Explosion.png",
+        framesMax: 5,
+        framesHold: 4,
+        offset: { x: 130, y: 190 },
+        scale: 1.3,
+      },
+    },
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -527,4 +589,5 @@ export let enemy_data = {
   green_cornian,
   dark_cornian,
   dark_drake,
+  ice_drake,
 };

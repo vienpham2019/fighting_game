@@ -46,6 +46,7 @@ export class Enemy extends Character {
     this.stop_animation_delay = 20;
     this.attack_again = true;
     this.in_attack_range = false;
+    this.character_type = "enemy";
   }
 
   drawHealthBar() {

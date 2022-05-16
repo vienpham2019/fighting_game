@@ -15,6 +15,7 @@ import { DarkCornian } from "./enemy/physic_enemy/DarkCornian.js";
 
 // magic Enemy
 import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
+import { IceDrake } from "./enemy/magic_enemy/IceDrake.js";
 import { Worm } from "./enemy/magic_enemy/Worm.js";
 
 import { player_data } from "./player_data.js";
@@ -106,6 +107,10 @@ export function createEnemy({ platform, enemy_name }) {
       return new DarkDrake({
         ...obj_val,
       });
+    case "ice_drake":
+      return new IceDrake({
+        ...obj_val,
+      });
   }
 }
 
@@ -120,6 +125,7 @@ export function createEnemyByPlatform(platforms) {
     // "dark_cornian",
     "worm",
     "dark_drake",
+    "ice_drake",
   ];
 
   let enemyOption = enemyOptionLV3;

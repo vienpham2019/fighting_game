@@ -104,12 +104,14 @@ export class MagicEnemy extends Enemy {
           this.magic_obj.explosion.flip = this.flip;
           this.magic_obj.explosion.update();
         } else {
-          this.updateMagicObjLocation();
-          if (this.enemy_get_hit === true) this.enemy_get_hit = false;
-
-          this.attack_again = true;
-          this.start_attack = false;
-          this.in_attack_range = false;
+          if (this.attack_cool_down-- === 0) {
+            this.updateMagicObjLocation();
+            if (this.enemy_get_hit === true) this.enemy_get_hit = false;
+            this.attack_cool_down = this.attack_cool_down_max;
+            this.attack_again = true;
+            this.start_attack = false;
+            this.in_attack_range = false;
+          }
         }
       }
     }

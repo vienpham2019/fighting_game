@@ -62,6 +62,7 @@ export class Player extends Character {
     };
     this.enemys;
     this.health = 10000;
+    this.character_type = "player";
   }
 
   // attack box colition

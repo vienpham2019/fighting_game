@@ -52,7 +52,8 @@ export class DarkDrake extends MagicEnemy {
 
     this.magicObjSpeed = { x: 15, y: 0 };
 
-    this.attack_cool_down = 7;
+    this.attack_cool_down = 50;
+    this.attack_cool_down_max = 50;
     this.maxHealth = 200;
     this.canStuntWhenAttack = false;
     this.level = 2;

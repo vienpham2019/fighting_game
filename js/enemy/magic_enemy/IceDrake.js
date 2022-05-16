@@ -4,7 +4,7 @@ import { getCoordinate } from "../../helper.js";
 import { MagicEnemy } from "./MagicEnemy.js";
 import { Sprite } from "../../Sprite.js";
 
-export class Worm extends MagicEnemy {
+export class IceDrake extends MagicEnemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },
@@ -18,7 +18,7 @@ export class Worm extends MagicEnemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
@@ -36,38 +36,48 @@ export class Worm extends MagicEnemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 100,
+      health: 200,
     });
+
     this.magic_obj = {
       move: new Sprite({
-        position: { x: position.x, y: position.y + 10 },
+        position: { x: position.x, y: position.y },
         ...sprites.magic_obj.move,
       }),
       explosion: new Sprite({
-        position: { x: position.x, y: position.y + 10 },
+        position: { x: position.x, y: position.y },
         ...sprites.magic_obj.explosion,
       }),
     };
-    this.magicObjSpeed = { x: 8, y: 0 };
 
-    this.attack_cool_down = 70;
-    this.attack_cool_down_max = 70;
-    this.color = "green";
-    this.maxHealth = 100;
-    this.level = 1;
+    this.magicObjSpeed = { x: 15, y: 0 };
+
+    this.attack_cool_down = 50;
+    this.attack_cool_down_max = 50;
+    this.maxHealth = 200;
+    this.canStuntWhenAttack = false;
+    this.level = 2;
   }
 
   drawHitBox() {
+    let [x1, x2, y1] = getCoordinate(this);
+    let b_x1 = this.flip === 1 ? x2 : x1 - this.attack_box.width;
+
     let { x, y } = this.position;
     c.beginPath();
     c.strokeStyle = this.color;
     c.rect(x, y, this.width, this.height);
     c.stroke();
+
+    this.updateSprite(this.sprites.attack[0]);
+    // this.updateSprite(this.sprites.run);
+    c.fillStyle = "green";
+    c.fillRect(b_x1, y1, this.attack_box.width, this.attack_box.height);
   }
 
   update() {
-    this.detect_attack();
     this.drawHealthBar();
+    this.detect_attack();
     super.update();
   }
 }

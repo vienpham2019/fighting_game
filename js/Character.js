@@ -119,7 +119,8 @@ export class Character extends Sprite {
     this.damges.forEach((d, i) => {
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
         (c.font = "bold 20px Arial");
-      c.strokeStyle = "white";
+      let color = d.target.character_type === "player" ? "yellow" : "white";
+      c.strokeStyle = color;
       c.lineWidth = 5;
       c.strokeText(d.text, d.x, d.y);
       let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 10);
@@ -130,7 +131,6 @@ export class Character extends Sprite {
       gradient.addColorStop(1, "rgba(255, 0, 0 , " + d.alpha + ")");
 
       c.fillStyle = gradient;
-      // c.fillStyle = "rgba(161, 0, 0, " + d.alpha + ")";
       c.fillText(d.text, d.x, d.y--);
       d.time--;
       d.alpha -= 0.03;

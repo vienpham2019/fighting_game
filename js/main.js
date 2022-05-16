@@ -96,8 +96,8 @@ player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));
 
 let enemy = createEnemy({
-  platform: platforms[3],
-  enemy_name: "dark_drake",
+  platform: platforms[2],
+  enemy_name: "ice_drake",
 });
 
 let d = -100;
