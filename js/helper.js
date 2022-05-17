@@ -18,8 +18,13 @@ import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
 import { IceDrake } from "./enemy/magic_enemy/IceDrake.js";
 import { Worm } from "./enemy/magic_enemy/Worm.js";
 
+// Boss
+import { InnerRage } from "./enemy/boss/InnerRage.js";
+
+//data
 import { player_data } from "./player_data.js";
 import { enemy_data } from "./enemy_data.js";
+import { boss_data } from "./boss_data.js";
 
 export function getCoordinate(p) {
   return [
@@ -32,6 +37,29 @@ export function getCoordinate(p) {
 
 export function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+export function RectCircleColliding(circle, rect) {
+  // temporary variables to set edges for testing
+  let testX = circle.x;
+  let testY = circle.y;
+
+  // which edge is closest?
+  if (circle.x < rect.x) testX = rect.x; // test left edge
+  else if (circle.x > rect.x + rect.w) testX = rect.x + rect.w; // right edge
+  if (circle.y < rect.y) testY = rect.y; // top edge
+  else if (circle.y > rect.y + rect.h) testY = rect.y + rect.h; // bottom edge
+
+  // get distance from closest edges
+  let distX = circle.x - testX;
+  let distY = circle.y - testY;
+  let distance = Math.sqrt(distX * distX + distY * distY);
+
+  // if the distance is less than the radius, collision!
+  if (distance <= circle.r) {
+    return true;
+  }
+  return false;
 }
 
 export function createPlayer({
@@ -50,8 +78,9 @@ export function createPlayer({
   });
 }
 
-export function createEnemy({ platform, enemy_name }) {
-  let enemy = enemy_data[enemy_name];
+export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
+  let enemy =
+    enemy_type === "bot" ? enemy_data[enemy_name] : boss_data[enemy_name];
   let position = {
     x: getRandomArbitrary(
       platform.position.x + 10,
@@ -109,6 +138,12 @@ export function createEnemy({ platform, enemy_name }) {
       });
     case "ice_drake":
       return new IceDrake({
+        ...obj_val,
+      });
+
+    // Boss
+    case "inner_rage":
+      return new InnerRage({
         ...obj_val,
       });
   }

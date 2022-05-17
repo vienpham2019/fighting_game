@@ -93,12 +93,21 @@ export class Enemy extends Character {
     }
   }
 
-  attackBoxCollition() {
-    let [x1, x2, y1, y2] = getCoordinate(this);
-    let b_x1 = this.flip === 1 ? x2 : x1 - this.attack_box.width;
-    let b_x2 = this.flip === 1 ? x2 + this.attack_box.width : x1;
-    let b_y1 = y1;
-    let b_y2 = y1 + this.attack_box.height;
+  attackBoxCollition(attack_box = this.attack_box, fix_attack_box = false) {
+    let [x1, x2, y1] = getCoordinate(this);
+    let b_x1, b_x2, b_y1, b_y2;
+    if (fix_attack_box) {
+      b_x1 = attack_box.x;
+      b_x2 = attack_box.x + attack_box.w;
+      b_y1 = attack_box.y;
+      b_y2 = attack_box.y + attack_box.h;
+    } else {
+      b_x1 = this.flip === 1 ? x2 : x1 - attack_box.width;
+      b_x2 = this.flip === 1 ? x2 + attack_box.width : x1;
+      b_y1 = y1;
+      b_y2 = y1 + attack_box.height;
+    }
+
     let [e_x1, e_x2, e_y1, e_y2] = getCoordinate(this.enemy);
     let check_x =
       (e_x1 <= b_x1 && e_x2 >= b_x2) ||
