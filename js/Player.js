@@ -182,19 +182,7 @@ export class Player extends Character {
           this.frameCurrent === sprite.hitFrame &&
           this.rectCollition(e)
         ) {
-          e.get_hit = true;
-
-          e.health -= sprite.damge;
-          if (e.health > 0) {
-            this.damgeEffect(e, sprite.damge);
-            if (e.level < 3) {
-              e.updateSprite(e.sprites.takeHit);
-            } else {
-              if (e.in_attack_range === false)
-                e.updateSprite(e.sprites.takeHit);
-            }
-          }
-          if (e.health <= 0) e.updateSprite(e.sprites.death);
+          e.handelTakeHit(sprite.damge);
         }
 
         if (this.frameCurrent === this.framesMax - 1) {

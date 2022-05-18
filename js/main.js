@@ -92,7 +92,7 @@ player.walls = walls;
 
 let enemys = createEnemyByPlatform(platforms);
 
-player.enemys = enemys;
+// player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));
 
 let enemy = createEnemy({
@@ -102,6 +102,7 @@ let enemy = createEnemy({
 });
 
 enemy.enemy = player;
+player.enemys = [enemy];
 
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
@@ -145,7 +146,9 @@ function animate() {
     player.platforms.forEach(
       (p) => (p.position.x += player.gameVelocity.x * -1)
     );
+
     player.walls.forEach((w) => (w.position.x += player.gameVelocity.x * -1));
+    // backgorund and floor
     floorImage.position.x += player.gameVelocity.x * -1;
     cloudBG.position.x += player.gameVelocity.x * -0.1;
     mountainBG.position.x += player.gameVelocity.x * -0.1;
@@ -153,6 +156,9 @@ function animate() {
     tree3BG.position.x += player.gameVelocity.x * -0.3;
     tree2BG.position.x += player.gameVelocity.x * -0.5;
     tree1BG.position.x += player.gameVelocity.x * -0.7;
+
+    // enemy
+    enemy.position.x += player.gameVelocity.x * -1;
     enemys.forEach((e) => {
       e.position.x += player.gameVelocity.x * -1;
 

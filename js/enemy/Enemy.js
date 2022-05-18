@@ -47,6 +47,22 @@ export class Enemy extends Character {
     this.attack_again = true;
     this.in_attack_range = false;
     this.character_type = "enemy";
+    this.canStuntWhenAttack = true;
+  }
+
+  handelTakeHit(damage) {
+    this.get_hit = true;
+
+    this.health -= damage;
+    if (this.health > 0) {
+      this.damgeEffect(this, damage);
+
+      if (this.canStuntWhenAttack || this.in_attack_range === false) {
+        this.updateSprite(this.sprites.takeHit);
+        this.flip = this.enemy.flip * -1;
+      }
+    }
+    if (this.health <= 0) e.updateSprite(this.sprites.death);
   }
 
   drawHealthBar() {
