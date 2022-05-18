@@ -259,6 +259,7 @@ export class InnerRage extends Enemy {
 
     if (this.attackBoxCollition(move_box, true) && !this.in_attack_range) {
       this.flip = this.position.x - this.enemy.position.x > 0 ? -1 : 1;
+      this.velocity.x = 0;
     }
 
     if (

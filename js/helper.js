@@ -20,6 +20,7 @@ import { Worm } from "./enemy/magic_enemy/Worm.js";
 
 // Boss
 import { InnerRage } from "./enemy/boss/InnerRage.js";
+import { Andras } from "./enemy/boss/Andras.js";
 
 //data
 import { player_data } from "./player_data.js";
@@ -144,6 +145,10 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
     // Boss
     case "inner_rage":
       return new InnerRage({
+        ...obj_val,
+      });
+    case "andras":
+      return new Andras({
         ...obj_val,
       });
   }

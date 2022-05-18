@@ -70,4 +70,62 @@ const inner_rage = {
   },
 };
 
-export let boss_data = { inner_rage };
+const andras = {
+  height: 110,
+  width: 110,
+  imageSrc: "./img/boss/Andras/Idle.png",
+  scale: 1.4,
+  framesMax: 4,
+  framesHold: 7,
+  offset: { x: 150, y: 154 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 30,
+    height: 100,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/boss/Andras/Idle.png",
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: "./img/boss/Andras/Run.png",
+      framesMax: 5,
+    },
+    takeHit: {
+      imageSrc: "./img/boss/Andras/Take Hit.png",
+      framesMax: 5,
+    },
+    death: {
+      imageSrc: "./img/boss/Andras/Death.png",
+      framesMax: 9,
+    },
+    attack: [
+      {
+        imageSrc: "./img/boss/Andras/Attack 1.png",
+        framesMax: 9,
+        hitFrame: { [6]: true },
+        damge: 25,
+      },
+      {
+        imageSrc: "./img/boss/Andras/Attack 2.png",
+        framesMax: 14,
+        hitFrame: { [10]: true },
+        damge: 40,
+      },
+    ],
+    attack_effect: {
+      height: 10,
+      width: 10,
+      imageSrc: "./img/boss/Andras/Attack Effect.png",
+      framesMax: 5,
+      framesHold: 4,
+      offset: { x: 110, y: 200 },
+      scale: 1,
+      trigger_frame: [6, 10],
+    },
+  },
+};
+
+export let boss_data = { inner_rage, andras };
