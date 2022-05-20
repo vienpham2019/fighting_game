@@ -18,7 +18,7 @@ export class Andras extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.3, y: 0 },
+    moveSpeed = { x: 1.5, y: 0 },
     platform,
   }) {
     super({
@@ -38,8 +38,6 @@ export class Andras extends Enemy {
       platform,
       health: 1000,
     });
-    this.attack_cool_down = 60;
-    this.attack_cool_down_max = 60;
 
     this.maxHealth = 1000;
     this.canStuntWhenAttack = false;

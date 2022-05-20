@@ -97,7 +97,7 @@ enemys.forEach((e) => (e.enemy = player));
 
 let enemy = createEnemy({
   platform: platforms[3],
-  enemy_name: "andras",
+  enemy_name: "sygnus",
   enemy_type: "boss",
 });
 

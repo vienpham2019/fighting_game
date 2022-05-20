@@ -130,7 +130,6 @@ export class Enemy extends Character {
       (b_x1 > e_x1 && b_x1 < e_x2) ||
       (b_x1 < e_x1 && b_x2 > e_x1);
 
-    // c.fillRect(b_x1, b_y1, b_x2 - b_x1, b_y2 - b_y1);
     return check_x && b_y2 >= e_y1 && b_y1 <= e_y2;
   }
 

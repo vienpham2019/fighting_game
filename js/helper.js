@@ -21,6 +21,7 @@ import { Worm } from "./enemy/magic_enemy/Worm.js";
 // Boss
 import { InnerRage } from "./enemy/boss/InnerRage.js";
 import { Andras } from "./enemy/boss/Andras.js";
+import { Sygnus } from "./enemy/boss/Sygnus.js";
 
 //data
 import { player_data } from "./player_data.js";
@@ -89,7 +90,8 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
     ),
     y: platform.position.y - enemy.height,
   };
-  let flip = Math.random() > 0.5 ? -1 : 1;
+  // let flip = Math.random() > 0.5 ? -1 : 1;
+  let flip = -1;
   let obj_val = {
     ...enemy,
     position,
@@ -149,6 +151,10 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
       });
     case "andras":
       return new Andras({
+        ...obj_val,
+      });
+    case "sygnus":
+      return new Sygnus({
         ...obj_val,
       });
   }
