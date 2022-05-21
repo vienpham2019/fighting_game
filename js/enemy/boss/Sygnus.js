@@ -98,6 +98,10 @@ export class Sygnus extends MagicEnemy {
           [-1]: { x: 0, y: 50 },
           [1]: { x: 0, y: 50 },
         },
+        {
+          [-1]: { x: 100, y: 210 },
+          [1]: { x: 70, y: 210 },
+        },
       ],
     };
   }
@@ -112,8 +116,8 @@ export class Sygnus extends MagicEnemy {
     c.rect(x, y, this.width, this.height);
     c.stroke();
 
-    this.offset = this.sprites_offset.attack[2][this.flip];
-    this.updateSprite(this.sprites.attack[2]);
+    this.offset = this.sprites_offset.attack[3][this.flip];
+    this.updateSprite(this.sprites.attack[3]);
     this.attack_effects[1].update();
     // this.updateSprite(this.sprites.run);
     c.fillStyle = "green";

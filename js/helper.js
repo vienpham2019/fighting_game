@@ -91,7 +91,7 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
     y: platform.position.y - enemy.height,
   };
   // let flip = Math.random() > 0.5 ? -1 : 1;
-  let flip = -1;
+  let flip = 1;
   let obj_val = {
     ...enemy,
     position,

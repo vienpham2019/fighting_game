@@ -175,6 +175,11 @@ const sygnus = {
         framesMax: 24,
         damge: 20,
       },
+      {
+        imageSrc: "./img/boss/Sygnus/Attack 4.png",
+        framesMax: 38,
+        damge: 30,
+      },
     ],
     attack_effect: [
       {
@@ -226,7 +231,7 @@ const sygnus = {
       move: {
         height: 20,
         width: 20,
-        imageSrc: "./img/bot/DarkDrake/ElectricBall.png",
+        imageSrc: "./img/boss/Sygnus/Dark power.png",
         framesMax: 8,
         framesHold: 4,
         offset: { x: 130, y: 190 },
@@ -235,7 +240,7 @@ const sygnus = {
       explosion: {
         height: 20,
         width: 20,
-        imageSrc: "./img/bot/DarkDrake/Attack 1 Hit.png",
+        imageSrc: "./img/boss/Sygnus/Attack 1 Hit.png",
         framesMax: 6,
         framesHold: 4,
         offset: { x: 130, y: 190 },
