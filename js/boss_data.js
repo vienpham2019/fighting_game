@@ -156,8 +156,8 @@ const sygnus = {
       framesMax: 5,
     },
     death: {
-      imageSrc: "./img/boss/Andras/Death.png",
-      framesMax: 9,
+      imageSrc: "./img/boss/Sygnus/Death.png",
+      framesMax: 29,
     },
     attack: [
       {
@@ -179,6 +179,10 @@ const sygnus = {
         imageSrc: "./img/boss/Sygnus/Attack 4.png",
         framesMax: 38,
         damge: 30,
+      },
+      {
+        imageSrc: "./img/boss/Sygnus/Attack 5.png",
+        framesMax: 24,
       },
     ],
     attack_effect: [
