@@ -94,6 +94,7 @@ export class Character extends Sprite {
 
     // override take hit
     if (
+      this.sprites.takeHit &&
       this.image === this.sprites.takeHit.image &&
       this.frameCurrent < this.sprites.takeHit.framesMax - 1
     )

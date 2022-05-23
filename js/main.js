@@ -97,7 +97,7 @@ enemys.forEach((e) => (e.enemy = player));
 
 let enemy = createEnemy({
   platform: platforms[3],
-  enemy_name: "sygnus",
+  enemy_name: "boomer",
   enemy_type: "boss",
 });
 
@@ -122,7 +122,7 @@ function animate() {
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
   player.update();
-  enemy.update();
+  // if (enemy.health > 0) enemy.update();
   // enemys.forEach((e) => !e.is_death && e.update());
 
   // platforms.forEach((p) => p.draw());
@@ -138,7 +138,11 @@ function animate() {
     player.floorColition(platforms[i]);
   }
 
+  // update each enemy
+  player.enemys.forEach((e) => e.update());
+
   player.gameCurrentX += player.gameVelocity.x;
+
   if (
     player.velocity.x === 0 &&
     floorImage.position.x + player.gameVelocity.x * -1 <= 0
@@ -158,8 +162,8 @@ function animate() {
     tree1BG.position.x += player.gameVelocity.x * -0.7;
 
     // enemy
-    enemy.position.x += player.gameVelocity.x * -1;
-    enemys.forEach((e) => {
+    // enemy.position.x += player.gameVelocity.x * -1;
+    player.enemys.forEach((e) => {
       e.position.x += player.gameVelocity.x * -1;
 
       if (e.enemy_type === "magic") {
@@ -168,6 +172,9 @@ function animate() {
       }
     });
   }
+  // Update player enemys
+  if (player.enemys.length > 0)
+    player.enemys = player.enemys.filter((e) => !e.is_death);
 }
 
 animate();

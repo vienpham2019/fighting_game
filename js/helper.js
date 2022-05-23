@@ -22,6 +22,7 @@ import { Worm } from "./enemy/magic_enemy/Worm.js";
 import { InnerRage } from "./enemy/boss/InnerRage.js";
 import { Andras } from "./enemy/boss/Andras.js";
 import { Sygnus } from "./enemy/boss/Sygnus.js";
+import { Boomer } from "./enemy/boss/Boomer.js";
 
 //data
 import { player_data } from "./player_data.js";
@@ -155,6 +156,10 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
       });
     case "sygnus":
       return new Sygnus({
+        ...obj_val,
+      });
+    case "boomer":
+      return new Boomer({
         ...obj_val,
       });
   }

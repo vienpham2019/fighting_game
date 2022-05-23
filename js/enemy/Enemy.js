@@ -135,6 +135,7 @@ export class Enemy extends Character {
 
   update() {
     if (this.stop_animation) {
+      this.velocity.x = 0;
       if (--this.stop_animation_delay <= 0) this.is_death = true;
     }
     super.update();

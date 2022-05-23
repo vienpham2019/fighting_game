@@ -254,4 +254,31 @@ const sygnus = {
   },
 };
 
-export let boss_data = { inner_rage, andras, sygnus };
+const boomer = {
+  height: 70,
+  width: 60,
+  imageSrc: "./img/boss/Boomer/Run.png",
+  scale: 1,
+  framesMax: 4,
+  framesHold: 7,
+  offset: { x: 70, y: 65 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 10,
+    height: 70,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    run: {
+      imageSrc: "./img/boss/Boomer/Run.png",
+      framesMax: 4,
+    },
+
+    death: {
+      imageSrc: "./img/boss/Boomer/Death.png",
+      framesMax: 8,
+    },
+  },
+};
+
+export let boss_data = { inner_rage, andras, sygnus, boomer };
