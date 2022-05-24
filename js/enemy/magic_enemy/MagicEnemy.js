@@ -63,7 +63,32 @@ export class MagicEnemy extends Enemy {
     return check_x && y2 >= e_y1 && y1 <= e_y2;
   }
 
-  magicObjMove() {
+  magicObjExplosion(attack_n = 0) {
+    if (
+      this.enemy_get_hit === false &&
+      this.hitCollition() &&
+      this.magic_obj.explosion.frameCurrent === 0
+    ) {
+      this.enemy_get_hit = true;
+      if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
+      this.enemy.get_hit = true;
+      this.enemy.health -= this.sprites.attack[attack_n].damge;
+      this.damgeEffect(this.enemy, this.sprites.attack[attack_n].damge);
+      this.enemy.updateSprite(this.enemy.sprites.takeHit);
+    }
+    this.enemy.get_hit = false;
+    this.magic_obj.explosion.position.x = this.magic_obj.move.position.x;
+    this.flip === 1
+      ? this.magic_obj.move.position.x +
+        this.magic_obj.move.width +
+        this.attack_box.width
+      : this.magic_obj.move.position.x - this.attack_box.width;
+
+    this.magic_obj.explosion.flip = this.flip;
+    this.magic_obj.explosion.update();
+  }
+
+  detectMagicObj(attack_n = 0) {
     if (this.start_attack) {
       if (
         !this.hitCollition() &&
@@ -81,28 +106,7 @@ export class MagicEnemy extends Enemy {
           this.magic_obj.explosion.frameCurrent <
           this.magic_obj.explosion.framesMax - 1
         ) {
-          if (
-            this.enemy_get_hit === false &&
-            this.hitCollition() &&
-            this.magic_obj.explosion.frameCurrent === 0
-          ) {
-            this.enemy_get_hit = true;
-            if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-            this.enemy.get_hit = true;
-            this.enemy.health -= this.sprites.attack[0].damge;
-            this.damgeEffect(this.enemy, this.sprites.attack[0].damge);
-            this.enemy.updateSprite(this.enemy.sprites.takeHit);
-          }
-          this.enemy.get_hit = false;
-          this.magic_obj.explosion.position.x = this.magic_obj.move.position.x;
-          this.flip === 1
-            ? this.magic_obj.move.position.x +
-              this.magic_obj.move.width +
-              this.attack_box.width
-            : this.magic_obj.move.position.x - this.attack_box.width;
-
-          this.magic_obj.explosion.flip = this.flip;
-          this.magic_obj.explosion.update();
+          this.magicObjExplosion();
         } else {
           if (this.attack_cool_down-- === 0) {
             this.updateMagicObjLocation();

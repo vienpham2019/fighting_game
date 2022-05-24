@@ -97,12 +97,14 @@ enemys.forEach((e) => (e.enemy = player));
 
 let enemy = createEnemy({
   platform: platforms[3],
-  enemy_name: "boomer",
+  enemy_name: "sygnus",
   enemy_type: "boss",
 });
 
+player.enemys = [];
+player.enemys.forEach((e) => (e.enemy = player));
+
 enemy.enemy = player;
-player.enemys = [enemy];
 
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
@@ -122,9 +124,8 @@ function animate() {
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
   player.update();
-  // if (enemy.health > 0) enemy.update();
-  // enemys.forEach((e) => !e.is_death && e.update());
 
+  enemy.update();
   // platforms.forEach((p) => p.draw());
   // walls.forEach((p) => p.draw());
 
@@ -162,7 +163,8 @@ function animate() {
     tree1BG.position.x += player.gameVelocity.x * -0.7;
 
     // enemy
-    // enemy.position.x += player.gameVelocity.x * -1;
+    enemy.position.x += player.gameVelocity.x * -1;
+    enemy.obj.forEach((e) => (e.af.position.x += player.gameVelocity.x * -1));
     player.enemys.forEach((e) => {
       e.position.x += player.gameVelocity.x * -1;
 
