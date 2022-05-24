@@ -116,15 +116,15 @@ export class Sygnus extends MagicEnemy {
       { cool_down: 100, max: 100 },
     ];
 
-    this.select_attacks = [false, false];
+    this.continue_attack = false;
 
     this.obj = [];
     this.attackEffect1 = [];
 
     this.switchAttack = false;
 
-    this.setAttackEffect1 = false;
-    this.currentAttackIndex = 2;
+    this.setAttackEffectAction = false;
+    this.currentAttackIndex = 0;
 
     // Attack 2
     this.magic_obj = {
@@ -139,18 +139,16 @@ export class Sygnus extends MagicEnemy {
     };
 
     this.magicObjSpeed = { x: 15, y: 0 };
+
+    // Attack 3
+    this.finish_attack_action = false;
   }
 
   selectAttack() {
     if (this.switchAttack === false) {
       this.switchAttack = true;
-      // this.currentAttackIndex = getRandomArbitrary(
-      //   0,
-      //   this.select_attacks.length
-      // );
-      this.currentAttackIndex = 2;
-      this.select_attacks = [false, false];
-      this.select_attacks[this.currentAttackIndex] = true;
+      this.currentAttackIndex = getRandomArbitrary(0, 3);
+      // this.currentAttackIndex = 2;
     }
   }
 
@@ -162,10 +160,15 @@ export class Sygnus extends MagicEnemy {
     this.enemy.updateSprite(this.enemy.sprites.takeHit);
   }
 
-  setAttackEffect({ attack_effect_n, amount, attack_box }) {
+  setAttackEffect({
+    attack_effect_n,
+    amount = [1, 1],
+    attack_box,
+    coolDown = [0, 0],
+  }) {
     // Set Attack Effect 1
-    if (this.setAttackEffect1 === false) {
-      this.setAttackEffect1 = true;
+    if (this.setAttackEffectAction === false) {
+      this.setAttackEffectAction = true;
       let n = getRandomArbitrary(...amount);
       let w_range = attack_box.w / n;
       for (let i = 0; i < n; i++) {
@@ -179,12 +182,14 @@ export class Sygnus extends MagicEnemy {
                   w_range -
                   this.sprites.attack_effect[attack_effect_n].width
               ),
-              y: this.position.y,
+              y:
+                this.platform.position.y -
+                this.sprites.attack_effect[attack_effect_n].height,
             },
             ...this.sprites.attack_effect[attack_effect_n],
           }),
           hitFrame: { ...this.sprites.attack_effect[attack_effect_n].hitFrame },
-          coolDown: getRandomArbitrary(0, 100),
+          coolDown: getRandomArbitrary(...coolDown),
         });
       }
       this.obj = [...this.attackEffect1.filter((a) => a.af)];
@@ -194,14 +199,23 @@ export class Sygnus extends MagicEnemy {
   triggerAttackEffect({ attack_effect_n }) {
     if (
       this.frameCurrent >=
-      this.sprites.attack_effect[attack_effect_n].trigger_frame
+        this.sprites.attack_effect[attack_effect_n].trigger_frame ||
+      this.continue_attack
     ) {
+      this.continue_attack = true;
       this.attackEffect1.forEach((a) => {
         if (a.coolDown <= 0) {
           if (
             a.af.frameCurrent <
             this.sprites.attack_effect[attack_effect_n].framesMax - 1
           ) {
+            // c.fillStyle = "green";
+            // c.fillRect(
+            //   a.af.position.x,
+            //   a.af.position.y,
+            //   a.af.width,
+            //   a.af.height
+            // );
             a.af.update();
             if (
               this.attackBoxCollition(
@@ -232,7 +246,12 @@ export class Sygnus extends MagicEnemy {
     this.updateSprite(this.sprites.attack[0]);
 
     //set attack effect
-    this.setAttackEffect({ attack_effect_n: 0, amount: [3, 6], attack_box });
+    this.setAttackEffect({
+      attack_effect_n: 0,
+      amount: [3, 6],
+      attack_box,
+      coolDown: [0, 100],
+    });
 
     // trigger attack effect
     this.triggerAttackEffect({ attack_effect_n: 0 });
@@ -242,8 +261,9 @@ export class Sygnus extends MagicEnemy {
       this.attack_again = false;
       this.enemy_get_hit = false;
       this.in_attack_range = false;
-      this.setAttackEffect1 = false;
+      this.setAttackEffectAction = false;
       this.switchAttack = false;
+      this.continue_attack = false;
       this.attackEffect1 = [];
       this.obj = [];
     }
@@ -276,9 +296,46 @@ export class Sygnus extends MagicEnemy {
   }
 
   handleAttack3(attack_box) {
-    this.offset = this.sprites_offset.attack[2][this.flip];
-    this.updateSprite(this.sprites.attack[2]);
-    let { hitFrame, damge, framesMax } = this.sprites.attack[2];
+    if (this.finish_attack_action === false) {
+      this.offset = this.sprites_offset.attack[2][this.flip];
+      this.updateSprite(this.sprites.attack[2]);
+    }
+
+    let { framesMax } = this.sprites.attack[2];
+
+    //set attack effect
+    this.setAttackEffect({
+      attack_effect_n: 1,
+      amount: [2, 2],
+      attack_box,
+    });
+
+    // trigger attack effect
+    this.triggerAttackEffect({ attack_effect_n: 1 });
+
+    //reset frame
+    if (this.frameCurrent === framesMax - 1) {
+      this.finish_attack_action = true;
+
+      this.offset = this.sprites_offset.idle[this.flip];
+      this.updateSprite(this.sprites.idle);
+    }
+
+    if (
+      this.attackEffect1.every(
+        (e) => e.af.frameCurrent === this.sprites.attack_effect[1].framesMax - 1
+      )
+    ) {
+      this.attack_again = false;
+      this.enemy_get_hit = false;
+      this.in_attack_range = false;
+      this.setAttackEffectAction = false;
+      this.switchAttack = false;
+      this.continue_attack = false;
+      this.attackEffect1 = [];
+      this.obj = [];
+      this.finish_attack_action = false;
+    }
   }
 
   detectAttack() {
@@ -296,9 +353,6 @@ export class Sygnus extends MagicEnemy {
       w: this.sprites.attack[this.currentAttackIndex].width,
       h: this.height,
     };
-
-    c.fillStyle = "green";
-    c.fillRect(attack_box.x, attack_box.y, attack_box.w, attack_box.h);
 
     if (
       (this.attackBoxCollition(attack_box, true) || this.in_attack_range) &&

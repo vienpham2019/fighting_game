@@ -204,7 +204,7 @@ const sygnus = {
         imageSrc: "./img/boss/Sygnus/Attack 1 Effect.png",
         framesMax: 39,
         framesHold: 4,
-        offset: { x: 15, y: 145 },
+        offset: { x: 15, y: 5 },
         scale: 0.5,
         hitFrame: {
           [26]: true,
@@ -223,12 +223,12 @@ const sygnus = {
         trigger_frame: 10,
       },
       {
-        height: 10,
-        width: 10,
+        height: 50,
+        width: 300,
         imageSrc: "./img/boss/Sygnus/Attack 3 Effect.png",
         framesMax: 27,
         framesHold: 10,
-        offset: { x: 300, y: 107 },
+        offset: { x: 60, y: 185 },
         scale: 0.7,
         hitFrame: {
           [20]: true,
