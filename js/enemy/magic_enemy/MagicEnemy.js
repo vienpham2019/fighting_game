@@ -42,6 +42,12 @@ export class MagicEnemy extends Enemy {
     this.enemy_get_hit = false;
   }
 
+  handleGameMove({ postition }) {
+    super.handleGameMove({ postition });
+    this.magic_obj.move.position.x += postition.x;
+    this.magic_obj.explosion.position.x += postition.x;
+  }
+
   updateMagicObjLocation() {
     this.magic_obj.move.position.x = this.position.x;
     this.magic_obj.move.flip = this.flip;

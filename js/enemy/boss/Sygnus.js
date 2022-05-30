@@ -1,5 +1,9 @@
 import { c } from "../../main.js";
-import { getCoordinate, getRandomArbitrary } from "../../helper.js";
+import {
+  getCoordinate,
+  getRandomArbitrary,
+  createEnemy,
+} from "../../helper.js";
 
 import { MagicEnemy } from "../magic_enemy/MagicEnemy.js";
 import { Sprite } from "../../Sprite.js";
@@ -106,6 +110,10 @@ export class Sygnus extends MagicEnemy {
           [-1]: { x: 85, y: 30 },
           [1]: { x: 55, y: 30 },
         },
+        {
+          [-1]: { x: 85, y: 30 },
+          [1]: { x: 55, y: 30 },
+        },
       ],
     };
 
@@ -113,6 +121,7 @@ export class Sygnus extends MagicEnemy {
       { cool_down: 200, max: 200 },
       { cool_down: 100, max: 100 },
       { cool_down: 200, max: 200 },
+      { cool_down: 100, max: 100 },
       { cool_down: 100, max: 100 },
     ];
 
@@ -142,13 +151,27 @@ export class Sygnus extends MagicEnemy {
 
     // Attack 3
     this.finish_attack_action = false;
+
+    // Attack 5
+    this.boomers = [
+      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
+      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
+      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
+    ];
+    this.attack_5_continue = false;
+  }
+
+  handleGameMove({ position }) {
+    this.position.x += position.x;
+    this.obj.forEach((e) => (e.af.position.x += position.x));
+    if (this.currentAttackIndex == 4)
+      this.boomers.forEach((e) => (e.position.x += position.x));
   }
 
   selectAttack() {
     if (this.switchAttack === false) {
       this.switchAttack = true;
-      this.currentAttackIndex = getRandomArbitrary(0, 3);
-      // this.currentAttackIndex = 2;
+      this.currentAttackIndex = getRandomArbitrary(0, 5);
     }
   }
 
@@ -209,13 +232,6 @@ export class Sygnus extends MagicEnemy {
             a.af.frameCurrent <
             this.sprites.attack_effect[attack_effect_n].framesMax - 1
           ) {
-            // c.fillStyle = "green";
-            // c.fillRect(
-            //   a.af.position.x,
-            //   a.af.position.y,
-            //   a.af.width,
-            //   a.af.height
-            // );
             a.af.update();
             if (
               this.attackBoxCollition(
@@ -239,6 +255,34 @@ export class Sygnus extends MagicEnemy {
     }
   }
 
+  resetFrame() {
+    this.attack_again = false;
+    this.enemy_get_hit = false;
+    this.in_attack_range = false;
+    this.setAttackEffectAction = false;
+    this.switchAttack = false;
+    this.continue_attack = false;
+    this.attackEffect1 = [];
+    this.obj = [];
+    this.finish_attack_action = false;
+    if (this.currentAttackIndex == 4) {
+      this.createBoomer(getRandomArbitrary(2, 6));
+    }
+  }
+
+  createBoomer(n) {
+    while (n > 0) {
+      this.boomers.push(
+        createEnemy({
+          platform: this.platform,
+          enemy_name: "boomer",
+          enemy_type: "boss",
+        })
+      );
+      n--;
+    }
+  }
+
   handleAttack1(attack_box) {
     let { framesMax } = this.sprites.attack[0];
 
@@ -258,14 +302,7 @@ export class Sygnus extends MagicEnemy {
 
     //reset frame
     if (this.frameCurrent === framesMax - 1) {
-      this.attack_again = false;
-      this.enemy_get_hit = false;
-      this.in_attack_range = false;
-      this.setAttackEffectAction = false;
-      this.switchAttack = false;
-      this.continue_attack = false;
-      this.attackEffect1 = [];
-      this.obj = [];
+      this.resetFrame();
     }
   }
 
@@ -306,8 +343,13 @@ export class Sygnus extends MagicEnemy {
     //set attack effect
     this.setAttackEffect({
       attack_effect_n: 1,
-      amount: [2, 2],
-      attack_box,
+      amount: [2, 3],
+      attack_box: {
+        x: this.platform.position.x,
+        y: this.platform.position.y,
+        w: this.platform.width,
+        h: attack_box.h,
+      },
     });
 
     // trigger attack effect
@@ -326,15 +368,79 @@ export class Sygnus extends MagicEnemy {
         (e) => e.af.frameCurrent === this.sprites.attack_effect[1].framesMax - 1
       )
     ) {
-      this.attack_again = false;
-      this.enemy_get_hit = false;
-      this.in_attack_range = false;
-      this.setAttackEffectAction = false;
-      this.switchAttack = false;
-      this.continue_attack = false;
-      this.attackEffect1 = [];
-      this.obj = [];
+      this.resetFrame();
+    }
+  }
+
+  handleAttack4(attack_box) {
+    if (this.finish_attack_action === false) {
+      this.offset = this.sprites_offset.attack[3][this.flip];
+      this.updateSprite(this.sprites.attack[3]);
+    }
+
+    let { framesMax } = this.sprites.attack[3];
+
+    // set attack effect
+    this.setAttackEffect({
+      attack_effect_n: 2,
+      amount: [4, 4],
+      coolDown: [0, 50],
+      attack_box: {
+        x: this.platform.position.x,
+        y: this.platform.position.y,
+        w: this.platform.width,
+        h: attack_box.h,
+      },
+    });
+
+    // trigger attack effect
+    this.triggerAttackEffect({ attack_effect_n: 2 });
+
+    //reset frame
+    if (this.frameCurrent === framesMax - 1) {
+      this.finish_attack_action = true;
+
+      this.offset = this.sprites_offset.idle[this.flip];
+      this.updateSprite(this.sprites.idle);
+    }
+
+    if (
+      this.attackEffect1.every(
+        (e) => e.af.frameCurrent === this.sprites.attack_effect[2].framesMax - 1
+      )
+    ) {
+      this.resetFrame();
+    }
+  }
+
+  handleAttack5() {
+    if (this.finish_attack_action === false) {
+      this.offset = this.sprites_offset.attack[4][this.flip];
+      this.updateSprite(this.sprites.attack[4]);
+    }
+    let { framesMax, trigger_frame } = this.sprites.attack[4];
+    if (
+      (this.image === this.sprites.attack[4].image &&
+        this.frameCurrent >= trigger_frame) ||
+      this.attack_5_continue
+    ) {
+      this.attack_5_continue = true;
+      this.boomers.forEach((b) => {
+        b.enemy = this.enemy;
+        if (!b.is_death) b.update();
+      });
+    }
+    //reset frame
+    if (this.frameCurrent === framesMax - 1) {
+      this.finish_attack_action = true;
+      this.offset = this.sprites_offset.idle[this.flip];
+      this.updateSprite(this.sprites.idle);
+    }
+
+    if (this.boomers.every((e) => e.is_death)) {
+      this.attack_5_continue = false;
       this.finish_attack_action = false;
+      this.resetFrame();
     }
   }
 
@@ -359,7 +465,6 @@ export class Sygnus extends MagicEnemy {
       this.enemy.health > 0
     ) {
       this.in_attack_range = true;
-      this.color = "red";
       this.velocity.x = 0;
       if (this.attack_again) {
         switch (this.currentAttackIndex) {
@@ -371,6 +476,12 @@ export class Sygnus extends MagicEnemy {
             break;
           case 2:
             this.handleAttack3(attack_box);
+            break;
+          case 3:
+            this.handleAttack4(attack_box);
+            break;
+          case 4:
+            this.handleAttack5();
             break;
         }
       } else {
@@ -389,7 +500,6 @@ export class Sygnus extends MagicEnemy {
       this.in_attack_range = false;
       this.attack_again = false;
       this.move();
-      this.color = "green";
     }
   }
 
@@ -412,9 +522,7 @@ export class Sygnus extends MagicEnemy {
   }
 
   update() {
-    // this.drawHealthBar();
     this.detectAttack();
-    this.drawHitBox();
     super.update();
   }
 }

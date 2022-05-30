@@ -165,7 +165,7 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
   }
 }
 
-export function createEnemyByPlatform(platforms) {
+export function createEnemyByPlatform(platforms, player) {
   let result = [];
   let enemyOptionLV1 = ["skeleton", "mushroom", "goblin", "flying_eye"];
   let enemyOptionLV2 = ["worm", "dark_drake"];

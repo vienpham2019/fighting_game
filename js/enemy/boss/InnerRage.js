@@ -103,6 +103,11 @@ export class InnerRage extends Enemy {
     }
   }
 
+  handleGameMove({ position }) {
+    this.position.x += position.x;
+    this.attack_effects.forEach((e) => (e.af.position.x += position.x));
+  }
+
   getAttackDimention(attack_n) {
     let [x1, x2, y1, y2] = getCoordinate(this);
     let dimentions = [

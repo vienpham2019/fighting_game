@@ -17,7 +17,7 @@ export class Boomer extends Enemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.5, y: 0 },
+    moveSpeed = { x: 1.3, y: 0 },
     platform,
   }) {
     super({

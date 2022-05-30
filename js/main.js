@@ -163,15 +163,9 @@ function animate() {
     tree1BG.position.x += player.gameVelocity.x * -0.7;
 
     // enemy
-    enemy.position.x += player.gameVelocity.x * -1;
-    enemy.obj.forEach((e) => (e.af.position.x += player.gameVelocity.x * -1));
+    enemy.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
     player.enemys.forEach((e) => {
-      e.position.x += player.gameVelocity.x * -1;
-
-      if (e.enemy_type === "magic") {
-        e.magic_obj.move.position.x += player.gameVelocity.x * -1;
-        e.magic_obj.explosion.position.x += player.gameVelocity.x * -1;
-      }
+      e.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
     });
   }
   // Update player enemys

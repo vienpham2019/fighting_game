@@ -58,6 +58,11 @@ export class Andras extends Enemy {
     });
   }
 
+  handleGameMove({ position }) {
+    this.position.x += position.x;
+    this.attack_effects.position.x += position.x;
+  }
+
   enemyGetHit(damage, knock_back) {
     let [x1, x2] = getCoordinate(this.enemy);
 
