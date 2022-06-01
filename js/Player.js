@@ -35,9 +35,8 @@ export class Player extends Character {
     });
     this.last_key = [];
     this.is_jump = false;
-    this.platforms = [];
+    this.platform;
     this.walls = [];
-    this.floor = canvas.height;
     this.keys = {
       a: {
         pressed: false,
@@ -55,8 +54,14 @@ export class Player extends Character {
     };
     this.speed = moveSpeed;
     this.gameCurrentX = position.x;
+    this.gameCurrentY = position.y;
     this.gameVelocity = { x: 0, y: 0 };
-    this.changeScreen = { x1: 300, x2: 500, y1: 0, y2: 0 };
+    this.changeScreen = {
+      x1: 300,
+      x2: 500,
+      y1: canvas.height - 300,
+      y2: canvas.height - 60,
+    };
     this.floorImage = {
       w: 0,
     };
@@ -91,8 +96,9 @@ export class Player extends Character {
   }
 
   //   check collition with floor of platform
-  floorColition(platform) {
+  floorColition(platform, camera) {
     if (!platform) return;
+    platform.color = "blue";
     let [x1, x2, _, y2] = getCoordinate(this);
 
     let [cp_x1, cp_x2, cp_y1] = getCoordinate(platform);
@@ -104,7 +110,12 @@ export class Player extends Character {
         (x1 > cp_x1 && x1 < cp_x2) ||
         (x1 < cp_x1 && x2 > cp_x1))
     ) {
-      this.floor = cp_y1;
+      if (this.platform != platform) {
+        this.platform = platform;
+        camera.offset.y = platform.position.y - camera.y;
+        camera.offset.diff = camera.offset.y / camera.offset.delay_frame;
+      }
+      platform.color = "red";
     }
   }
 
@@ -138,25 +149,42 @@ export class Player extends Character {
       if (!this.is_jump && !this.get_hit) {
         this.velocity.x = 0;
         this.gameVelocity.x = 0;
+        this.gameVelocity.y = 0;
         this.updateSprite(this.sprites["idle"]);
       }
     }
 
-    if (this.velocity.y < 0) {
-      this.updateSprite(this.sprites["jump"]);
-    } else if (this.velocity.y > 0) {
-      this.updateSprite(this.sprites["fall"]);
-    }
-
     let y_pos = this.position.y + this.height + this.velocity.y;
 
-    if (y_pos >= this.floor) {
+    if (
+      y_pos >= this.platform.position.y &&
+      this.position.x + this.width > this.platform.position.x &&
+      this.position.x < this.platform.position.x + this.platform.width
+    ) {
       this.velocity.y = 0;
       this.is_jump = false;
-      this.position.y = this.floor - this.height - this.velocity.y;
+      this.position.y =
+        this.platform.position.y - this.height - this.velocity.y;
     } else {
       this.is_jump = true;
       this.velocity.y += gravity;
+    }
+
+    if (this.velocity.y < 0) {
+      if (
+        this.position.y + this.height + this.velocity.y < 400 &&
+        this.position.y + this.height + this.velocity.y < canvas.height - 250
+      )
+        this.gameVelocity.y = this.velocity.y;
+      this.updateSprite(this.sprites["jump"]);
+    } else if (this.velocity.y > 0) {
+      // if (
+      //   this.position.y + this.height + this.velocity.y > 400 &&
+      //   this.position.y + this.height + this.velocity.y > canvas.height - 250
+      // ) {
+      //   this.gameVelocity.y = this.velocity.y;
+      // }
+      this.updateSprite(this.sprites["fall"]);
     }
   }
 

@@ -1,10 +1,11 @@
 import { c } from "./main.js";
 
 export class Platform {
-  constructor({ position, width, height }) {
+  constructor({ position, width, height, offset }) {
     this.position = position;
     this.width = width;
     this.height = height;
+    this.offset = offset;
     this.color = "blue";
   }
 

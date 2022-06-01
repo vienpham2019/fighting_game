@@ -199,12 +199,13 @@ export function createEnemyByPlatform(platforms, player) {
 export function createPlatform(arr) {
   let result = [];
   for (let e of arr) {
-    let { x, y, width, height } = e;
+    let { x, width, height, offset } = e;
     result.push(
       new Platform({
-        position: { x, y },
+        position: { x, y: canvas.height + offset.y },
         width,
         height,
+        offset,
       })
     );
   }

@@ -66,28 +66,49 @@ const shop = new Sprite({
 });
 
 const player = createPlayer({
-  position: { x: 500, y: 0 },
+  position: { x: 500, y: canvas.height - 200 },
   velocity: { x: 0, y: 0 },
   moveSpeed: { x: 4, y: 15 },
   player_name: "warior",
 });
 
 const platforms = createPlatform([
-  { x: 0, y: canvas.height - 192, width: 95, height: 2 },
-  { x: 95, y: canvas.height - 152, width: 44, height: 2 },
-  { x: 89, y: canvas.height - 110, width: 110, height: 2 },
-  { x: 198, y: canvas.height - 69, width: 633, height: 2 },
-  { x: 740, y: canvas.height - 132, width: 680, height: 2 },
-  { x: 1670, y: canvas.height - 129, width: 200, height: 2 },
+  { x: 0, width: 95, height: 2, offset: { x: 0, y: -192 } },
+  { x: 0, width: canvas.width * 2, height: 2, offset: { x: 0, y: 192 } },
+  { x: 95, width: 44, height: 2, offset: { x: 0, y: -152 } },
+  { x: 200, width: 200, height: 2, offset: { x: 0, y: -230 } },
+  { x: 295, width: 300, height: 2, offset: { x: 0, y: -250 } },
+  { x: 295, width: 300, height: 2, offset: { x: 0, y: -350 } },
+  { x: 595, width: 200, height: 2, offset: { x: 0, y: -380 } },
+  { x: 765, width: 200, height: 2, offset: { x: 0, y: -480 } },
+  { x: 1065, width: 300, height: 2, offset: { x: 0, y: -580 } },
+  { x: 1465, width: 300, height: 2, offset: { x: 0, y: -680 } },
+  { x: 1765, width: 500, height: 2, offset: { x: 0, y: -550 } },
+  { x: 89, width: 110, height: 2, offset: { x: 0, y: -110 } },
+  { x: 198, width: 633, height: 2, offset: { x: 0, y: -69 } },
+  { x: 740, width: 680, height: 2, offset: { x: 0, y: -132 } },
+  { x: 1670, width: 200, height: 2, offset: { x: 0, y: -129 } },
 ]);
 
 const walls = createPlatform([
-  { x: -1, y: 2, width: 1, height: canvas.height + 2 },
-  { x: 95, y: canvas.height - 192, width: 2, height: 42 },
-  { x: 198, y: canvas.height - 110, width: 2, height: 42 },
+  {
+    x: -1,
+    width: 1,
+    height: canvas.height + 2,
+    offset: { x: 0, y: -(canvas.height - 2) },
+  },
+  { x: 95, width: 2, height: 42, offset: { x: 0, y: -192 } },
+  { x: 198, width: 2, height: 42, offset: { x: 0, y: -110 } },
 ]);
 
-player.platforms = platforms;
+const camera = {
+  x1: 300,
+  x2: 500,
+  y: player.position.y + player.height / 2,
+  offset: { y: 0, diff: 0, delay_frame: 25 },
+};
+
+player.platform = platforms[0];
 player.walls = walls;
 
 let enemys = createEnemyByPlatform(platforms);
@@ -95,16 +116,16 @@ let enemys = createEnemyByPlatform(platforms);
 // player.enemys = enemys;
 enemys.forEach((e) => (e.enemy = player));
 
-let enemy = createEnemy({
-  platform: platforms[3],
-  enemy_name: "sygnus",
-  enemy_type: "boss",
-});
+// let enemy = createEnemy({
+//   platform: platforms[3],
+//   enemy_name: "sygnus",
+//   enemy_type: "boss",
+// });
 
 player.enemys = [];
 player.enemys.forEach((e) => (e.enemy = player));
 
-enemy.enemy = player;
+// enemy.enemy = player;
 
 let d = -100;
 // floorImage.position.x -= canvas.width + d;
@@ -123,22 +144,20 @@ function animate() {
 
   floorImage.update();
   player.floorImage.x = floorImage.image.width * floorImage.scale;
-  player.update();
 
-  enemy.update();
-  // platforms.forEach((p) => p.draw());
+  // enemy.update();
+  platforms.forEach((p) => p.draw());
   // walls.forEach((p) => p.draw());
-
   // player move
   player.move({ left: "a", right: "d" }, [floorImage]);
   for (let i = 0; i < walls.length; i++) {
     player.sideColition(walls[i]);
   }
-  player.floor = canvas.height;
-  for (let i = 0; i < platforms.length; i++) {
-    player.floorColition(platforms[i]);
-  }
 
+  for (let i = 0; i < platforms.length; i++) {
+    player.floorColition(platforms[i], camera);
+  }
+  player.update();
   // update each enemy
   player.enemys.forEach((e) => e.update());
 
@@ -148,12 +167,8 @@ function animate() {
     player.velocity.x === 0 &&
     floorImage.position.x + player.gameVelocity.x * -1 <= 0
   ) {
-    player.platforms.forEach(
-      (p) => (p.position.x += player.gameVelocity.x * -1)
-    );
-
     player.walls.forEach((w) => (w.position.x += player.gameVelocity.x * -1));
-    // backgorund and floor
+    // backgorund and floor x
     floorImage.position.x += player.gameVelocity.x * -1;
     cloudBG.position.x += player.gameVelocity.x * -0.1;
     mountainBG.position.x += player.gameVelocity.x * -0.1;
@@ -162,12 +177,36 @@ function animate() {
     tree2BG.position.x += player.gameVelocity.x * -0.5;
     tree1BG.position.x += player.gameVelocity.x * -0.7;
 
+    platforms.forEach((p) => {
+      p.position.x += player.gameVelocity.x * -1;
+    });
     // enemy
-    enemy.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
+    // enemy.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
     player.enemys.forEach((e) => {
       e.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
     });
   }
+
+  if (
+    (camera.offset.diff < 0 && camera.offset.y < 0) ||
+    (camera.offset.diff > 0 && camera.offset.y > 0)
+  ) {
+    if (Math.abs(camera.offset.y) < Math.abs(camera.offset.diff)) {
+      camera.offset.diff = camera.offset.y;
+    }
+    floorImage.position.y += camera.offset.diff * -1;
+    platforms.forEach((p) => {
+      p.position.y += camera.offset.diff * -1;
+    });
+    player.position.y += camera.offset.diff * -1;
+    camera.offset.y += camera.offset.diff * -1;
+  }
+
+  c.beginPath();
+  c.moveTo(player.position.x, camera.y);
+  c.lineTo(player.position.x + player.width, camera.y);
+  c.stroke();
+  // floorImage.position.y += player.gameVelocity.y * -1;
   // Update player enemys
   if (player.enemys.length > 0)
     player.enemys = player.enemys.filter((e) => !e.is_death);
