@@ -50,8 +50,9 @@ export class Enemy extends Character {
     this.canStuntWhenAttack = true;
   }
 
-  handleGameMove({ postition }) {
-    this.position.x += postition.x;
+  handleGameMove(move_postition) {
+    this.position.x += move_postition.x;
+    this.position.y += move_postition.y;
   }
 
   handelTakeHit(damage) {

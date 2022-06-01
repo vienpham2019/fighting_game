@@ -91,8 +91,8 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
     ),
     y: platform.position.y - enemy.height,
   };
-  // let flip = Math.random() > 0.5 ? -1 : 1;
-  let flip = 1;
+  let flip = Math.random() > 0.5 ? -1 : 1;
+  // let flip = 1;
   let obj_val = {
     ...enemy,
     position,
@@ -165,15 +165,15 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
   }
 }
 
-export function createEnemyByPlatform(platforms, player) {
+export function createEnemyByPlatform(platforms) {
   let result = [];
   let enemyOptionLV1 = ["skeleton", "mushroom", "goblin", "flying_eye"];
   let enemyOptionLV2 = ["worm", "dark_drake"];
   let enemyOptionLV3 = [
-    // "jungle_wolf",
-    // "white_wolf",
-    // "green_cornian",
-    // "dark_cornian",
+    "jungle_wolf",
+    "white_wolf",
+    "green_cornian",
+    "dark_cornian",
     "worm",
     "dark_drake",
     "ice_drake",

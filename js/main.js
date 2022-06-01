@@ -108,61 +108,19 @@ const camera = {
   offset: { y: 0, diff: 0, delay_frame: 25 },
 };
 
-player.platform = platforms[0];
-player.walls = walls;
-
-let enemys = createEnemyByPlatform(platforms);
-
-// player.enemys = enemys;
-enemys.forEach((e) => (e.enemy = player));
-
-// let enemy = createEnemy({
-//   platform: platforms[3],
-//   enemy_name: "sygnus",
-//   enemy_type: "boss",
-// });
-
-player.enemys = [];
-player.enemys.forEach((e) => (e.enemy = player));
-
-// enemy.enemy = player;
-
-let d = -100;
-// floorImage.position.x -= canvas.width + d;
-// platforms.forEach((p) => (p.position.x -= canvas.width + d));
-function animate() {
-  window.requestAnimationFrame(animate);
-  c.fillStyle = "black";
-  c.fillRect(0, 0, canvas.width, canvas.height);
-
-  cloudBG.update();
-  mountainBG.update();
-  tree4BG.update();
-  tree3BG.update();
-  tree2BG.update();
-  tree1BG.update();
-
-  floorImage.update();
-  player.floorImage.x = floorImage.image.width * floorImage.scale;
-
-  // enemy.update();
-  platforms.forEach((p) => p.draw());
-  // walls.forEach((p) => p.draw());
-  // player move
-  player.move({ left: "a", right: "d" }, [floorImage]);
-  for (let i = 0; i < walls.length; i++) {
-    player.sideColition(walls[i]);
-  }
-
-  for (let i = 0; i < platforms.length; i++) {
-    player.floorColition(platforms[i], camera);
-  }
-  player.update();
-  // update each enemy
-  player.enemys.forEach((e) => e.update());
-
+const objs = [
+  cloudBG,
+  mountainBG,
+  tree4BG,
+  tree3BG,
+  tree2BG,
+  tree1BG,
+  floorImage,
+];
+function handleCamera() {
   player.gameCurrentX += player.gameVelocity.x;
 
+  // X axis
   if (
     player.velocity.x === 0 &&
     floorImage.position.x + player.gameVelocity.x * -1 <= 0
@@ -183,10 +141,12 @@ function animate() {
     // enemy
     // enemy.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
     player.enemys.forEach((e) => {
-      e.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
+      e.handleGameMove({ x: player.gameVelocity.x * -1, y: 0 });
     });
   }
+  // X axis
 
+  // Y axis
   if (
     (camera.offset.diff < 0 && camera.offset.y < 0) ||
     (camera.offset.diff > 0 && camera.offset.y > 0)
@@ -195,21 +155,94 @@ function animate() {
       camera.offset.diff = camera.offset.y;
     }
     floorImage.position.y += camera.offset.diff * -1;
+
+    // walls
+    walls.forEach((w) => {
+      w.position.y += camera.offset.diff * -1;
+    });
+
+    // platforms
     platforms.forEach((p) => {
       p.position.y += camera.offset.diff * -1;
     });
+
+    // enemys
+    player.enemys.forEach((e) => {
+      e.handleGameMove({ x: 0, y: camera.offset.diff * -1 });
+    });
+
     player.position.y += camera.offset.diff * -1;
     camera.offset.y += camera.offset.diff * -1;
   }
+  // Y axis
 
   c.beginPath();
   c.moveTo(player.position.x, camera.y);
   c.lineTo(player.position.x + player.width, camera.y);
   c.stroke();
-  // floorImage.position.y += player.gameVelocity.y * -1;
+}
+player.platform = platforms[0];
+player.walls = walls;
+
+// let enemys = createEnemyByPlatform(platforms);
+
+// player.enemys = enemys;
+// enemys.forEach((e) => (e.enemy = player));
+
+// let enemy = createEnemy({
+//   platform: platforms[3],
+//   enemy_name: "sygnus",
+//   enemy_type: "boss",
+// });
+
+player.enemys = [];
+player.enemys.forEach((e) => (e.enemy = player));
+
+// enemy.enemy = player;
+
+let d = -100;
+// floorImage.position.x -= canvas.width + d;
+// platforms.forEach((p) => (p.position.x -= canvas.width + d));
+function animate() {
+  window.requestAnimationFrame(animate);
+  c.fillStyle = "black";
+  c.fillRect(0, 0, canvas.width, canvas.height);
+
+  objs.forEach((e) => e.update());
+  player.floorImage.x = floorImage.image.width * floorImage.scale;
+
+  // enemy.update();
+  platforms.forEach((p) => p.draw());
+  walls.forEach((p) => p.draw());
+  // player move
+  player.move({ left: "a", right: "d" }, [floorImage]);
+  for (let i = 0; i < walls.length; i++) {
+    player.sideColition(walls[i]);
+  }
+
+  for (let i = 0; i < platforms.length; i++) {
+    player.floorColition(platforms[i], camera);
+  }
+  player.update();
   // Update player enemys
-  if (player.enemys.length > 0)
+  if (player.enemys.length > 0) {
+    // update each enemy
+    player.enemys.forEach((e) => {
+      // only load enemy if player in range
+      if (
+        e.position.x > player.position.x - 600 &&
+        e.position.x + e.width < player.position.x + player.width + 600 &&
+        e.position.y > player.position.y - 500 &&
+        e.position.y + e.height < player.position.y + player.height + 500
+      )
+        e.update();
+    });
     player.enemys = player.enemys.filter((e) => !e.is_death);
+  }
+
+  // Camera
+  handleCamera();
+  // camera
 }
 
 animate();

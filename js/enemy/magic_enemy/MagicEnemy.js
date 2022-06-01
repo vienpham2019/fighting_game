@@ -42,10 +42,12 @@ export class MagicEnemy extends Enemy {
     this.enemy_get_hit = false;
   }
 
-  handleGameMove({ postition }) {
-    super.handleGameMove({ postition });
+  handleGameMove(postition) {
+    super.handleGameMove(postition);
     this.magic_obj.move.position.x += postition.x;
     this.magic_obj.explosion.position.x += postition.x;
+    this.magic_obj.move.position.y += postition.y;
+    this.magic_obj.explosion.position.y += postition.y;
   }
 
   updateMagicObjLocation() {
@@ -94,7 +96,7 @@ export class MagicEnemy extends Enemy {
     this.magic_obj.explosion.update();
   }
 
-  detectMagicObj(attack_n = 0) {
+  detectMagicObj() {
     if (this.start_attack) {
       if (
         !this.hitCollition() &&
@@ -151,7 +153,7 @@ export class MagicEnemy extends Enemy {
       } else {
         this.updateSprite(this.sprites.idle);
       }
-      this.magicObjMove();
+      this.detectMagicObj();
     } else {
       this.updateSprite(this.sprites.run);
       this.attack_again = true;

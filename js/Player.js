@@ -149,7 +149,6 @@ export class Player extends Character {
       if (!this.is_jump && !this.get_hit) {
         this.velocity.x = 0;
         this.gameVelocity.x = 0;
-        this.gameVelocity.y = 0;
         this.updateSprite(this.sprites["idle"]);
       }
     }
@@ -171,19 +170,8 @@ export class Player extends Character {
     }
 
     if (this.velocity.y < 0) {
-      if (
-        this.position.y + this.height + this.velocity.y < 400 &&
-        this.position.y + this.height + this.velocity.y < canvas.height - 250
-      )
-        this.gameVelocity.y = this.velocity.y;
       this.updateSprite(this.sprites["jump"]);
     } else if (this.velocity.y > 0) {
-      // if (
-      //   this.position.y + this.height + this.velocity.y > 400 &&
-      //   this.position.y + this.height + this.velocity.y > canvas.height - 250
-      // ) {
-      //   this.gameVelocity.y = this.velocity.y;
-      // }
       this.updateSprite(this.sprites["fall"]);
     }
   }
