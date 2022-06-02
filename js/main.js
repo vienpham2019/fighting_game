@@ -16,8 +16,8 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const floorImage = new Sprite({
   position: { x: 0, y: 0 },
-  offset: { x: 0, y: 290 },
-  imageSrc: "./img/Forest copy.png",
+  offset: { x: 0, y: 1000 },
+  imageSrc: "./img/platform1.png",
   scale: 1.5,
 });
 
@@ -66,45 +66,85 @@ const shop = new Sprite({
 });
 
 const player = createPlayer({
-  position: { x: 500, y: canvas.height - 200 },
+  position: { x: 0, y: canvas.height - 200 },
   velocity: { x: 0, y: 0 },
   moveSpeed: { x: 4, y: 15 },
   player_name: "warior",
 });
 
 const platforms = createPlatform([
-  { x: 0, width: 95, height: 2, offset: { x: 0, y: -192 } },
-  { x: 0, width: canvas.width * 2, height: 2, offset: { x: 0, y: 192 } },
-  { x: 95, width: 44, height: 2, offset: { x: 0, y: -152 } },
-  { x: 200, width: 200, height: 2, offset: { x: 0, y: -230 } },
-  { x: 295, width: 300, height: 2, offset: { x: 0, y: -250 } },
-  { x: 295, width: 300, height: 2, offset: { x: 0, y: -350 } },
-  { x: 595, width: 200, height: 2, offset: { x: 0, y: -380 } },
-  { x: 765, width: 200, height: 2, offset: { x: 0, y: -480 } },
-  { x: 1065, width: 300, height: 2, offset: { x: 0, y: -580 } },
-  { x: 1465, width: 300, height: 2, offset: { x: 0, y: -680 } },
-  { x: 1765, width: 500, height: 2, offset: { x: 0, y: -550 } },
-  { x: 89, width: 110, height: 2, offset: { x: 0, y: -110 } },
-  { x: 198, width: 633, height: 2, offset: { x: 0, y: -69 } },
-  { x: 740, width: 680, height: 2, offset: { x: 0, y: -132 } },
-  { x: 1670, width: 200, height: 2, offset: { x: 0, y: -129 } },
+  { x: 0, width: 95, height: 2, offset: { x: 0, y: -272 } },
+  { x: 0, width: 195, height: 2, offset: { x: 0, y: 661 } },
+  { x: 0, width: 901, height: 2, offset: { x: 0, y: 951 } },
+  { x: 95, width: 185, height: 2, offset: { x: 0, y: -200 } },
+  { x: 150, width: 75, height: 2, offset: { x: 0, y: -368 } },
+  { x: 195, width: 910, height: 2, offset: { x: 0, y: 734 } },
+  { x: 225, width: 250, height: 2, offset: { x: 0, y: -472 } },
+  { x: 280, width: 1095, height: 2, offset: { x: 0, y: -128 } },
+  { x: 991, width: 210, height: 2, offset: { x: 0, y: 956 } },
+  { x: 1020, width: 1010, height: 2, offset: { x: 0, y: 876 } },
+  { x: 1128, width: 215, height: 2, offset: { x: 0, y: 546 } },
+  { x: 1375, width: 75, height: 2, offset: { x: 0, y: -56 } },
+  { x: 1428, width: 215, height: 2, offset: { x: 0, y: 486 } },
+  { x: 1538, width: 284, height: 2, offset: { x: 0, y: 20 } },
+  { x: 1720, width: 375, height: 2, offset: { x: 0, y: 428 } },
+  { x: 1965, width: 284, height: 2, offset: { x: 0, y: 93 } },
+  { x: 2090, width: 200, height: 2, offset: { x: 0, y: 836 } },
+  { x: 2092, width: 82, height: 2, offset: { x: 0, y: 344 } },
+  { x: 2170, width: 208, height: 2, offset: { x: 0, y: 271 } },
+  { x: 2340, width: 65, height: 2, offset: { x: 0, y: 870 } },
+  { x: 2405, width: 220, height: 2, offset: { x: 0, y: 800 } },
+  { x: 2375, width: 215, height: 2, offset: { x: 0, y: 201 } },
+  { x: 2590, width: 483, height: 2, offset: { x: 0, y: 274 } },
+  { x: 2625, width: 450, height: 2, offset: { x: 0, y: 873 } },
 ]);
 
 const walls = createPlatform([
   {
     x: -1,
     width: 1,
-    height: canvas.height + 2,
+    height: canvas.height * 5,
     offset: { x: 0, y: -(canvas.height - 2) },
   },
-  { x: 95, width: 2, height: 42, offset: { x: 0, y: -192 } },
-  { x: 198, width: 2, height: 42, offset: { x: 0, y: -110 } },
+  { x: 95, width: 2, height: 75, offset: { x: 0, y: -272 } },
+  { x: 195, width: 2, height: 77, offset: { x: 0, y: 661 } },
+  { x: 225, width: 2, height: 110, offset: { x: 0, y: -472 } },
+  { x: 280, width: 2, height: 75, offset: { x: 0, y: -200 } },
+  { x: 901, width: 2, height: 50, offset: { x: 0, y: 951 } },
+  { x: 1128, width: 2, height: 50, offset: { x: 0, y: 546 } },
+  { x: 1343, width: 2, height: 50, offset: { x: 0, y: 546 } },
+  { x: 1375, width: 2, height: 73, offset: { x: 0, y: -128 } },
+  { x: 1428, width: 2, height: 50, offset: { x: 0, y: 486 } },
+  { x: 1450, width: 2, height: 150, offset: { x: 0, y: -56 } },
+  { x: 1643, width: 2, height: 50, offset: { x: 0, y: 486 } },
+  { x: 1720, width: 2, height: 50, offset: { x: 0, y: 428 } },
+  { x: 2092, width: 2, height: 86, offset: { x: 0, y: 344 } },
+  { x: 2170, width: 2, height: 75, offset: { x: 0, y: 271 } },
+  { x: 2375, width: 2, height: 75, offset: { x: 0, y: 201 } },
+  { x: 2405, width: 2, height: 75, offset: { x: 0, y: 800 } },
+  { x: 2590, width: 2, height: 76, offset: { x: 0, y: 201 } },
+  { x: 2625, width: 2, height: 75, offset: { x: 0, y: 800 } },
 ]);
+
+// let dx = -canvas.width;
+// let dy = -canvas.height - 400;
+
+// floorImage.position.x -= canvas.width + dx;
+// floorImage.position.y -= canvas.height + dy;
+// platforms.forEach((p) => {
+//   p.position.x -= canvas.width + dx;
+//   p.position.y -= canvas.height + dy;
+// });
+// walls.forEach((p) => {
+//   p.position.x -= canvas.width + dx;
+//   p.position.y -= canvas.height + dy;
+// });
 
 const camera = {
   x1: 300,
   x2: 500,
   y: player.position.y + player.height / 2,
+  fall_offset: { y: 30, delay_frame: 5 },
   offset: { y: 0, diff: 0, delay_frame: 25 },
 };
 
@@ -118,30 +158,27 @@ const objs = [
   floorImage,
 ];
 function handleCamera() {
-  player.gameCurrentX += player.gameVelocity.x;
+  player.gameCurrentX += camera.x;
 
   // X axis
-  if (
-    player.velocity.x === 0 &&
-    floorImage.position.x + player.gameVelocity.x * -1 <= 0
-  ) {
-    player.walls.forEach((w) => (w.position.x += player.gameVelocity.x * -1));
+  if (player.velocity.x === 0 && floorImage.position.x + camera.x * -1 <= 0) {
+    player.walls.forEach((w) => (w.position.x += camera.x * -1));
     // backgorund and floor x
-    floorImage.position.x += player.gameVelocity.x * -1;
-    cloudBG.position.x += player.gameVelocity.x * -0.1;
-    mountainBG.position.x += player.gameVelocity.x * -0.1;
-    tree4BG.position.x += player.gameVelocity.x * -0.2;
-    tree3BG.position.x += player.gameVelocity.x * -0.3;
-    tree2BG.position.x += player.gameVelocity.x * -0.5;
-    tree1BG.position.x += player.gameVelocity.x * -0.7;
+    floorImage.position.x += camera.x * -1;
+    cloudBG.position.x += camera.x * -0.1;
+    mountainBG.position.x += camera.x * -0.1;
+    tree4BG.position.x += camera.x * -0.2;
+    tree3BG.position.x += camera.x * -0.3;
+    tree2BG.position.x += camera.x * -0.5;
+    tree1BG.position.x += camera.x * -0.7;
 
     platforms.forEach((p) => {
-      p.position.x += player.gameVelocity.x * -1;
+      p.position.x += camera.x * -1;
     });
     // enemy
-    // enemy.handleGameMove({ position: { x: player.gameVelocity.x * -1 } });
+    // enemy.handleGameMove({ position: { x: camera.x * -1 } });
     player.enemys.forEach((e) => {
-      e.handleGameMove({ x: player.gameVelocity.x * -1, y: 0 });
+      e.handleGameMove({ x: camera.x * -1, y: 0 });
     });
   }
   // X axis
@@ -180,6 +217,11 @@ function handleCamera() {
   c.moveTo(player.position.x, camera.y);
   c.lineTo(player.position.x + player.width, camera.y);
   c.stroke();
+
+  c.beginPath();
+  c.moveTo(player.position.x, camera.y + camera.fall_offset.y);
+  c.lineTo(player.position.x + player.width, camera.y + camera.fall_offset.y);
+  c.stroke();
 }
 player.platform = platforms[0];
 player.walls = walls;
@@ -200,9 +242,6 @@ player.enemys.forEach((e) => (e.enemy = player));
 
 // enemy.enemy = player;
 
-let d = -100;
-// floorImage.position.x -= canvas.width + d;
-// platforms.forEach((p) => (p.position.x -= canvas.width + d));
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -215,9 +254,9 @@ function animate() {
   platforms.forEach((p) => p.draw());
   walls.forEach((p) => p.draw());
   // player move
-  player.move({ left: "a", right: "d" }, [floorImage]);
+  player.move({ left: "a", right: "d" }, camera);
   for (let i = 0; i < walls.length; i++) {
-    player.sideColition(walls[i]);
+    player.sideColition(walls[i], camera);
   }
 
   for (let i = 0; i < platforms.length; i++) {

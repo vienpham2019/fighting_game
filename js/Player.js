@@ -54,8 +54,6 @@ export class Player extends Character {
     };
     this.speed = moveSpeed;
     this.gameCurrentX = position.x;
-    this.gameCurrentY = position.y;
-    this.gameVelocity = { x: 0, y: 0 };
     this.changeScreen = {
       x1: 300,
       x2: 500,
@@ -81,7 +79,7 @@ export class Player extends Character {
   }
 
   //   check collition with side of platform
-  sideColition(w) {
+  sideColition(w, camera) {
     let left = this.velocity.x < 0;
     let [x1, x2, _, y2] = getCoordinate(this);
 
@@ -91,7 +89,7 @@ export class Player extends Character {
     let check_y = y2 > p_y1 && y2 < p_y2;
     if ((check_go_left || check_go_right) && check_y) {
       this.velocity.x = 0;
-      this.gameVelocity.x = 0;
+      camera.x = 0;
     }
   }
 
@@ -119,7 +117,7 @@ export class Player extends Character {
     }
   }
 
-  move(m) {
+  move(m, camera) {
     if (this.keys[m.left].pressed && this.last_key[0] === m.left) {
       if (
         this.gameCurrentX >= this.changeScreen.x1 &&
@@ -128,7 +126,7 @@ export class Player extends Character {
         this.velocity.x = 0;
       } else this.velocity.x = -this.speed.x;
 
-      this.gameVelocity.x = -this.speed.x;
+      camera.x = -this.speed.x;
 
       this.flip = -1;
       if (!this.is_jump) this.updateSprite(this.sprites["run"]);
@@ -141,14 +139,14 @@ export class Player extends Character {
         this.velocity.x = 0;
       } else this.velocity.x = this.speed.x;
 
-      this.gameVelocity.x = this.speed.x;
+      camera.x = this.speed.x;
 
       this.flip = 1;
       if (!this.is_jump) this.updateSprite(this.sprites["run"]);
     } else {
       if (!this.is_jump && !this.get_hit) {
         this.velocity.x = 0;
-        this.gameVelocity.x = 0;
+        camera.x = 0;
         this.updateSprite(this.sprites["idle"]);
       }
     }
@@ -172,6 +170,14 @@ export class Player extends Character {
     if (this.velocity.y < 0) {
       this.updateSprite(this.sprites["jump"]);
     } else if (this.velocity.y > 0) {
+      if (
+        this.position.y + this.height + this.velocity.y >
+        camera.y + camera.fall_offset.y
+      ) {
+        camera.offset.y =
+          this.position.y + this.height + this.velocity.y - camera.y;
+        camera.offset.diff = camera.offset.y / camera.fall_offset.delay_frame;
+      }
       this.updateSprite(this.sprites["fall"]);
     }
   }
