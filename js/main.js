@@ -98,7 +98,7 @@ const platforms = createPlatform([
   { x: 1720, width: 375, height: 2, offset: { x: 0, y: 428 } },
   { x: 1825, width: 370, height: 2, offset: { x: 0, y: -1085 } },
   { x: 1965, width: 284, height: 2, offset: { x: 0, y: 93 } },
-  { x: 1985, width: 1087, height: 2, offset: { x: 0, y: -554 } },
+  { x: 1985, width: 1435, height: 2, offset: { x: 0, y: -554 } }, //
   { x: 2090, width: 200, height: 2, offset: { x: 0, y: 836 } },
   { x: 2092, width: 82, height: 2, offset: { x: 0, y: 344 } },
   { x: 2170, width: 208, height: 2, offset: { x: 0, y: 271 } },
@@ -110,7 +110,32 @@ const platforms = createPlatform([
   { x: 2475, width: 210, height: 2, offset: { x: 0, y: -1312 } },
   { x: 2590, width: 483, height: 2, offset: { x: 0, y: 274 } },
   { x: 2625, width: 450, height: 2, offset: { x: 0, y: 873 } },
-  { x: 2685, width: 390, height: 2, offset: { x: 0, y: -1240 } },
+  { x: 2685, width: 580, height: 2, offset: { x: 0, y: -1240 } },
+  { x: 3265, width: 190, height: 2, offset: { x: 0, y: -1169 } },
+  { x: 3420, width: 60, height: 2, offset: { x: 0, y: -482 } }, //
+  { x: 3455, width: 1090, height: 2, offset: { x: 0, y: -1098 } },
+  { x: 3584, width: 300, height: 2, offset: { x: 0, y: -470 } }, //
+  { x: 3975, width: 420, height: 2, offset: { x: 0, y: -365 } }, //
+  { x: 4395, width: 480, height: 2, offset: { x: 0, y: -435 } }, //
+  { x: 4545, width: 70, height: 2, offset: { x: 0, y: -1025 } },
+  { x: 4680, width: 214, height: 2, offset: { x: 0, y: -1017 } },
+  { x: 4860, width: 214, height: 2, offset: { x: 0, y: -923 } },
+  { x: 4930, width: 67, height: 2, offset: { x: 0, y: -507 } }, //
+  { x: 4997, width: 340, height: 2, offset: { x: 0, y: -579 } }, //
+  { x: 5070, width: 214, height: 2, offset: { x: 0, y: -830 } },
+  { x: 5260, width: 1110, height: 2, offset: { x: 0, y: -725 } },
+  { x: 6370, width: 1090, height: 2, offset: { x: 0, y: -652 } },
+  { x: 7460, width: 70, height: 2, offset: { x: 0, y: -582 } },
+  { x: 7590, width: 280, height: 2, offset: { x: 0, y: -642 } },
+  { x: 7990, width: 70, height: 2, offset: { x: 0, y: -718 } },
+  { x: 8058, width: 1410, height: 2, offset: { x: 0, y: -787 } },
+  { x: 9468, width: 290, height: 2, offset: { x: 0, y: -715 } },
+  { x: 9762, width: 370, height: 2, offset: { x: 0, y: -828 } },
+  { x: 10182, width: 290, height: 2, offset: { x: 0, y: -923 } },
+  { x: 10472, width: 440, height: 2, offset: { x: 0, y: -996 } },
+  { x: 10912, width: 730, height: 2, offset: { x: 0, y: -1068 } },
+  { x: 11692, width: 230, height: 2, offset: { x: 0, y: -956 } },
+  { x: 11922, width: 300, height: 2, offset: { x: 0, y: -1026 } },
 ]);
 
 const walls = createPlatform([
@@ -146,10 +171,24 @@ const walls = createPlatform([
   { x: 2590, width: 2, height: 76, offset: { x: 0, y: 201 } },
   { x: 2625, width: 2, height: 75, offset: { x: 0, y: 800 } },
   { x: 2685, width: 2, height: 75, offset: { x: 0, y: -1312 } },
+  { x: 3265, width: 2, height: 75, offset: { x: 0, y: -1240 } },
+  { x: 3420, width: 2, height: 75, offset: { x: 0, y: -554 } }, //
+  { x: 3455, width: 2, height: 75, offset: { x: 0, y: -1169 } },
+  { x: 4395, width: 2, height: 75, offset: { x: 0, y: -435 } }, //
+  { x: 4545, width: 2, height: 75, offset: { x: 0, y: -1098 } },
+  { x: 4997, width: 2, height: 75, offset: { x: 0, y: -579 } }, //
+  { x: 6370, width: 2, height: 75, offset: { x: 0, y: -725 } },
+  { x: 7460, width: 2, height: 75, offset: { x: 0, y: -650 } },
+  { x: 8058, width: 2, height: 75, offset: { x: 0, y: -787 } },
+  { x: 9468, width: 2, height: 75, offset: { x: 0, y: -787 } },
+  { x: 10472, width: 2, height: 75, offset: { x: 0, y: -996 } },
+  { x: 10912, width: 2, height: 75, offset: { x: 0, y: -1068 } },
+  { x: 11922, width: 2, height: 75, offset: { x: 0, y: -1026 } },
+  { x: 12222, width: 2, height: canvas.height * 5, offset: { x: 0, y: -1526 } },
 ]);
 
-// let dx = -canvas.width + 2300;
-// let dy = -canvas.height - 400;
+// let dx = -canvas.width + 4600;
+// let dy = -canvas.height - 300;
 
 // floorImage.position.x -= canvas.width + dx;
 // floorImage.position.y -= canvas.height + dy;
@@ -260,7 +299,7 @@ player.walls = walls;
 // });
 
 player.enemys = [];
-player.enemys.forEach((e) => (e.enemy = player));
+// player.enemys.forEach((e) => (e.enemy = player));
 
 // enemy.enemy = player;
 

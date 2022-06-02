@@ -167,9 +167,11 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
 
 export function createEnemyByPlatform(platforms) {
   let result = [];
-  let enemyOptionLV1 = ["skeleton", "mushroom", "goblin", "flying_eye"];
-  let enemyOptionLV2 = ["worm", "dark_drake"];
-  let enemyOptionLV3 = [
+  let enemyOption = [
+    "skeleton",
+    "mushroom",
+    "goblin",
+    "flying_eye",
     "jungle_wolf",
     "white_wolf",
     "green_cornian",
@@ -179,7 +181,6 @@ export function createEnemyByPlatform(platforms) {
     "ice_drake",
   ];
 
-  let enemyOption = enemyOptionLV3;
   platforms.forEach((p) => {
     if (p.width >= 200) {
       let number_of_enemy = Math.min(
