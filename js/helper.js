@@ -25,9 +25,9 @@ import { Sygnus } from "./enemy/boss/Sygnus.js";
 import { Boomer } from "./enemy/boss/Boomer.js";
 
 //data
-import { player_data } from "./player_data.js";
-import { enemy_data } from "./enemy_data.js";
-import { boss_data } from "./boss_data.js";
+import { player_data } from "./data/player_data.js";
+import { enemy_data } from "./data/enemy_data.js";
+import { boss_data } from "./data/boss_data.js";
 
 export function getCoordinate(p) {
   return [
@@ -197,15 +197,15 @@ export function createEnemyByPlatform(platforms) {
   return result;
 }
 
-export function createPlatform(arr) {
+export function createPlatform(arr, type) {
   let result = [];
   for (let e of arr) {
-    let { x, width, height, offset } = e;
+    let { x, offset } = e;
     result.push(
       new Platform({
         position: { x, y: canvas.height + offset.y },
-        width,
-        height,
+        width: type === "platform" ? e.width : 2,
+        height: type === "wall" ? e.height : 2,
         offset,
       })
     );
