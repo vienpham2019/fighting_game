@@ -108,8 +108,8 @@ const platforms = createPlatform([
   { x: 2405, width: 220, height: 2, offset: { x: 0, y: 800 } },
   { x: 2375, width: 215, height: 2, offset: { x: 0, y: 201 } },
   { x: 2475, width: 210, height: 2, offset: { x: 0, y: -1312 } },
-  { x: 2590, width: 483, height: 2, offset: { x: 0, y: 274 } },
-  { x: 2625, width: 450, height: 2, offset: { x: 0, y: 873 } },
+  { x: 2590, width: 576, height: 2, offset: { x: 0, y: 274 } },
+  { x: 2625, width: 555, height: 2, offset: { x: 0, y: 873 } },
   { x: 2685, width: 580, height: 2, offset: { x: 0, y: -1240 } },
   { x: 3265, width: 190, height: 2, offset: { x: 0, y: -1169 } },
   { x: 3420, width: 60, height: 2, offset: { x: 0, y: -482 } },
@@ -143,37 +143,58 @@ const platforms = createPlatform([
   { x: 10182, width: 290, height: 2, offset: { x: 0, y: -923 } },
   { x: 10472, width: 440, height: 2, offset: { x: 0, y: -996 } },
   { x: 10912, width: 730, height: 2, offset: { x: 0, y: -1068 } },
-  { x: 7242, width: 923, height: 2, offset: { x: 0, y: 212 } }, //
-  { x: 7662, width: 213, height: 2, offset: { x: 0, y: 110 } }, //
-  { x: 7880, width: 213, height: 2, offset: { x: 0, y: 26 } }, //
-  { x: 8110, width: 590, height: 2, offset: { x: 0, y: -44 } }, //
-  { x: 8165, width: 190, height: 2, offset: { x: 0, y: 285 } }, //
-  { x: 8355, width: 1080, height: 2, offset: { x: 0, y: 358 } }, //
-  { x: 8700, width: 490, height: 2, offset: { x: 0, y: -115 } }, //
+  { x: 3165, width: 1090, height: 2, offset: { x: 0, y: 346 } },
+  { x: 3475, width: 215, height: 2, offset: { x: 0, y: 246 } },
+  { x: 3658, width: 215, height: 2, offset: { x: 0, y: 176 } },
+  { x: 3880, width: 215, height: 2, offset: { x: 0, y: 105 } },
+  { x: 4120, width: 360, height: 2, offset: { x: 0, y: 78 } },
+  { x: 4255, width: 73, height: 2, offset: { x: 0, y: 417 } },
+  { x: 4415, width: 290, height: 2, offset: { x: 0, y: 493 } },
+  { x: 4680, width: 215, height: 2, offset: { x: 0, y: 598 } },
+  { x: 4850, width: 215, height: 2, offset: { x: 0, y: 698 } },
+  { x: 3180, width: 190, height: 2, offset: { x: 0, y: 943 } }, //
+  { x: 3370, width: 1373, height: 2, offset: { x: 0, y: 1015 } }, //
+  { x: 4740, width: 80, height: 2, offset: { x: 0, y: 932 } }, //
+  { x: 4820, width: 202, height: 2, offset: { x: 0, y: 860 } }, //
+  { x: 5020, width: 215, height: 2, offset: { x: 0, y: 788 } },
+  { x: 5235, width: 1980, height: 2, offset: { x: 0, y: 861 } },
+  { x: 7215, width: 600, height: 2, offset: { x: 0, y: 934 } },
+  { x: 4480, width: 85, height: 2, offset: { x: 0, y: -7 } },
+  { x: 4560, width: 210, height: 2, offset: { x: 0, y: -78 } },
+  { x: 4770, width: 210, height: 2, offset: { x: 0, y: -150 } },
+  { x: 4980, width: 1000, height: 2, offset: { x: 0, y: -78 } },
+  { x: 5900, width: 1330, height: 2, offset: { x: 0, y: 66 } },
+  { x: 7230, width: 936, height: 2, offset: { x: 0, y: 212 } },
+  { x: 7662, width: 213, height: 2, offset: { x: 0, y: 110 } },
+  { x: 7880, width: 213, height: 2, offset: { x: 0, y: 26 } },
+  { x: 8110, width: 590, height: 2, offset: { x: 0, y: -44 } },
+  { x: 8165, width: 190, height: 2, offset: { x: 0, y: 285 } },
+  { x: 8355, width: 1080, height: 2, offset: { x: 0, y: 358 } },
+  { x: 8700, width: 490, height: 2, offset: { x: 0, y: -115 } },
   { x: 9167, width: 67, height: 2, offset: { x: 0, y: -903 } },
-  { x: 9210, width: 350, height: 2, offset: { x: 0, y: -3 } }, //
-  { x: 9435, width: 80, height: 2, offset: { x: 0, y: 430 } }, //
-  { x: 9560, width: 290, height: 2, offset: { x: 0, y: -117 } }, //
-  { x: 9565, width: 65, height: 2, offset: { x: 0, y: 423 } }, //
-  { x: 9760, width: 67, height: 2, offset: { x: 0, y: -215 } }, //
-  { x: 9695, width: 210, height: 2, offset: { x: 0, y: 403 } }, //
-  { x: 9820, width: 530, height: 2, offset: { x: 0, y: -308 } }, //
-  { x: 9995, width: 210, height: 2, offset: { x: 0, y: 350 } }, //
-  { x: 10220, width: 67, height: 2, offset: { x: 0, y: 275 } }, //
-  { x: 10350, width: 434, height: 2, offset: { x: 0, y: -380 } }, //
-  { x: 10330, width: 360, height: 2, offset: { x: 0, y: 215 } }, //
-  { x: 10690, width: 86, height: 2, offset: { x: 0, y: 130 } }, //
-  { x: 10976, width: 214, height: 2, offset: { x: 0, y: -12 } }, //
-  { x: 10720, width: 213, height: 2, offset: { x: 0, y: -480 } }, //
-  { x: 10776, width: 200, height: 2, offset: { x: 0, y: 59 } }, //
-  { x: 11010, width: 300, height: 2, offset: { x: 0, y: -544 } }, //
-  { x: 11310, width: 230, height: 2, offset: { x: 0, y: -472 } }, //
-  { x: 11190, width: 210, height: 2, offset: { x: 0, y: -613 } }, //
-  { x: 11190, width: 1040, height: 2, offset: { x: 0, y: 61 } }, //
-  { x: 11316, width: 67, height: 2, offset: { x: 0, y: -678 } }, //
-  { x: 11389, width: 67, height: 2, offset: { x: 0, y: -748 } }, //
-  { x: 11465, width: 210, height: 2, offset: { x: 0, y: -824 } }, //
-  { x: 11601, width: 67, height: 2, offset: { x: 0, y: -902 } }, //
+  { x: 9210, width: 350, height: 2, offset: { x: 0, y: -3 } },
+  { x: 9435, width: 80, height: 2, offset: { x: 0, y: 430 } },
+  { x: 9560, width: 290, height: 2, offset: { x: 0, y: -117 } },
+  { x: 9565, width: 65, height: 2, offset: { x: 0, y: 423 } },
+  { x: 9760, width: 67, height: 2, offset: { x: 0, y: -215 } },
+  { x: 9695, width: 210, height: 2, offset: { x: 0, y: 403 } },
+  { x: 9820, width: 530, height: 2, offset: { x: 0, y: -308 } },
+  { x: 9995, width: 210, height: 2, offset: { x: 0, y: 350 } },
+  { x: 10220, width: 67, height: 2, offset: { x: 0, y: 275 } },
+  { x: 10350, width: 434, height: 2, offset: { x: 0, y: -380 } },
+  { x: 10330, width: 360, height: 2, offset: { x: 0, y: 215 } },
+  { x: 10690, width: 86, height: 2, offset: { x: 0, y: 130 } },
+  { x: 10976, width: 214, height: 2, offset: { x: 0, y: -12 } },
+  { x: 10720, width: 213, height: 2, offset: { x: 0, y: -480 } },
+  { x: 10776, width: 200, height: 2, offset: { x: 0, y: 59 } },
+  { x: 11010, width: 300, height: 2, offset: { x: 0, y: -544 } },
+  { x: 11310, width: 230, height: 2, offset: { x: 0, y: -472 } },
+  { x: 11190, width: 210, height: 2, offset: { x: 0, y: -613 } },
+  { x: 11190, width: 1040, height: 2, offset: { x: 0, y: 61 } },
+  { x: 11316, width: 67, height: 2, offset: { x: 0, y: -678 } },
+  { x: 11389, width: 67, height: 2, offset: { x: 0, y: -748 } },
+  { x: 11465, width: 210, height: 2, offset: { x: 0, y: -824 } },
+  { x: 11601, width: 67, height: 2, offset: { x: 0, y: -902 } },
   { x: 11692, width: 230, height: 2, offset: { x: 0, y: -956 } },
   { x: 11922, width: 300, height: 2, offset: { x: 0, y: -1026 } },
 ]);
@@ -211,46 +232,63 @@ const walls = createPlatform([
   { x: 2590, width: 2, height: 76, offset: { x: 0, y: 201 } },
   { x: 2625, width: 2, height: 75, offset: { x: 0, y: 800 } },
   { x: 2685, width: 2, height: 75, offset: { x: 0, y: -1312 } },
+  { x: 3165, width: 2, height: 75, offset: { x: 0, y: 274 } },
+  { x: 3180, width: 2, height: 75, offset: { x: 0, y: 874 } }, //
   { x: 3265, width: 2, height: 75, offset: { x: 0, y: -1240 } },
+  { x: 3370, width: 2, height: 75, offset: { x: 0, y: 943 } }, //
   { x: 3420, width: 2, height: 75, offset: { x: 0, y: -554 } },
   { x: 3455, width: 2, height: 75, offset: { x: 0, y: -1169 } },
+  { x: 4255, width: 2, height: 75, offset: { x: 0, y: 346 } },
+  { x: 4328, width: 2, height: 75, offset: { x: 0, y: 417 } },
   { x: 4395, width: 2, height: 75, offset: { x: 0, y: -435 } },
+  { x: 4480, width: 2, height: 87, offset: { x: 0, y: -7 } },
+  { x: 4560, width: 2, height: 75, offset: { x: 0, y: -78 } },
   { x: 4545, width: 2, height: 75, offset: { x: 0, y: -1098 } },
+  { x: 4740, width: 2, height: 85, offset: { x: 0, y: 932 } }, //
+  { x: 4770, width: 2, height: 75, offset: { x: 0, y: -150 } },
+  { x: 4820, width: 2, height: 75, offset: { x: 0, y: 860 } }, //
+  { x: 4980, width: 2, height: 75, offset: { x: 0, y: -150 } },
   { x: 4997, width: 2, height: 75, offset: { x: 0, y: -579 } },
+  { x: 5020, width: 2, height: 75, offset: { x: 0, y: 788 } },
+  { x: 5235, width: 2, height: 75, offset: { x: 0, y: 788 } },
+  { x: 5900, width: 2, height: 75, offset: { x: 0, y: -6 } },
   { x: 6370, width: 2, height: 75, offset: { x: 0, y: -725 } },
+  { x: 7215, width: 2, height: 75, offset: { x: 0, y: 861 } },
+  { x: 7230, width: 2, height: 150, offset: { x: 0, y: 66 } },
   { x: 7312, width: 2, height: 75, offset: { x: 0, y: -1292 } },
   { x: 7460, width: 2, height: 75, offset: { x: 0, y: -650 } },
+  { x: 7815, width: 2, height: 200, offset: { x: 0, y: 737 } },
   { x: 8058, width: 2, height: 75, offset: { x: 0, y: -787 } },
-  { x: 8165, width: 2, height: 75, offset: { x: 0, y: 212 } }, //
-  { x: 8355, width: 2, height: 75, offset: { x: 0, y: 285 } }, //
-  { x: 8700, width: 2, height: 75, offset: { x: 0, y: -115 } }, //
-  { x: 9435, width: 2, height: 75, offset: { x: 0, y: 358 } }, //
+  { x: 8165, width: 2, height: 75, offset: { x: 0, y: 212 } },
+  { x: 8355, width: 2, height: 75, offset: { x: 0, y: 285 } },
+  { x: 8700, width: 2, height: 75, offset: { x: 0, y: -115 } },
+  { x: 9435, width: 2, height: 75, offset: { x: 0, y: 358 } },
   { x: 9468, width: 2, height: 75, offset: { x: 0, y: -787 } },
-  { x: 10350, width: 2, height: 75, offset: { x: 0, y: -380 } }, //
+  { x: 10350, width: 2, height: 75, offset: { x: 0, y: -380 } },
   { x: 10472, width: 2, height: 75, offset: { x: 0, y: -996 } },
-  { x: 10690, width: 2, height: 87, offset: { x: 0, y: 130 } }, //
-  { x: 10776, width: 2, height: 75, offset: { x: 0, y: 59 } }, //
+  { x: 10690, width: 2, height: 87, offset: { x: 0, y: 130 } },
+  { x: 10776, width: 2, height: 75, offset: { x: 0, y: 59 } },
   { x: 10912, width: 2, height: 75, offset: { x: 0, y: -1068 } },
-  { x: 10976, width: 2, height: 75, offset: { x: 0, y: -12 } }, //
-  { x: 11190, width: 2, height: 75, offset: { x: 0, y: -12 } }, //
-  { x: 11310, width: 2, height: 75, offset: { x: 0, y: -544 } }, //
+  { x: 10976, width: 2, height: 75, offset: { x: 0, y: -12 } },
+  { x: 11190, width: 2, height: 75, offset: { x: 0, y: -12 } },
+  { x: 11310, width: 2, height: 75, offset: { x: 0, y: -544 } },
   { x: 11922, width: 2, height: 75, offset: { x: 0, y: -1026 } },
   { x: 12222, width: 2, height: canvas.height * 5, offset: { x: 0, y: -1526 } },
 ]);
 
-let dx = -canvas.width + 11300;
-let dy = -canvas.height + 400;
+// let dx = -canvas.width;
+// let dy = -canvas.height;
 
-floorImage.position.x -= canvas.width + dx;
-floorImage.position.y -= canvas.height + dy;
-platforms.forEach((p) => {
-  p.position.x -= canvas.width + dx;
-  p.position.y -= canvas.height + dy;
-});
-walls.forEach((p) => {
-  p.position.x -= canvas.width + dx;
-  p.position.y -= canvas.height + dy;
-});
+// floorImage.position.x -= canvas.width + dx;
+// floorImage.position.y -= canvas.height + dy;
+// platforms.forEach((p) => {
+//   p.position.x -= canvas.width + dx;
+//   p.position.y -= canvas.height + dy;
+// });
+// walls.forEach((p) => {
+//   p.position.x -= canvas.width + dx;
+//   p.position.y -= canvas.height + dy;
+// });
 
 const camera = {
   x1: 300,
@@ -378,7 +416,7 @@ function animate() {
   for (let i = 0; i < platforms.length; i++) {
     player.floorColition(platforms[i], camera);
   }
-  // player.update();
+  player.update();
   // Update player enemys
   if (player.enemys.length > 0) {
     // update each enemy
@@ -396,7 +434,7 @@ function animate() {
   }
 
   // Camera
-  // handleCamera();
+  handleCamera();
   // camera
 }
 
