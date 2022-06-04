@@ -1,3 +1,6 @@
+const canvas_width = 1024;
+const canvas_height = 576;
+
 const platforms_1 = [
   { x: 0, width: 95, offset: { x: 0, y: -272 } },
   { x: 0, width: 195, offset: { x: 0, y: 661 } },
@@ -128,9 +131,8 @@ const platforms_1 = [
 const walls_1 = [
   {
     x: -1,
-    width: 1,
-    height: canvas.height * 5,
-    offset: { x: 0, y: -(canvas.height - 2) },
+    height: canvas_height * 5,
+    offset: { x: 0, y: -(canvas_height * 2) },
   },
   { x: 95, height: 75, offset: { x: 0, y: -272 } },
   { x: 195, height: 77, offset: { x: 0, y: 661 } },
@@ -199,7 +201,7 @@ const walls_1 = [
   { x: 11190, height: 75, offset: { x: 0, y: -12 } },
   { x: 11310, height: 75, offset: { x: 0, y: -544 } },
   { x: 11922, height: 75, offset: { x: 0, y: -1026 } },
-  { x: 12222, height: canvas.height * 5, offset: { x: 0, y: -1526 } },
+  { x: 12222, height: canvas_height * 5, offset: { x: 0, y: -1526 } },
 ];
 
 export let platform = { platforms_1, walls_1 };

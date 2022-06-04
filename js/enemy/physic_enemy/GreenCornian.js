@@ -44,6 +44,7 @@ export class GreenCornian extends PhysicEnemy {
     this.maxHealth = 200;
     this.canStuntWhenAttack = false;
     this.level = 3;
+    this.hp = 70;
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

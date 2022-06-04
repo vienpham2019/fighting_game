@@ -35,13 +35,14 @@ export class Goblin extends PhysicEnemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 100,
+      health: 60,
     });
     this.attack_cool_down = 10;
     this.attack_cool_down_max = 10;
 
-    this.maxHealth = 100;
+    this.maxHealth = 60;
     this.level = 1;
+    this.hp = 20;
   }
 
   drawHitBox() {

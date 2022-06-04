@@ -35,13 +35,14 @@ export class FlyingEye extends PhysicEnemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 70,
+      health: 50,
     });
     this.attack_cool_down = 10;
     this.attack_cool_down_max = 10;
 
-    this.maxHealth = 70;
+    this.maxHealth = 50;
     this.level = 1;
+    this.hp = 20;
   }
 
   drawHitBox() {

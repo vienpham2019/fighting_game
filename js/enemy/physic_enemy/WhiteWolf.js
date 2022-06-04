@@ -44,6 +44,7 @@ export class WhiteWolf extends PhysicEnemy {
     this.maxHealth = 250;
     this.canStuntWhenAttack = false;
     this.level = 3;
+    this.hp = 200;
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

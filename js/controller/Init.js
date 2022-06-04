@@ -11,7 +11,7 @@ export function int() {
   const floorImage = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platform 1.png",
+    imageSrc: "..//img/platform lv1.png",
     scale: 1.5,
   });
 
@@ -57,6 +57,20 @@ export function int() {
     scale: 2.75,
     framesMax: 6,
     framesHold: 5,
+  });
+
+  const healthBar = new Sprite({
+    position: { x: 20, y: 0 },
+    offset: { x: 0, y: 0 },
+    scale: 0.5,
+    imageSrc: "../img/Health bar.png",
+  });
+
+  const playerInfo = new Sprite({
+    position: { x: 100, y: 100 },
+    offset: { x: 0, y: 0 },
+    scale: 2,
+    imageSrc: "../img/player_info.png",
   });
 
   const platforms = createPlatform(platform.platforms_1, "platform");
@@ -105,5 +119,7 @@ export function int() {
     platforms,
     walls,
     camera,
+    healthBar,
+    playerInfo,
   };
 }

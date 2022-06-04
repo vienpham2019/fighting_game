@@ -64,8 +64,37 @@ export class Player extends Character {
       w: 0,
     };
     this.enemys;
-    this.health = 10000;
+    this.health = 200;
+    this.maxHealth = 200;
+
+    this.shield = 100;
+    this.maxShield = 100;
+
+    this.level = 1;
+    this.hp = 0;
+    this.maxLevelHp = 100;
+
     this.character_type = "player";
+  }
+
+  handleTakeHit(damge) {
+    this.get_hit = true;
+    this.shield -= damge;
+    if (this.shield < 0) {
+      this.health -= this.shield * -1;
+      this.shield = 0;
+    }
+    this.updateSprite(this.sprites.takeHit);
+  }
+
+  handleHP(hp) {
+    this.hp += hp;
+    this.damgeEffect({ ...this, character_type: "hp" }, `+ ${hp}`);
+    if (this.hp > this.maxLevelHp) {
+      this.level += Math.floor(this.hp / this.maxLevelHp);
+      this.hp = this.hp % this.maxLevelHp;
+      this.maxLevelHp += Math.floor(this.level * this.maxLevelHp * 0.3);
+    }
   }
 
   // attack box colition

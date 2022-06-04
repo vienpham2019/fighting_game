@@ -55,6 +55,7 @@ export class Worm extends MagicEnemy {
     this.color = "green";
     this.maxHealth = 100;
     this.level = 1;
+    this.hp = 120;
   }
 
   drawHitBox() {

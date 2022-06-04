@@ -69,8 +69,10 @@ export class Character extends Sprite {
     }
   }
 
-  damgeEffect(target, text) {
+  damgeEffect(target, text, color = "white") {
     let metrics = c.measureText(text);
+    if (target.character_type === "player") color = "yellow";
+    if (target.character_type === "hp") color = "green";
     this.damges.push({
       target,
       width: metrics.width,
@@ -81,6 +83,7 @@ export class Character extends Sprite {
       text,
       alpha: 1,
       time: 30,
+      color,
     });
   }
 
@@ -120,16 +123,18 @@ export class Character extends Sprite {
     this.damges.forEach((d, i) => {
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
         (c.font = "bold 20px Arial");
-      let color = d.target.character_type === "player" ? "yellow" : "white";
-      c.strokeStyle = color;
+      c.strokeStyle = d.color;
       c.lineWidth = 5;
       c.strokeText(d.text, d.x, d.y);
       let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 10);
 
       // Add three color stops
-      gradient.addColorStop(0, "rgba(255, 0, 0 , " + d.alpha + ")");
-      gradient.addColorStop(0.5, "rgba(0, 0, 0 , " + d.alpha + ")");
-      gradient.addColorStop(1, "rgba(255, 0, 0 , " + d.alpha + ")");
+      let gradient_color_1 =
+        d.color === "green" ? "255, 255, 255" : "255, 0, 0";
+      let gradient_color_2 = d.color === "green" ? "255, 0, 0" : "0, 0, 0";
+      gradient.addColorStop(0, `rgba(${gradient_color_1}, ` + d.alpha + ")");
+      gradient.addColorStop(0.5, `rgba(${gradient_color_2},` + d.alpha + ")");
+      gradient.addColorStop(1, `rgba(${gradient_color_1}, ` + d.alpha + ")");
 
       c.fillStyle = gradient;
       c.fillText(d.text, d.x, d.y--);

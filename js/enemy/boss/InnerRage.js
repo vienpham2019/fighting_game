@@ -119,10 +119,8 @@ export class InnerRage extends Enemy {
 
   enemyGetHit(damage) {
     if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-    this.enemy.get_hit = true;
-    this.enemy.health -= damage;
+    this.enemy.handleTakeHit(damge);
     this.damgeEffect(this.enemy, damage);
-    this.enemy.updateSprite(this.enemy.sprites.takeHit);
   }
 
   handleAttack1(attack_box) {

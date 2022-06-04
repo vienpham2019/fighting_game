@@ -1,12 +1,22 @@
 import { c } from "../main.js";
 
 export class Controller {
-  constructor({ player, objs, platforms, walls, camera }) {
+  constructor({
+    player,
+    objs,
+    platforms,
+    walls,
+    camera,
+    healthBar,
+    playerInfo,
+  }) {
     this.player = player;
     this.objs = objs;
     this.platforms = platforms;
     this.walls = walls;
     this.camera = camera;
+    this.healthBar = healthBar;
+    this.playerInfo = playerInfo;
   }
 
   handleCamera() {
@@ -80,6 +90,111 @@ export class Controller {
       this.camera.y + this.camera.fall_offset.y
     );
     c.stroke();
+  }
+
+  calculatePercent(n, start_n, end_n) {
+    let result = n - ((start_n - end_n) / start_n) * n;
+    return result > 0 ? result : 0;
+  }
+
+  drawPlayerHealthBar() {
+    //   Health
+    c.font = "bold 10px Arial";
+    c.fillStyle = "#3b3a3a";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 16,
+      208,
+      14
+    );
+
+    c.fillStyle = "#FF1C1C";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 16,
+      this.calculatePercent(208, this.player.maxHealth, this.player.health),
+      14
+    );
+
+    c.fillStyle = "white";
+    c.fillText(
+      `${this.player.health > 0 ? this.player.health : 0} / ${
+        this.player.maxHealth
+      }`,
+      this.healthBar.position.x + 170,
+      this.healthBar.position.y + 26
+    );
+
+    // Shield
+    c.fillStyle = "#3b3a3a";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 33,
+      178,
+      8
+    );
+
+    c.fillStyle = "#007bc2";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 33,
+      this.calculatePercent(178, this.player.maxShield, this.player.shield),
+      8
+    );
+
+    c.fillStyle = "white";
+    c.font = "bold 8px Arial";
+    c.fillText(
+      `${this.player.shield > 0 ? this.player.shield : 0} / ${
+        this.player.maxShield
+      }`,
+      this.healthBar.position.x + 160,
+      this.healthBar.position.y + 41
+    );
+
+    // Hp
+    c.fillStyle = "#3b3a3a";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 44,
+      144,
+      8
+    );
+
+    c.fillStyle = "#088f03";
+
+    c.fillRect(
+      this.healthBar.position.x + 52,
+      this.healthBar.position.y + 44,
+      this.calculatePercent(144, this.player.maxLevelHp, this.player.hp),
+      8
+    );
+
+    c.fillStyle = "white";
+    c.font = "bold 7px Arial";
+    c.fillText(
+      `${this.player.hp > 0 ? this.player.hp : 0} / ${this.player.maxLevelHp}`,
+      this.healthBar.position.x + 140,
+      this.healthBar.position.y + 52
+    );
+
+    this.healthBar.update();
+    c.fillStyle = "light";
+    c.font = "bold 10px Arial";
+    c.fillText(
+      `${this.player.level}`,
+      this.healthBar.position.x + 40 + (this.player.level < 10 ? 3 : 1),
+      this.healthBar.position.y + 66
+    );
+  }
+
+  handlePlayerInfo() {
+    this.playerInfo.update();
   }
 
   run() {

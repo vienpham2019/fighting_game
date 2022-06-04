@@ -43,6 +43,7 @@ export class DarkCornian extends PhysicEnemy {
     this.maxHealth = 300;
     this.canStuntWhenAttack = false;
     this.level = 3;
+    this.hp = 75;
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

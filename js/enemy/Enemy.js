@@ -48,6 +48,7 @@ export class Enemy extends Character {
     this.in_attack_range = false;
     this.character_type = "enemy";
     this.canStuntWhenAttack = true;
+    this.addHp = false;
   }
 
   handleGameMove(move_postition) {
@@ -67,7 +68,13 @@ export class Enemy extends Character {
         this.flip = this.enemy.flip * -1;
       }
     }
-    if (this.health <= 0) this.updateSprite(this.sprites.death);
+    if (this.health <= 0) {
+      this.updateSprite(this.sprites.death);
+      if (!this.addHp) {
+        this.enemy.handleHP(this.hp);
+        this.addHp = true;
+      }
+    }
   }
 
   drawHealthBar() {

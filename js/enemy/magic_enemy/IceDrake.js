@@ -57,6 +57,7 @@ export class IceDrake extends MagicEnemy {
     this.maxHealth = 200;
     this.canStuntWhenAttack = false;
     this.level = 2;
+    this.hp = 220;
   }
 
   drawHitBox() {
