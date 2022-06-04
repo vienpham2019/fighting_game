@@ -26,7 +26,7 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   // controller.run();
   controller.drawPlayerHealthBar();
-  controller.handlePlayerInfo();
+  controller.playerInfoObj.run();
 }
 
 animate();
@@ -67,4 +67,17 @@ window.addEventListener("keyup", (e) => {
         break;
     }
   }
+});
+
+canvas.addEventListener("click", (e) => {
+  let { offsetX, offsetY } = e;
+  controller.playerInfoObj.buttons.forEach((b) => {
+    if (
+      b.x <= offsetX &&
+      b.x + b.w >= offsetX &&
+      b.y <= offsetY &&
+      b.y + b.h >= offsetY
+    )
+      controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
+  });
 });
