@@ -195,6 +195,84 @@ export class Controller {
 
   handlePlayerInfo() {
     this.playerInfo.update();
+    c.fillStyle = "black";
+    c.font = "bold 11px Arial";
+    // Health
+    c.fillText(
+      "Increase your life point to 110",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 86
+    );
+    c.fillText(
+      "Next Level:  310rp",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 122
+    );
+
+    // Speed
+    c.fillText(
+      "Increase your movement speed point to 2",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 141
+    );
+
+    c.fillText(
+      "Next Level:  32rp",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 173
+    );
+
+    // Shield
+    c.fillText(
+      "Increase your shield point to 110",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 194
+    );
+
+    c.fillText(
+      "Full upgraded",
+      this.playerInfo.position.x + 150,
+      this.playerInfo.position.y + 226
+    );
+
+    // Attack Speed
+    c.fillText(
+      "Increase your attack speed point to 110",
+      this.playerInfo.position.x + 526,
+      this.playerInfo.position.y + 86
+    );
+
+    c.fillText(
+      "Full upgraded",
+      this.playerInfo.position.x + 526,
+      this.playerInfo.position.y + 123
+    );
+
+    // Attack Damage
+    c.fillText(
+      "Increase your attack damage point to 110",
+      this.playerInfo.position.x + 526,
+      this.playerInfo.position.y + 145
+    );
+
+    c.fillText(
+      "Full upgraded",
+      this.playerInfo.position.x + 526,
+      this.playerInfo.position.y + 177
+    );
+
+    // upgrate button
+    c.font = "bold 13px Arial";
+    c.fillText(
+      "Point: 5 / 5",
+      this.playerInfo.position.x + 526,
+      this.playerInfo.position.y + 215
+    );
+    c.fillText(
+      "Upgrate",
+      this.playerInfo.position.x + 713,
+      this.playerInfo.position.y + 215
+    );
   }
 
   run() {

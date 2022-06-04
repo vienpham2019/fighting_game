@@ -69,8 +69,8 @@ export function int() {
   const playerInfo = new Sprite({
     position: { x: 100, y: 100 },
     offset: { x: 0, y: 0 },
-    scale: 2,
-    imageSrc: "../img/player_info.png",
+    scale: 1,
+    imageSrc: "../img/player info.png",
   });
 
   const platforms = createPlatform(platform.platforms_1, "platform");
