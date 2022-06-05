@@ -71,13 +71,17 @@ window.addEventListener("keyup", (e) => {
 
 canvas.addEventListener("click", (e) => {
   let { offsetX, offsetY } = e;
-  controller.playerInfoObj.buttons.forEach((b) => {
-    if (
-      b.x <= offsetX &&
-      b.x + b.w >= offsetX &&
-      b.y <= offsetY &&
-      b.y + b.h >= offsetY
-    )
-      controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
-  });
+  if (controller.playerInfoObj.open) {
+    controller.playerInfoObj.buttons.forEach((b) => {
+      if (
+        b.x <= offsetX &&
+        b.x + b.w >= offsetX &&
+        b.y <= offsetY &&
+        b.y + b.h >= offsetY
+      ) {
+        if (b.type === "exit") controller.playerInfoObj.open = false;
+        else controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
+      }
+    });
+  }
 });

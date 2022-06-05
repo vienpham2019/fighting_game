@@ -74,6 +74,15 @@ export class Player extends Character {
     this.hp = 0;
     this.maxLevelHp = 100;
 
+    this.points = {
+      point: [5, 5],
+      health: [8, 10],
+      speed: [4, 10],
+      shield: [2, 10],
+      "attack speed": [4, 10],
+      damage: [4, 10],
+    };
+
     this.character_type = "player";
   }
 

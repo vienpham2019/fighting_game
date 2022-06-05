@@ -47,7 +47,7 @@ export class UpdatePlayer {
         h: 27,
       },
       {
-        type: "exis",
+        type: "exit",
         x: playerInfo.position.x + 790,
         y: playerInfo.position.y + 76,
         w: 33,
@@ -55,14 +55,10 @@ export class UpdatePlayer {
       },
     ];
 
-    this.points = {
-      point: [5, 5],
-      health: [8, 10],
-      speed: [4, 10],
-      shield: [2, 10],
-      "attack speed": [4, 10],
-      damage: [4, 10],
-    };
+    // clone player points
+    this.points = JSON.parse(JSON.stringify(player.points));
+
+    this.open = true;
   }
 
   drawPlayerInfo() {
@@ -185,7 +181,8 @@ export class UpdatePlayer {
 
   handleUpdatePlayerInfo(type) {
     if (this.points["point"][0] === 0) return;
-    if (this.points[type][0] === this.points[type][1]) return;
+    if (type != "upgrate" && this.points[type][0] === this.points[type][1])
+      return;
 
     switch (type) {
       case "health":
@@ -207,6 +204,11 @@ export class UpdatePlayer {
         this.points["damage"][0]++;
 
         break;
+
+      case "upgrate":
+        this.player.points = JSON.parse(JSON.stringify(this.points));
+        this.open = false;
+        return;
       default:
         break;
     }
@@ -214,6 +216,6 @@ export class UpdatePlayer {
   }
 
   run() {
-    this.drawPlayerInfo();
+    if (this.open) this.drawPlayerInfo();
   }
 }
