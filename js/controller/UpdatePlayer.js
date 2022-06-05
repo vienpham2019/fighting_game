@@ -180,6 +180,11 @@ export class UpdatePlayer {
   }
 
   handleUpdatePlayerInfo(type) {
+    if (type === "upgrate") {
+      this.player.points = JSON.parse(JSON.stringify(this.points));
+      this.open = false;
+      return;
+    }
     if (this.points["point"][0] === 0) return;
     if (type != "upgrate" && this.points[type][0] === this.points[type][1])
       return;
@@ -205,13 +210,10 @@ export class UpdatePlayer {
 
         break;
 
-      case "upgrate":
-        this.player.points = JSON.parse(JSON.stringify(this.points));
-        this.open = false;
-        return;
       default:
         break;
     }
+
     this.points["point"][0]--;
   }
 

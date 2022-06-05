@@ -83,6 +83,16 @@ export class Player extends Character {
       damage: [4, 10],
     };
 
+    this.info = {
+      hp: 200,
+      speed: 14,
+      jump: 20,
+      attack_speed: 20,
+      crit: 10,
+      damage: 103,
+      shield: 100,
+    };
+
     this.character_type = "player";
   }
 

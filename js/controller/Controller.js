@@ -1,4 +1,5 @@
 import { c } from "../main.js";
+import { InfoPanel } from "./InfoPanel.js";
 import { UpdatePlayer } from "./UpdatePlayer.js";
 export class Controller {
   constructor({
@@ -9,6 +10,7 @@ export class Controller {
     camera,
     healthBar,
     playerInfo,
+    infoPanel,
   }) {
     this.player = player;
     this.objs = objs;
@@ -17,6 +19,7 @@ export class Controller {
     this.camera = camera;
     this.healthBar = healthBar;
     this.playerInfoObj = new UpdatePlayer({ player, playerInfo });
+    this.playerInfoPanel = new InfoPanel({ player, infoPanel });
   }
 
   handleCamera() {

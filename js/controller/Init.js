@@ -73,6 +73,13 @@ export function int() {
     imageSrc: "../img/player info.png",
   });
 
+  const infoPanel = new Sprite({
+    position: { x: -20, y: canvas.height - 130 },
+    offset: { x: 0, y: 0 },
+    scale: 0.5,
+    imageSrc: "../img/info panel.png",
+  });
+
   const platforms = createPlatform(platform.platforms_1, "platform");
   const walls = createPlatform(platform.walls_1, "wall");
 
@@ -121,5 +128,6 @@ export function int() {
     camera,
     healthBar,
     playerInfo,
+    infoPanel,
   };
 }

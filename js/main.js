@@ -24,9 +24,10 @@ function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
-  // controller.run();
+  controller.run();
   controller.drawPlayerHealthBar();
   controller.playerInfoObj.run();
+  controller.playerInfoPanel.run();
 }
 
 animate();
@@ -47,6 +48,13 @@ window.addEventListener("keydown", (e) => {
         break;
       case " ":
         player.attack();
+        break;
+
+      case "p":
+        controller.playerInfoPanel.open = !controller.playerInfoPanel.open;
+        break;
+      case "u":
+        controller.playerInfoObj.open = !controller.playerInfoObj.open;
         break;
     }
   }
