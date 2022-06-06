@@ -173,7 +173,6 @@ export class Player extends Character {
       ) {
         this.velocity.x = 0;
       } else this.velocity.x = -this.speed.x;
-
       camera.x = -this.speed.x;
 
       this.flip = -1;
@@ -181,12 +180,13 @@ export class Player extends Character {
     } else if (this.keys[m.right].pressed && this.last_key[0] === m.right) {
       if (
         this.gameCurrentX <=
-          this.floorImage.x - this.changeScreen.x2 - this.width &&
+          this.floorImage.x -
+            (canvas.width - this.changeScreen.x2) -
+            this.width &&
         this.position.x >= this.changeScreen.x2
       ) {
         this.velocity.x = 0;
       } else this.velocity.x = this.speed.x;
-
       camera.x = this.speed.x;
 
       this.flip = 1;

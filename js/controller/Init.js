@@ -9,7 +9,7 @@ import { canvas } from "../main.js";
 
 export function int() {
   const floorImage = new Sprite({
-    position: { x: 0, y: 0 },
+    position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
     imageSrc: "..//img/platform lv1.png",
     scale: 1.5,
@@ -67,16 +67,16 @@ export function int() {
   });
 
   const playerInfo = new Sprite({
-    position: { x: 100, y: 100 },
+    position: { x: 200, y: 200 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/player info.png",
   });
 
   const infoPanel = new Sprite({
-    position: { x: -20, y: canvas.height - 130 },
+    position: { x: -20, y: canvas.height - 190 },
     offset: { x: 0, y: 0 },
-    scale: 0.5,
+    scale: 0.7,
     imageSrc: "../img/info panel.png",
   });
 

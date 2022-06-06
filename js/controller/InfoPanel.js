@@ -11,89 +11,89 @@ export class InfoPanel {
       this.player.info;
     this.infoPanel.update();
     c.fillStyle = "black";
-    c.font = "bold 9px Arial";
+    c.font = "bold 11px Arial";
     // Health
     c.fillText(
       "Hp",
-      this.infoPanel.position.x + 65,
-      this.infoPanel.position.y + 42
+      this.infoPanel.position.x + 89,
+      this.infoPanel.position.y + 57
     );
     c.fillText(
       `${hp}`,
-      this.infoPanel.position.x + 70,
-      this.infoPanel.position.y + 52
+      this.infoPanel.position.x + 100,
+      this.infoPanel.position.y + 72
     );
 
     // speed
     c.fillText(
       "Speed",
-      this.infoPanel.position.x + 65,
-      this.infoPanel.position.y + 67
+      this.infoPanel.position.x + 88,
+      this.infoPanel.position.y + 95
     );
     c.fillText(
       `${speed}`,
-      this.infoPanel.position.x + 70,
-      this.infoPanel.position.y + 79
+      this.infoPanel.position.x + 100,
+      this.infoPanel.position.y + 109
     );
 
     // jump
     c.fillText(
       "Jump",
-      this.infoPanel.position.x + 65,
-      this.infoPanel.position.y + 95
+      this.infoPanel.position.x + 87,
+      this.infoPanel.position.y + 132
     );
     c.fillText(
       `${jump}`,
-      this.infoPanel.position.x + 70,
-      this.infoPanel.position.y + 106
+      this.infoPanel.position.x + 100,
+      this.infoPanel.position.y + 147
     );
 
     // attack speed
     c.fillText(
       "Attack Speed",
-      this.infoPanel.position.x + 150,
-      this.infoPanel.position.y + 41
+      this.infoPanel.position.x + 210,
+      this.infoPanel.position.y + 57
     );
     c.fillText(
       `${attack_speed}%`,
-      this.infoPanel.position.x + 160,
-      this.infoPanel.position.y + 52
+      this.infoPanel.position.x + 220,
+      this.infoPanel.position.y + 72
     );
 
     // crit
     c.fillText(
       "Crit",
-      this.infoPanel.position.x + 150,
-      this.infoPanel.position.y + 68
+      this.infoPanel.position.x + 210,
+      this.infoPanel.position.y + 95
     );
     c.fillText(
       `${crit}%`,
-      this.infoPanel.position.x + 160,
-      this.infoPanel.position.y + 79
+      this.infoPanel.position.x + 217,
+      this.infoPanel.position.y + 109
     );
 
     // damage
     c.fillText(
       "Damage",
-      this.infoPanel.position.x + 150,
-      this.infoPanel.position.y + 97
+      this.infoPanel.position.x + 208,
+      this.infoPanel.position.y + 133
     );
     c.fillText(
       `${damage}`,
-      this.infoPanel.position.x + 160,
-      this.infoPanel.position.y + 108
+      this.infoPanel.position.x + 215,
+      this.infoPanel.position.y + 149
     );
 
     // shield
     c.fillText(
       "Shield",
-      this.infoPanel.position.x + 233,
-      this.infoPanel.position.y + 42
+      this.infoPanel.position.x + 328,
+      this.infoPanel.position.y + 59
     );
     c.fillText(
       `${shield}`,
-      this.infoPanel.position.x + 240,
-      this.infoPanel.position.y + 53
+      this.infoPanel.position.x + 338,
+      this.infoPanel.position.y + 73
     );
   }
 
