@@ -60,6 +60,19 @@ window.addEventListener("keydown", (e) => {
       case "u":
         controller.playerInfoObj.open = !controller.playerInfoObj.open;
         break;
+
+      case "1":
+        controller.itemsInfoPanel.handleUseItems(1);
+        break;
+      case "2":
+        controller.itemsInfoPanel.handleUseItems(2);
+        break;
+      case "3":
+        controller.itemsInfoPanel.handleUseItems(3);
+        break;
+      case "4":
+        controller.itemsInfoPanel.handleUseItems(4);
+        break;
     }
   }
 });
@@ -93,6 +106,19 @@ canvas.addEventListener("click", (e) => {
       ) {
         if (b.type === "exit") controller.playerInfoObj.open = false;
         else controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
+      }
+    });
+  }
+
+  if (controller.shopInfoPanel.open) {
+    controller.shopInfoPanel.buttons.forEach((b) => {
+      if (
+        b.x <= offsetX &&
+        b.x + b.w >= offsetX &&
+        b.y <= offsetY &&
+        b.y + b.h >= offsetY
+      ) {
+        controller.shopInfoPanel.handleButton(b.type);
       }
     });
   }

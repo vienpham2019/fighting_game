@@ -93,6 +93,38 @@ export class Player extends Character {
       shield: 100,
     };
 
+    this.playerItems = [
+      {
+        type: "shieldPotion",
+        amount: 10,
+        isUse: false,
+        box: {},
+        miliSecond: 0,
+        second: 2,
+        maxSecond: 2,
+      },
+      {
+        type: "healPotion",
+        amount: 10,
+        isUse: false,
+        box: {},
+        miliSecond: 0,
+        second: 2,
+        maxSecond: 2,
+      },
+      {
+        type: "critPotion",
+        amount: 2,
+        isUse: false,
+        box: {},
+        miliSecond: 0,
+        second: 15,
+        maxSecond: 15,
+      },
+    ];
+
+    this.totalCoints = 2000;
+
     this.character_type = "player";
   }
 

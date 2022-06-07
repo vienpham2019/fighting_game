@@ -88,10 +88,17 @@ export function int() {
   });
 
   const itemsPanel = new Sprite({
-    position: { x: canvas.width - 330, y: canvas.height - 120 },
+    position: { x: canvas.width - 260, y: canvas.height - 120 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/items_panel.png",
+  });
+
+  const itemsPanelDetails = new Sprite({
+    position: { x: canvas.width - 256, y: canvas.height - 171 },
+    offset: { x: 0, y: 0 },
+    scale: 1,
+    imageSrc: "../img/items_panel_details.png",
   });
 
   const items = {
@@ -122,14 +129,14 @@ export function int() {
       scale: 1,
       imageSrc: "../img/items/crit potion.png",
     }),
-    permitCritPotion: new Sprite({
+    permanetCritPotion: new Sprite({
       position: {
         x: itemsPanel.position.x + 20,
         y: itemsPanel.position.y + 34,
       },
       offset: { x: 0, y: 0 },
       scale: 1,
-      imageSrc: "../img/items/permit crit potion.png",
+      imageSrc: "../img/items/permanet crit potion.png",
     }),
   };
   const platforms = createPlatform(platform.platforms_1, "platform");
@@ -184,5 +191,6 @@ export function int() {
     shopPanel,
     itemsPanel,
     items,
+    itemsPanelDetails,
   };
 }

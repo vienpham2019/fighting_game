@@ -1,10 +1,10 @@
 import { c } from "../main.js";
-import { Sprite } from "../Sprite.js";
 export class ItemsPanel {
-  constructor({ player, itemsPanel, items }) {
+  constructor({ player, itemsPanel, items, itemsPanelDetails }) {
     this.itemsPanel = itemsPanel;
     this.player = player;
     this.items = items;
+    this.itemsPanelDetails = itemsPanelDetails;
 
     this.open = true;
 
@@ -13,40 +13,102 @@ export class ItemsPanel {
       y: itemsPanel.position.y + 54,
       w: 45,
       h: 41,
+      mh: 41,
     };
 
-    this.playerItems = [
-      {
-        type: "healPotion",
-        amount: 10,
-        box: { ...this.coverBox },
-        isUse: false,
+    this.itemsPanelDetailsImage = new Image();
+    this.itemsPanelDetailsImage.src = "../img/items/crit potion.png";
+
+    this.itemDetails = {
+      heal: {
+        name: "Heal Potion",
+        offset: { x: -5, y: 0 },
+        details: ["Regenerate 20% of total hp"],
+        image_url: "../img/items/heal potion.png",
       },
-      {
-        type: "shieldPotion",
-        amount: 10,
-        box: { ...this.coverBox },
-        isUse: false,
+      shield: {
+        name: "Shield Potion",
+        offset: { x: -5, y: 0 },
+        details: ["Regenerate 20% of total shield"],
+        image_url: "../img/items/shield potion.png",
       },
-      {
-        type: "critPotion",
-        amount: 1,
-        box: { ...this.coverBox },
-        isUse: false,
+      crit: {
+        name: "Crit Potion",
+        offset: { x: -10, y: 0 },
+        details: [
+          "Increase 20% crit damage and",
+          "10% crit chance in 15 second",
+        ],
+        image_url: "../img/items/crit potion.png",
       },
-      {
-        type: "permitCritPotion",
-        amount: 10,
-        box: { ...this.coverBox },
-        isUse: true,
+      permanent_crit: {
+        name: "Permanet Crit Potion",
+        offset: { x: -13, y: 2 },
+        details: ["Permanet increase 10% crit", "damage and 15% crit chance."],
+        image_url: "../img/items/permanent crit potion.png",
       },
-    ];
+    };
+
+    player.playerItems.forEach(
+      (_, i) => (player.playerItems[i]["box"] = { ...this.coverBox })
+    );
+  }
+
+  handleUseItems(order) {
+    if (order > this.player.playerItems.length) return;
+    if (this.player.playerItems[order - 1].isUse) return;
+    this.player.playerItems[order - 1].isUse = true;
+    if (--this.player.playerItems[order - 1].amount == 0) {
+      this.player.playerItems.splice(order - 1, 1);
+      return;
+    }
+    this.player.playerItems[order - 1].second =
+      this.player.playerItems[order - 1].maxSecond;
+    this.player.playerItems[order - 1].maxSecond =
+      this.player.playerItems[order - 1].maxSecond;
+    this.player.playerItems[order - 1].miliSecond = 0;
+
+    this.player.playerItems[order - 1].box = {
+      x: this.itemsPanel.position.x + 48,
+      y: this.itemsPanel.position.y + 54,
+      w: 45,
+      h: 41,
+      mh: 41,
+    };
+  }
+
+  drawItemsDetailsInfo(type) {
+    this.itemsPanelDetails.update();
+    if (this.itemsPanelDetailsImage.src != this.itemDetails[type].image_url)
+      this.itemsPanelDetailsImage.src = this.itemDetails[type].image_url;
+    c.drawImage(
+      this.itemsPanelDetailsImage,
+      this.itemsPanelDetails.position.x + 30 + this.itemDetails[type].offset.x,
+      this.itemsPanelDetails.position.y + 30 + this.itemDetails[type].offset.y,
+      this.itemsPanelDetailsImage.width,
+      this.itemsPanelDetailsImage.height
+    );
+    c.font = "11px Arial";
+    c.fillStyle = "black";
+    c.fillText(
+      this.itemDetails[type].name,
+      this.itemsPanelDetails.position.x + 83,
+      this.itemsPanelDetails.position.y + 63
+    );
+    c.font = "10px Arial";
+    this.itemDetails[type].details.forEach((t, i) => {
+      c.fillText(
+        t,
+        this.itemsPanelDetails.position.x + 91,
+        this.itemsPanelDetails.position.y + 75 + 9 * i
+      );
+    });
   }
 
   drawItemsInfo() {
     c.font = "bold 11px Arial";
     this.itemsPanel.update();
-    this.playerItems.forEach((e, i) => {
+    this.player.playerItems.forEach((e, i) => {
       this.items[e.type].offset.x = -50 * i;
       this.items[e.type].update();
       c.fillStyle = "black";
@@ -61,16 +123,22 @@ export class ItemsPanel {
         this.itemsPanel.position.y + 93
       );
       c.fillStyle = "rgba(0,0,0,0.5)";
-      if (e.box.h && e.isUse)
-        c.fillRect(e.box.x + 49 * i, e.box.y++, e.box.w, e.box.h--);
-      else {
-        e.box.h = this.coverBox.h;
-        e.isUse = false;
+      if (e.box.h && e.isUse && e.second) {
+        e.box.y += e.box.mh / e.maxSecond / 100;
+        e.box.h -= e.box.mh / e.maxSecond / 100;
+        if (e.miliSecond++ === 100) {
+          e.miliSecond = 0;
+          e.second--;
+        }
+        c.fillRect(e.box.x + 49 * i, e.box.y, e.box.w, e.box.h);
+
+        e.isUse = e.box.h > 0;
       }
     });
   }
 
   run() {
+    this.drawItemsDetailsInfo("permanent_crit");
     if (this.open) this.drawItemsInfo();
   }
 }

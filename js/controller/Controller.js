@@ -16,6 +16,7 @@ export class Controller {
     shopPanel,
     itemsPanel,
     items,
+    itemsPanelDetails,
   }) {
     this.player = player;
     this.objs = objs;
@@ -25,8 +26,13 @@ export class Controller {
     this.healthBar = healthBar;
     this.playerInfoObj = new UpdatePlayer({ player, playerInfo });
     this.playerInfoPanel = new InfoPanel({ player, infoPanel });
-    this.shopInfoPanel = new ShopPanel({ player, shopPanel });
-    this.itemsInfoPanel = new ItemsPanel({ player, itemsPanel, items });
+    this.shopInfoPanel = new ShopPanel({ player, shopPanel, itemsPanel });
+    this.itemsInfoPanel = new ItemsPanel({
+      player,
+      itemsPanel,
+      items,
+      itemsPanelDetails,
+    });
   }
 
   handleCamera() {
