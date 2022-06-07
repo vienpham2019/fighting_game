@@ -1,6 +1,8 @@
 import { c } from "../main.js";
 import { InfoPanel } from "./InfoPanel.js";
 import { UpdatePlayer } from "./UpdatePlayer.js";
+import { ShopPanel } from "./ShopPanel.js";
+import { ItemsPanel } from "./ItemsPanel.js";
 export class Controller {
   constructor({
     player,
@@ -11,6 +13,9 @@ export class Controller {
     healthBar,
     playerInfo,
     infoPanel,
+    shopPanel,
+    itemsPanel,
+    items,
   }) {
     this.player = player;
     this.objs = objs;
@@ -20,6 +25,8 @@ export class Controller {
     this.healthBar = healthBar;
     this.playerInfoObj = new UpdatePlayer({ player, playerInfo });
     this.playerInfoPanel = new InfoPanel({ player, infoPanel });
+    this.shopInfoPanel = new ShopPanel({ player, shopPanel });
+    this.itemsInfoPanel = new ItemsPanel({ player, itemsPanel, items });
   }
 
   handleCamera() {

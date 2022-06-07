@@ -80,6 +80,58 @@ export function int() {
     imageSrc: "../img/info panel.png",
   });
 
+  const shopPanel = new Sprite({
+    position: { x: 200, y: 200 },
+    offset: { x: 0, y: 0 },
+    scale: 1,
+    imageSrc: "../img/shop_panel.png",
+  });
+
+  const itemsPanel = new Sprite({
+    position: { x: canvas.width - 330, y: canvas.height - 120 },
+    offset: { x: 0, y: 0 },
+    scale: 1,
+    imageSrc: "../img/items_panel.png",
+  });
+
+  const items = {
+    healPotion: new Sprite({
+      position: {
+        x: itemsPanel.position.x + 28,
+        y: itemsPanel.position.y + 34,
+      },
+      offset: { x: 0, y: 0 },
+      scale: 1,
+      imageSrc: "../img/items/heal potion.png",
+    }),
+    shieldPotion: new Sprite({
+      position: {
+        x: itemsPanel.position.x + 25,
+        y: itemsPanel.position.y + 34,
+      },
+      offset: { x: 0, y: 0 },
+      scale: 1,
+      imageSrc: "../img/items/shield potion.png",
+    }),
+    critPotion: new Sprite({
+      position: {
+        x: itemsPanel.position.x + 21,
+        y: itemsPanel.position.y + 34,
+      },
+      offset: { x: 0, y: 0 },
+      scale: 1,
+      imageSrc: "../img/items/crit potion.png",
+    }),
+    permitCritPotion: new Sprite({
+      position: {
+        x: itemsPanel.position.x + 20,
+        y: itemsPanel.position.y + 34,
+      },
+      offset: { x: 0, y: 0 },
+      scale: 1,
+      imageSrc: "../img/items/permit crit potion.png",
+    }),
+  };
   const platforms = createPlatform(platform.platforms_1, "platform");
   const walls = createPlatform(platform.walls_1, "wall");
 
@@ -129,5 +181,8 @@ export function int() {
     healthBar,
     playerInfo,
     infoPanel,
+    shopPanel,
+    itemsPanel,
+    items,
   };
 }

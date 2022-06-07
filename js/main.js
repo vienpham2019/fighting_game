@@ -28,8 +28,10 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   controller.run();
   controller.drawPlayerHealthBar();
-  controller.playerInfoObj.run();
-  controller.playerInfoPanel.run();
+  // controller.playerInfoObj.run();
+  // controller.playerInfoPanel.run();
+  controller.shopInfoPanel.run();
+  controller.itemsInfoPanel.run();
 }
 
 animate();

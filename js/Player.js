@@ -181,8 +181,7 @@ export class Player extends Character {
       if (
         this.gameCurrentX <=
           this.floorImage.x -
-            (canvas.width - this.changeScreen.x2) -
-            this.width &&
+            (canvas.width - this.changeScreen.x2 + this.width) &&
         this.position.x >= this.changeScreen.x2
       ) {
         this.velocity.x = 0;
