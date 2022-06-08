@@ -27,11 +27,6 @@ function animate() {
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   controller.run();
-  controller.drawPlayerHealthBar();
-  // controller.playerInfoObj.run();
-  // controller.playerInfoPanel.run();
-  controller.shopInfoPanel.run();
-  controller.itemsInfoPanel.run();
 }
 
 animate();
@@ -122,4 +117,17 @@ canvas.addEventListener("click", (e) => {
       }
     });
   }
+
+  controller.itemsInfoPanel.openItemInfo = false;
+  player.playerItems.forEach((e, i) => {
+    if (
+      e.box.x + 49 * i <= offsetX &&
+      e.box.x + 49 * i + e.box.w >= offsetX &&
+      e.box.y <= offsetY &&
+      e.box.y + e.box.mh >= offsetY
+    ) {
+      controller.itemsInfoPanel.itemInfoType = e.type;
+      controller.itemsInfoPanel.openItemInfo = true;
+    }
+  });
 });

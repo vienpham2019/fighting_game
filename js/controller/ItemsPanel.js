@@ -20,19 +20,19 @@ export class ItemsPanel {
     this.itemsPanelDetailsImage.src = "../img/items/crit potion.png";
 
     this.itemDetails = {
-      heal: {
+      healPotion: {
         name: "Heal Potion",
         offset: { x: -5, y: 0 },
         details: ["Regenerate 20% of total hp"],
         image_url: "../img/items/heal potion.png",
       },
-      shield: {
+      shieldPotion: {
         name: "Shield Potion",
         offset: { x: -5, y: 0 },
         details: ["Regenerate 20% of total shield"],
         image_url: "../img/items/shield potion.png",
       },
-      crit: {
+      critPotion: {
         name: "Crit Potion",
         offset: { x: -10, y: 0 },
         details: [
@@ -41,7 +41,7 @@ export class ItemsPanel {
         ],
         image_url: "../img/items/crit potion.png",
       },
-      permanent_crit: {
+      permanentCritPotion: {
         name: "Permanet Crit Potion",
         offset: { x: -13, y: 2 },
         details: ["Permanet increase 10% crit", "damage and 15% crit chance."],
@@ -52,6 +52,9 @@ export class ItemsPanel {
     player.playerItems.forEach(
       (_, i) => (player.playerItems[i]["box"] = { ...this.coverBox })
     );
+
+    this.itemInfoType = "healPotion";
+    this.openItemInfo = false;
   }
 
   handleUseItems(order) {
@@ -77,26 +80,35 @@ export class ItemsPanel {
     };
   }
 
-  drawItemsDetailsInfo(type) {
+  drawItemsDetailsInfo() {
     this.itemsPanelDetails.update();
-    if (this.itemsPanelDetailsImage.src != this.itemDetails[type].image_url)
-      this.itemsPanelDetailsImage.src = this.itemDetails[type].image_url;
+
+    if (
+      this.itemsPanelDetailsImage.src !=
+      this.itemDetails[this.itemInfoType].image_url
+    )
+      this.itemsPanelDetailsImage.src =
+        this.itemDetails[this.itemInfoType].image_url;
     c.drawImage(
       this.itemsPanelDetailsImage,
-      this.itemsPanelDetails.position.x + 30 + this.itemDetails[type].offset.x,
-      this.itemsPanelDetails.position.y + 30 + this.itemDetails[type].offset.y,
+      this.itemsPanelDetails.position.x +
+        30 +
+        this.itemDetails[this.itemInfoType].offset.x,
+      this.itemsPanelDetails.position.y +
+        30 +
+        this.itemDetails[this.itemInfoType].offset.y,
       this.itemsPanelDetailsImage.width,
       this.itemsPanelDetailsImage.height
     );
     c.font = "11px Arial";
     c.fillStyle = "black";
     c.fillText(
-      this.itemDetails[type].name,
+      this.itemDetails[this.itemInfoType].name,
       this.itemsPanelDetails.position.x + 83,
       this.itemsPanelDetails.position.y + 63
     );
     c.font = "10px Arial";
-    this.itemDetails[type].details.forEach((t, i) => {
+    this.itemDetails[this.itemInfoType].details.forEach((t, i) => {
       c.fillText(
         t,
         this.itemsPanelDetails.position.x + 91,
@@ -138,7 +150,7 @@ export class ItemsPanel {
   }
 
   run() {
-    this.drawItemsDetailsInfo("permanent_crit");
+    if (this.openItemInfo) this.drawItemsDetailsInfo();
     if (this.open) this.drawItemsInfo();
   }
 }

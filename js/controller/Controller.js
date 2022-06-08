@@ -254,5 +254,12 @@ export class Controller {
     // Camera
     this.handleCamera();
     // camera
+
+    // game object
+    this.drawPlayerHealthBar();
+    this.playerInfoObj.run();
+    this.playerInfoPanel.run();
+    this.shopInfoPanel.run();
+    this.itemsInfoPanel.run();
   }
 }
