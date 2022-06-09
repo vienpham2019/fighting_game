@@ -3,6 +3,8 @@ import { InfoPanel } from "./InfoPanel.js";
 import { UpdatePlayer } from "./UpdatePlayer.js";
 import { ShopPanel } from "./ShopPanel.js";
 import { ItemsPanel } from "./ItemsPanel.js";
+import { createItem } from "../helper.js";
+
 export class Controller {
   constructor({
     player,
@@ -24,6 +26,7 @@ export class Controller {
     this.walls = walls;
     this.camera = camera;
     this.healthBar = healthBar;
+    this.itemsPanel = itemsPanel;
     this.playerInfoObj = new UpdatePlayer({ player, playerInfo });
     this.playerInfoPanel = new InfoPanel({ player, infoPanel });
     this.shopInfoPanel = new ShopPanel({ player, shopPanel, itemsPanel });
@@ -33,6 +36,18 @@ export class Controller {
       items,
       itemsPanelDetails,
     });
+
+    this.itemsObj = [];
+
+    // this.itemsObj.push(
+    //   createItem({
+    //     type: "permanetCritPotion",
+    //     position: { x: 200, y: 300 },
+    //     platform: this.platforms[3],
+    //     itemsPanel,
+    //   })
+    // );
+    // this.itemsObj[0].player = player;
   }
 
   handleCamera() {
@@ -61,6 +76,11 @@ export class Controller {
       this.player.enemys.forEach((e) => {
         e.handleGameMove({ x: this.camera.x * -1, y: 0 });
       });
+
+      // itemObj
+      this.itemsObj.forEach((i) => {
+        i.position.x += this.camera.x * -1;
+      });
     }
     // X axis
 
@@ -87,6 +107,11 @@ export class Controller {
       // enemys
       this.player.enemys.forEach((e) => {
         e.handleGameMove({ x: 0, y: this.camera.offset.diff * -1 });
+      });
+
+      // itemObj
+      this.itemsObj.forEach((i) => {
+        i.position.y += this.camera.offset.diff * -1;
       });
 
       this.player.position.y += this.camera.offset.diff * -1;
@@ -207,6 +232,23 @@ export class Controller {
       this.healthBar.position.x + 40 + (this.player.level < 10 ? 3 : 1),
       this.healthBar.position.y + 66
     );
+
+    c.fillText(
+      `${this.player.totalCoints}`,
+      this.healthBar.position.x + 77,
+      this.healthBar.position.y + 67
+    );
+  }
+
+  checkObjInPlayerRange(obj) {
+    return (
+      obj.position.x > this.player.position.x - 600 &&
+      obj.position.x + obj.width <
+        this.player.position.x + this.player.width + 600 &&
+      obj.position.y > this.player.position.y - 500 &&
+      obj.position.y + obj.height <
+        this.player.position.y + this.player.height + 500
+    );
   }
 
   run() {
@@ -238,17 +280,29 @@ export class Controller {
       // update each enemy
       this.player.enemys.forEach((e) => {
         // only load enemy if player in range
-        if (
-          e.position.x > this.player.position.x - 600 &&
-          e.position.x + e.width <
-            this.player.position.x + this.player.width + 600 &&
-          e.position.y > this.player.position.y - 500 &&
-          e.position.y + e.height <
-            this.player.position.y + this.player.height + 500
-        )
-          e.update();
+        if (this.checkObjInPlayerRange(e)) e.update();
       });
-      this.player.enemys = this.player.enemys.filter((e) => !e.is_death);
+      this.player.enemys = this.player.enemys.filter((e) => {
+        if (!e.is_death) return true;
+        else {
+          e.itemsObj.forEach((i) => {
+            i.position = { ...e.position };
+            i.itemsPanel = this.itemsPanel;
+            i.player = this.player;
+            this.itemsObj.push(i);
+          });
+          return false;
+        }
+      });
+    }
+
+    // itemsObj
+    if (this.itemsObj.length > 0) {
+      this.itemsObj.forEach((i) => {
+        if (this.checkObjInPlayerRange(i)) i.run();
+        if (--i.coolDown <= 0) i.isPickUp = true;
+      });
+      this.itemsObj = this.itemsObj.filter((i) => i.isPickUp === false);
     }
 
     // Camera
@@ -257,9 +311,9 @@ export class Controller {
 
     // game object
     this.drawPlayerHealthBar();
-    this.playerInfoObj.run();
-    this.playerInfoPanel.run();
-    this.shopInfoPanel.run();
+    // this.playerInfoObj.run();
+    // this.playerInfoPanel.run();
+    // this.shopInfoPanel.run();
     this.itemsInfoPanel.run();
   }
 }

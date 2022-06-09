@@ -11,6 +11,7 @@ export class ItemsPanel {
     this.coverBox = {
       x: itemsPanel.position.x + 48,
       y: itemsPanel.position.y + 54,
+      my: itemsPanel.position.y + 54,
       w: 45,
       h: 41,
       mh: 41,
@@ -61,10 +62,11 @@ export class ItemsPanel {
     if (order > this.player.playerItems.length) return;
     if (this.player.playerItems[order - 1].isUse) return;
     this.player.playerItems[order - 1].isUse = true;
-    if (--this.player.playerItems[order - 1].amount == 0) {
-      this.player.playerItems.splice(order - 1, 1);
-      return;
-    }
+    this.player.playerItems[order - 1].amount--;
+    // if (--this.player.playerItems[order - 1].amount == 0) {
+    //   this.player.playerItems.splice(order - 1, 1);
+    //   return;
+    // }
     this.player.playerItems[order - 1].second =
       this.player.playerItems[order - 1].maxSecond;
     this.player.playerItems[order - 1].maxSecond =
@@ -74,6 +76,7 @@ export class ItemsPanel {
     this.player.playerItems[order - 1].box = {
       x: this.itemsPanel.position.x + 48,
       y: this.itemsPanel.position.y + 54,
+      my: this.itemsPanel.position.y + 54,
       w: 45,
       h: 41,
       mh: 41,
@@ -83,12 +86,8 @@ export class ItemsPanel {
   drawItemsDetailsInfo() {
     this.itemsPanelDetails.update();
 
-    if (
-      this.itemsPanelDetailsImage.src !=
-      this.itemDetails[this.itemInfoType].image_url
-    )
-      this.itemsPanelDetailsImage.src =
-        this.itemDetails[this.itemInfoType].image_url;
+    this.itemsPanelDetailsImage.src =
+      this.itemDetails[this.itemInfoType].image_url;
     c.drawImage(
       this.itemsPanelDetailsImage,
       this.itemsPanelDetails.position.x +
@@ -145,6 +144,10 @@ export class ItemsPanel {
         c.fillRect(e.box.x + 49 * i, e.box.y, e.box.w, e.box.h);
 
         e.isUse = e.box.h > 0;
+      }
+
+      if (e.amount == 0 && e.box.h <= 0) {
+        this.player.playerItems.splice(i, 1);
       }
     });
   }

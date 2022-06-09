@@ -96,21 +96,21 @@ export class Player extends Character {
     this.playerItems = [
       {
         type: "shieldPotion",
-        amount: 10,
+        amount: 15,
         isUse: false,
         box: {},
         miliSecond: 0,
-        second: 2,
-        maxSecond: 2,
+        second: 1,
+        maxSecond: 1,
       },
       {
         type: "healPotion",
-        amount: 10,
+        amount: 15,
         isUse: false,
         box: {},
         miliSecond: 0,
-        second: 2,
-        maxSecond: 2,
+        second: 1,
+        maxSecond: 1,
       },
       {
         type: "critPotion",
@@ -144,7 +144,7 @@ export class Player extends Character {
     if (this.hp > this.maxLevelHp) {
       this.level += Math.floor(this.hp / this.maxLevelHp);
       this.hp = this.hp % this.maxLevelHp;
-      this.maxLevelHp += Math.floor(this.level * this.maxLevelHp * 0.3);
+      this.maxLevelHp += Math.floor(this.level * 100 * 0.3);
     }
   }
 
@@ -283,7 +283,8 @@ export class Player extends Character {
           this.frameCurrent === sprite.hitFrame &&
           this.rectCollition(e)
         ) {
-          e.handelTakeHit(sprite.damge);
+          // e.handelTakeHit(sprite.damge);
+          e.handelTakeHit(200);
         }
 
         if (this.frameCurrent === this.framesMax - 1) {

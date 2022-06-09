@@ -136,7 +136,7 @@ export function int() {
       },
       offset: { x: 0, y: 0 },
       scale: 1,
-      imageSrc: "../img/items/permanet crit potion.png",
+      imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
   const platforms = createPlatform(platform.platforms_1, "platform");

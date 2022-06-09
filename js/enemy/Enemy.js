@@ -1,6 +1,6 @@
 import { c, canvas } from "../main.js";
 import { Character } from "../Character.js";
-import { getCoordinate } from "../helper.js";
+import { getCoordinate, getRandomArbitrary, createItem } from "../helper.js";
 
 export class Enemy extends Character {
   constructor({
@@ -49,6 +49,29 @@ export class Enemy extends Character {
     this.character_type = "enemy";
     this.canStuntWhenAttack = true;
     this.addHp = false;
+
+    this.itemsObj = [];
+
+    let random = getRandomArbitrary(2, 6);
+    for (let i = 0; i < random; i++) {
+      this.itemsObj.push(createItem({ type: "coint", position, platform }));
+    }
+
+    if (Math.random() > 0.7) {
+      this.itemsObj.push(
+        createItem({ type: "healPotion", position, platform })
+      );
+    }
+    if (Math.random() > 0.7) {
+      this.itemsObj.push(
+        createItem({ type: "shieldPotion", position, platform })
+      );
+    }
+    if (Math.random() > 0.98) {
+      this.itemsObj.push(
+        createItem({ type: "critPotion", position, platform })
+      );
+    }
   }
 
   handleGameMove(move_postition) {

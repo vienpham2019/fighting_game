@@ -7,8 +7,8 @@ export class ShopPanel {
 
     this.open = true;
     this.shopDetails = [
-      { type: "healPotion", amount: 1, cost: 30 },
-      { type: "shieldPotion", amount: 1, cost: 30 },
+      { type: "healPotion", amount: 1, cost: 40 },
+      { type: "shieldPotion", amount: 1, cost: 40 },
     ];
     this.buttons = [
       {
@@ -125,6 +125,8 @@ export class ShopPanel {
           this.player.playerItems[i].amount = 15;
 
           if (amount === 0) return;
+        } else {
+          return;
         }
       }
     }
@@ -137,13 +139,14 @@ export class ShopPanel {
       box: {
         x: this.itemsPanel.position.x + 48,
         y: this.itemsPanel.position.y + 54,
+        my: this.itemsPanel.position.y + 54,
         w: 45,
         h: 41,
         mh: 41,
       },
       miliSecond: 0,
-      maxSecond: 2,
-      second: 2,
+      maxSecond: 1,
+      second: 1,
     });
   }
 

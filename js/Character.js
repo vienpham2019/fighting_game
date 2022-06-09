@@ -69,7 +69,7 @@ export class Character extends Sprite {
     }
   }
 
-  damgeEffect(target, text, color = "white") {
+  damgeEffect(target, text, color = "white", fontSize = "20px") {
     let metrics = c.measureText(text);
     if (target.character_type === "player") color = "yellow";
     if (target.character_type === "hp") color = "green";
@@ -84,6 +84,7 @@ export class Character extends Sprite {
       alpha: 1,
       time: 30,
       color,
+      fontSize,
     });
   }
 
@@ -122,7 +123,7 @@ export class Character extends Sprite {
     // this.hitboxdraw();
     this.damges.forEach((d, i) => {
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
-        (c.font = "bold 20px Arial");
+        (c.font = `bold ${d.fontSize} Arial`);
       c.strokeStyle = d.color;
       c.lineWidth = 5;
       c.strokeText(d.text, d.x, d.y);

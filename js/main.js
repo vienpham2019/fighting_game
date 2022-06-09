@@ -1,11 +1,3 @@
-import { Sprite } from "./Sprite.js";
-import {
-  createPlatform,
-  createPlayer,
-  createEnemyByPlatform,
-  createEnemy,
-} from "./helper.js";
-
 import { Controller } from "./controller/Controller.js";
 import { int } from "./controller/Init.js";
 
@@ -123,8 +115,8 @@ canvas.addEventListener("click", (e) => {
     if (
       e.box.x + 49 * i <= offsetX &&
       e.box.x + 49 * i + e.box.w >= offsetX &&
-      e.box.y <= offsetY &&
-      e.box.y + e.box.mh >= offsetY
+      e.box.my <= offsetY &&
+      e.box.my + e.box.mh >= offsetY
     ) {
       controller.itemsInfoPanel.itemInfoType = e.type;
       controller.itemsInfoPanel.openItemInfo = true;

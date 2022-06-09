@@ -24,10 +24,14 @@ import { Andras } from "./enemy/boss/Andras.js";
 import { Sygnus } from "./enemy/boss/Sygnus.js";
 import { Boomer } from "./enemy/boss/Boomer.js";
 
+// Items
+import { Item } from "./controller/Item.js";
+
 //data
 import { player_data } from "./data/player_data.js";
 import { enemy_data } from "./data/enemy_data.js";
 import { boss_data } from "./data/boss_data.js";
+import { items_data } from "./data/items_data.js";
 
 export function getCoordinate(p) {
   return [
@@ -211,4 +215,17 @@ export function createPlatform(arr, type) {
     );
   }
   return result;
+}
+
+export function createItem({ type, position, platform, itemsPanel }) {
+  let velocity_x = 1;
+  if (type === "Coints")
+    velocity_x = getRandomArbitrary(1, 5) * (Math.random() > 0.5 ? -1 : 1);
+  return new Item({
+    position,
+    ...items_data[type],
+    platform,
+    velocity: { x: velocity_x, y: 0 },
+    itemsPanel,
+  });
 }
