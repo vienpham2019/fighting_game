@@ -112,18 +112,9 @@ export class Player extends Character {
         second: 1,
         maxSecond: 1,
       },
-      {
-        type: "critPotion",
-        amount: 2,
-        isUse: false,
-        box: {},
-        miliSecond: 0,
-        second: 15,
-        maxSecond: 15,
-      },
     ];
 
-    this.totalCoints = 2000;
+    this.totalCoints = 0;
 
     this.character_type = "player";
   }

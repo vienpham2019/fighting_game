@@ -51,6 +51,7 @@ export class Item extends Sprite {
     }
 
     if (this.player.playerItems.length === 4) return;
+    let maxSecond = type === "healPotion" || type === "shieldPotion" ? 1 : 15;
     this.player.playerItems.push({
       type,
       amount: 1,
@@ -64,8 +65,8 @@ export class Item extends Sprite {
         mh: 41,
       },
       miliSecond: 0,
-      maxSecond: 1,
-      second: 1,
+      maxSecond,
+      second: maxSecond,
     });
     this.isPickUp = true;
   }

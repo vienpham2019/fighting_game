@@ -311,8 +311,8 @@ export class Controller {
 
     // game object
     this.drawPlayerHealthBar();
-    // this.playerInfoObj.run();
-    // this.playerInfoPanel.run();
+    this.playerInfoObj.run();
+    this.playerInfoPanel.run();
     // this.shopInfoPanel.run();
     this.itemsInfoPanel.run();
   }

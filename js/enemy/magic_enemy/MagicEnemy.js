@@ -153,7 +153,6 @@ export class MagicEnemy extends Enemy {
       }
       this.detectMagicObj();
     } else {
-      this.updateSprite(this.sprites.run);
       this.attack_again = true;
       this.start_attack = false;
       this.move();

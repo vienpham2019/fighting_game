@@ -52,6 +52,12 @@ export class Enemy extends Character {
 
     this.itemsObj = [];
 
+    this.palseMoveCoolDown = 0;
+    this.setPalseMoveCoolDown = false;
+
+    this.continueMoveCoolDown = getRandomArbitrary(100, 500);
+    this.setContinueMoveCoolDown = false;
+
     let random = getRandomArbitrary(2, 6);
     for (let i = 0; i < random; i++) {
       this.itemsObj.push(createItem({ type: "coint", position, platform }));
@@ -131,16 +137,40 @@ export class Enemy extends Character {
 
     let [p_x1, p_x2] = getCoordinate(this.platform);
 
-    if (x1 <= p_x1 || x2 >= p_x2) {
-      this.velocity.x *= -1;
-      this.flip *= -1;
-    }
-    if (this.velocity.x === 0) {
+    if (this.continueMoveCoolDown-- > 0) {
+      this.updateSprite(this.sprites.run);
+
       if (this.flip === 1) {
         this.velocity.x = this.speed.x;
       } else {
         this.velocity.x = -this.speed.x;
       }
+    } else {
+      this.velocity.x = 0;
+      this.updateSprite(this.sprites.idle);
+
+      if (this.setPalseMoveCoolDown === false) {
+        this.setPalseMoveCoolDown = true;
+        this.setContinueMoveCoolDown = false;
+        this.palseMoveCoolDown = getRandomArbitrary(100, 200);
+      }
+
+      if (this.palseMoveCoolDown > 0) {
+        if (
+          --this.palseMoveCoolDown <= 0 &&
+          this.setContinueMoveCoolDown === false
+        ) {
+          if (Math.random() > 0.5) this.flip *= -1;
+
+          this.setPalseMoveCoolDown = false;
+          this.setContinueMoveCoolDown = true;
+          this.continueMoveCoolDown = getRandomArbitrary(100, 500);
+        }
+      }
+    }
+    if (x1 <= p_x1 || x2 >= p_x2) {
+      this.velocity.x *= -1;
+      this.flip *= -1;
     }
   }
 

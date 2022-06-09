@@ -88,7 +88,6 @@ export class PhysicEnemy extends Enemy {
         }
       }
     } else {
-      this.updateSprite(this.sprites.run);
       this.attack_again = true;
       this.move();
       this.color = "green";
