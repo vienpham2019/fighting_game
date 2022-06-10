@@ -52,7 +52,6 @@ export class Player extends Character {
         pressed: false,
       },
     };
-    this.speed = moveSpeed;
     this.gameCurrentX = position.x;
     this.changeScreen = {
       x1: 300,
@@ -74,29 +73,32 @@ export class Player extends Character {
     this.hp = 0;
     this.maxLevelHp = 100;
 
+    this.temp_point = [19, 19];
     this.points = {
-      point: [5, 5],
-      health: [8, 10],
-      speed: [4, 10],
-      shield: [2, 10],
-      "attack speed": [4, 10],
-      damage: [4, 10],
+      point: [19, 19],
+      health: [0, 30],
+      speed: [0, 3],
+      shield: [0, 20],
+      "attack speed": [0, 19],
+      damage: [0, 40],
     };
 
     this.info = {
       hp: 200,
-      speed: 14,
-      jump: 20,
+      speed: moveSpeed.x,
+      jump: moveSpeed.y,
       attack_speed: 20,
       crit: 10,
-      damage: 103,
+      damage: 30,
       shield: 100,
     };
+
+    this.speed = moveSpeed;
 
     this.playerItems = [
       {
         type: "shieldPotion",
-        amount: 15,
+        amount: 10,
         isUse: false,
         box: {},
         miliSecond: 0,
@@ -105,7 +107,7 @@ export class Player extends Character {
       },
       {
         type: "healPotion",
-        amount: 15,
+        amount: 10,
         isUse: false,
         box: {},
         miliSecond: 0,
@@ -134,6 +136,10 @@ export class Player extends Character {
     this.damgeEffect({ ...this, character_type: "hp" }, `+ ${hp}`);
     if (this.hp > this.maxLevelHp) {
       this.level += Math.floor(this.hp / this.maxLevelHp);
+      this.points.point[0] += Math.floor(this.hp / this.maxLevelHp);
+      this.points.point[1] += Math.floor(this.hp / this.maxLevelHp);
+      this.temp_point[0] += Math.floor(this.hp / this.maxLevelHp);
+      this.temp_point[1] += Math.floor(this.hp / this.maxLevelHp);
       this.hp = this.hp % this.maxLevelHp;
       this.maxLevelHp += Math.floor(this.level * 100 * 0.3);
     }
@@ -261,6 +267,7 @@ export class Player extends Character {
 
   handelAttack() {
     if (this.attack_sprite_count > 0) {
+      this.framesHold = Math.ceil((4 * (100 - this.info.attack_speed)) / 100);
       let sprite =
         this.sprites.attack[
           this.sprites.attack.length - this.attack_sprite_count
@@ -274,8 +281,7 @@ export class Player extends Character {
           this.frameCurrent === sprite.hitFrame &&
           this.rectCollition(e)
         ) {
-          // e.handelTakeHit(sprite.damge);
-          e.handelTakeHit(200);
+          e.handelTakeHit(this.info.damage);
         }
 
         if (this.frameCurrent === this.framesMax - 1) {
@@ -286,7 +292,10 @@ export class Player extends Character {
         this.attack_sprite = false;
         this.attack_sprite_count--;
       }
-    } else this.is_attacking = false;
+    } else {
+      this.framesHold = 4;
+      this.is_attacking = false;
+    }
   }
 
   jump() {

@@ -114,13 +114,7 @@ export class Character extends Sprite {
     }
   }
 
-  update() {
-    super.update();
-
-    this.position.y += this.velocity.y;
-    this.position.x += this.velocity.x;
-
-    // this.hitboxdraw();
+  drawDamageEffect() {
     this.damges.forEach((d, i) => {
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
         (c.font = `bold ${d.fontSize} Arial`);
@@ -145,5 +139,14 @@ export class Character extends Sprite {
         this.damges.splice(i, 1);
       }
     });
+  }
+
+  update() {
+    super.update();
+
+    this.position.y += this.velocity.y;
+    this.position.x += this.velocity.x;
+
+    this.drawDamageEffect();
   }
 }

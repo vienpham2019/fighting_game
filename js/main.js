@@ -89,8 +89,7 @@ canvas.addEventListener("click", (e) => {
         b.y <= offsetY &&
         b.y + b.h >= offsetY
       ) {
-        if (b.type === "exit") controller.playerInfoObj.open = false;
-        else controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
+        controller.playerInfoObj.handleUpdatePlayerInfo(b.type);
       }
     });
   }

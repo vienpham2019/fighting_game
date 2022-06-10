@@ -57,6 +57,7 @@ export class UpdatePlayer {
 
     // clone player points
     this.points = JSON.parse(JSON.stringify(player.points));
+    this.player_info = JSON.parse(JSON.stringify(player.info));
 
     this.open = true;
   }
@@ -80,14 +81,16 @@ export class UpdatePlayer {
     );
 
     c.fillText(
-      "Next Level:  310rp",
+      this.points["health"][0] < this.points["health"][1]
+        ? `Next Level:  ${this.player_info.hp + 110}`
+        : "Full upgraded",
       this.playerInfo.position.x + 150,
       this.playerInfo.position.y + 122
     );
 
     // Speed
     c.fillText(
-      "Increase your movement speed point to 2",
+      "Increase your movement speed point to 1",
       this.playerInfo.position.x + 150,
       this.playerInfo.position.y + 141
     );
@@ -100,7 +103,9 @@ export class UpdatePlayer {
     );
 
     c.fillText(
-      "Next Level:  32rp",
+      this.points["speed"][0] < this.points["speed"][1]
+        ? `Next Level:  ${this.player_info.speed + 1}`
+        : "Full upgraded",
       this.playerInfo.position.x + 150,
       this.playerInfo.position.y + 173
     );
@@ -120,14 +125,16 @@ export class UpdatePlayer {
     );
 
     c.fillText(
-      "Full upgraded",
+      this.points["shield"][0] < this.points["shield"][1]
+        ? `Next Level:  ${this.player_info.shield + 110}`
+        : "Full upgraded",
       this.playerInfo.position.x + 150,
       this.playerInfo.position.y + 226
     );
 
     // Attack Speed
     c.fillText(
-      "Increase your attack speed point to 110",
+      "Increase your attack speed point to 3%",
       this.playerInfo.position.x + 526,
       this.playerInfo.position.y + 86
     );
@@ -140,14 +147,16 @@ export class UpdatePlayer {
     );
 
     c.fillText(
-      "Full upgraded",
+      this.points["attack speed"][0] < this.points["attack speed"][1]
+        ? `Next Level:  ${this.player_info.attack_speed + 3}%`
+        : "Full upgraded",
       this.playerInfo.position.x + 526,
       this.playerInfo.position.y + 123
     );
 
     // Attack Damage
     c.fillText(
-      "Increase your attack damage point to 110",
+      "Increase your attack damage point to 10",
       this.playerInfo.position.x + 526,
       this.playerInfo.position.y + 145
     );
@@ -160,7 +169,9 @@ export class UpdatePlayer {
     );
 
     c.fillText(
-      "Full upgraded",
+      this.points["damage"][0] < this.points["damage"][1]
+        ? `Next Level:  ${this.player_info.damage + 10}`
+        : "Full upgraded",
       this.playerInfo.position.x + 526,
       this.playerInfo.position.y + 177
     );
@@ -168,7 +179,7 @@ export class UpdatePlayer {
     // upgrate button
     c.font = "bold 13px Arial";
     c.fillText(
-      `Point: ${this.points["point"][0]} / ${this.points["point"][1]}`,
+      `Point: ${this.player.temp_point[0]} / ${this.player.temp_point[1]}`,
       this.playerInfo.position.x + 526,
       this.playerInfo.position.y + 215
     );
@@ -182,39 +193,61 @@ export class UpdatePlayer {
   handleUpdatePlayerInfo(type) {
     if (type === "upgrate") {
       this.player.points = JSON.parse(JSON.stringify(this.points));
+      this.player.temp_point[1] = this.player.temp_point[0];
+      this.player.points["point"] = [...this.player.temp_point];
+
+      this.player.health += this.player_info["hp"] - this.player.maxHealth;
+      this.player.maxHealth = this.player_info["hp"];
+
+      this.player.shield += this.player_info["shield"] - this.player.maxShield;
+      this.player.maxShield = this.player_info["shield"];
+
+      this.player.speed.x = this.player_info["speed"];
+
+      this.player.info = JSON.parse(JSON.stringify(this.player_info));
       this.open = false;
       return;
     }
-    if (this.points["point"][0] === 0) return;
+
+    if (type == "exit") {
+      this.points = JSON.parse(JSON.stringify(this.player.points));
+      this.player_info = JSON.parse(JSON.stringify(this.player.info));
+      this.player.temp_point = [...this.player.points["point"]];
+      this.open = false;
+      return;
+    }
+
+    if (this.player.temp_point[0] === 0) return;
     if (type != "upgrate" && this.points[type][0] === this.points[type][1])
       return;
 
     switch (type) {
       case "health":
         this.points["health"][0]++;
+        this.player_info.hp += 110;
         break;
       case "speed":
         this.points["speed"][0]++;
-
+        this.player_info.speed++;
         break;
       case "shield":
         this.points["shield"][0]++;
-
+        this.player_info.shield += 110;
         break;
       case "attack speed":
         this.points["attack speed"][0]++;
-
+        this.player_info.attack_speed += 3;
         break;
       case "damage":
         this.points["damage"][0]++;
-
+        this.player_info.damage += 20;
         break;
 
       default:
         break;
     }
 
-    this.points["point"][0]--;
+    this.player.temp_point[0]--;
   }
 
   run() {
