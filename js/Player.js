@@ -88,13 +88,14 @@ export class Player extends Character {
       speed: moveSpeed.x,
       jump: moveSpeed.y,
       attack_speed: 20,
-      crit: 10,
+      crit_damage: 20,
+      crit_chance: 10,
       damage: 30,
       shield: 100,
     };
 
     this.speed = moveSpeed;
-
+    this.useCritPotion = false;
     this.playerItems = [
       {
         type: "shieldPotion",
@@ -113,6 +114,15 @@ export class Player extends Character {
         miliSecond: 0,
         second: 1,
         maxSecond: 1,
+      },
+      {
+        type: "critPotion",
+        amount: 3,
+        isUse: false,
+        box: {},
+        miliSecond: 0,
+        second: 15,
+        maxSecond: 15,
       },
     ];
 
@@ -133,7 +143,7 @@ export class Player extends Character {
 
   handleHP(hp) {
     this.hp += hp;
-    this.damgeEffect({ ...this, character_type: "hp" }, `+ ${hp}`);
+    this.damgeEffect({ target: this, text: `+ ${hp}`, type: "hp" });
     if (this.hp > this.maxLevelHp) {
       this.level += Math.floor(this.hp / this.maxLevelHp);
       this.points.point[0] += Math.floor(this.hp / this.maxLevelHp);
@@ -142,6 +152,7 @@ export class Player extends Character {
       this.temp_point[1] += Math.floor(this.hp / this.maxLevelHp);
       this.hp = this.hp % this.maxLevelHp;
       this.maxLevelHp += Math.floor(this.level * 100 * 0.3);
+      this.damgeEffect({ target: this, text: `LV ${this.level}`, type: "hp" });
     }
   }
 
@@ -281,7 +292,13 @@ export class Player extends Character {
           this.frameCurrent === sprite.hitFrame &&
           this.rectCollition(e)
         ) {
-          e.handelTakeHit(this.info.damage);
+          let damage = this.info.damage;
+          let type = "damage";
+          if (Math.random() > (100 - this.info.crit_chance) / 100) {
+            damage += this.info.damage * (this.info.crit_damage / 100);
+            type = "crit";
+          }
+          e.handelTakeHit({ damage, type });
         }
 
         if (this.frameCurrent === this.framesMax - 1) {

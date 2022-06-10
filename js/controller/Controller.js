@@ -285,12 +285,14 @@ export class Controller {
       this.player.enemys = this.player.enemys.filter((e) => {
         if (!e.is_death) return true;
         else {
-          e.itemsObj.forEach((i) => {
-            i.position = { ...e.position };
-            i.itemsPanel = this.itemsPanel;
-            i.player = this.player;
-            this.itemsObj.push(i);
-          });
+          if (e.health <= 0) {
+            e.itemsObj.forEach((i) => {
+              i.position = { ...e.position };
+              i.itemsPanel = this.itemsPanel;
+              i.player = this.player;
+              this.itemsObj.push(i);
+            });
+          }
           return false;
         }
       });

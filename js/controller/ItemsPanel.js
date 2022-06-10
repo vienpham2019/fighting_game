@@ -63,10 +63,30 @@ export class ItemsPanel {
     if (this.player.playerItems[order - 1].isUse) return;
     this.player.playerItems[order - 1].isUse = true;
     this.player.playerItems[order - 1].amount--;
-    // if (--this.player.playerItems[order - 1].amount == 0) {
-    //   this.player.playerItems.splice(order - 1, 1);
-    //   return;
-    // }
+
+    switch (this.player.playerItems[order - 1].type) {
+      case "healPotion":
+        this.player.health += this.player.maxHealth * 0.2;
+        if (this.player.health > this.player.maxHealth) {
+          this.player.health = this.player.maxHealth;
+        }
+        break;
+      case "shieldPotion":
+        this.player.shield += this.player.maxShield * 0.2;
+        if (this.player.shield > this.player.maxShield) {
+          this.player.shield = this.player.maxShield;
+        }
+        break;
+      case "critPotion":
+        this.player.info.crit_damage += 20;
+        this.player.info.crit_chance += 10;
+        this.player.useCritPotion = true;
+        break;
+
+      default:
+        break;
+    }
+
     this.player.playerItems[order - 1].second =
       this.player.playerItems[order - 1].maxSecond;
     this.player.playerItems[order - 1].maxSecond =
@@ -144,6 +164,11 @@ export class ItemsPanel {
         c.fillRect(e.box.x + 49 * i, e.box.y, e.box.w, e.box.h);
 
         e.isUse = e.box.h > 0;
+        if (e.isUse === false && e.type === "critPotion") {
+          this.player.info.crit_damage -= 20;
+          this.player.info.crit_chance -= 10;
+          this.player.useCritPotion = false;
+        }
       }
 
       if (e.amount == 0 && e.box.h <= 0) {

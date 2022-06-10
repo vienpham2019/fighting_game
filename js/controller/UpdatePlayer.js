@@ -59,7 +59,7 @@ export class UpdatePlayer {
     this.points = JSON.parse(JSON.stringify(player.points));
     this.player_info = JSON.parse(JSON.stringify(player.info));
 
-    this.open = true;
+    this.open = false;
   }
 
   drawPlayerInfo() {

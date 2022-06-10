@@ -81,12 +81,11 @@ export class Item extends Sprite {
       }
 
       if (this.isPickUp) {
-        this.player.damgeEffect(
-          { ...this.player, character_type: "item" },
-          `+ ${this.amount} ${this.text}`,
-          "white",
-          "15px"
-        );
+        this.player.damgeEffect({
+          target: this.player,
+          text: `+ ${this.amount} ${this.text}`,
+          type: "item",
+        });
       }
     }
   }

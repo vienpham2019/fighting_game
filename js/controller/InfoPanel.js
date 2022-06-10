@@ -7,8 +7,16 @@ export class InfoPanel {
   }
 
   drawInfo() {
-    let { hp, speed, jump, attack_speed, crit, damage, shield } =
-      this.player.info;
+    let {
+      hp,
+      speed,
+      jump,
+      attack_speed,
+      crit_damage,
+      crit_chance,
+      damage,
+      shield,
+    } = this.player.info;
     this.infoPanel.update();
     c.fillStyle = "black";
     c.font = "bold 11px Arial";
@@ -60,30 +68,35 @@ export class InfoPanel {
       this.infoPanel.position.y + 72
     );
 
-    // crit
+    // crit damage
     c.fillText(
-      "Crit",
+      "Crit Damage",
       this.infoPanel.position.x + 210,
       this.infoPanel.position.y + 95
     );
+    c.fillStyle = this.player.useCritPotion ? "green" : "black";
     c.fillText(
-      `${crit}%`,
+      `${crit_damage}%`,
       this.infoPanel.position.x + 217,
       this.infoPanel.position.y + 109
     );
 
-    // damage
+    c.fillStyle = "black";
+    // crit chance
     c.fillText(
-      "Damage",
+      "Crit Chance",
       this.infoPanel.position.x + 208,
       this.infoPanel.position.y + 133
     );
+
+    c.fillStyle = this.player.useCritPotion ? "green" : "black";
     c.fillText(
-      `${damage}`,
+      `${crit_chance}%`,
       this.infoPanel.position.x + 215,
       this.infoPanel.position.y + 149
     );
 
+    c.fillStyle = "black";
     // shield
     c.fillText(
       "Shield",
@@ -94,6 +107,18 @@ export class InfoPanel {
       `${shield}`,
       this.infoPanel.position.x + 338,
       this.infoPanel.position.y + 73
+    );
+
+    // damage
+    c.fillText(
+      "Damage",
+      this.infoPanel.position.x + 328,
+      this.infoPanel.position.y + 96
+    );
+    c.fillText(
+      `${damage}`,
+      this.infoPanel.position.x + 338,
+      this.infoPanel.position.y + 110
     );
   }
 

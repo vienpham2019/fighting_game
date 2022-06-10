@@ -69,11 +69,9 @@ export class Character extends Sprite {
     }
   }
 
-  damgeEffect(target, text, color = "white", fontSize = "20px") {
+  damgeEffect({ target, text, type = "crit" }) {
     let metrics = c.measureText(text);
-    if (target.character_type === "player") color = "yellow";
-    if (target.character_type === "hp") color = "green";
-    this.damges.push({
+    target.damges.push({
       target,
       width: metrics.width,
       x: target.position.x + target.width / 2 - metrics.width / 2,
@@ -83,8 +81,7 @@ export class Character extends Sprite {
       text,
       alpha: 1,
       time: 30,
-      color,
-      fontSize,
+      type,
     });
   }
 
@@ -116,17 +113,42 @@ export class Character extends Sprite {
 
   drawDamageEffect() {
     this.damges.forEach((d, i) => {
+      // Add three color stops
+      let gradient_color_1;
+      let gradient_color_2;
+      let fontSize = "20px";
+      switch (d.type) {
+        case "damage":
+          gradient_color_1 = "255, 255, 255";
+          gradient_color_2 = "255, 0, 0";
+          fontSize = "20px";
+          break;
+        case "crit":
+          gradient_color_1 = "255, 255, 255";
+          gradient_color_2 = "251, 255, 0";
+          fontSize = "20px";
+          break;
+        case "item":
+          gradient_color_1 = "255, 255, 255";
+          gradient_color_2 = "0, 255, 247";
+          fontSize = "16px";
+          break;
+        case "hp":
+          gradient_color_1 = "255, 255, 255";
+          gradient_color_2 = "0, 255, 143";
+          fontSize = "16px";
+          break;
+        default:
+          break;
+      }
+
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
-        (c.font = `bold ${d.fontSize} Arial`);
-      c.strokeStyle = d.color;
-      c.lineWidth = 5;
+        (c.font = `bold ${fontSize} Arial`);
+      c.strokeStyle = "black";
+      c.lineWidth = 3;
       c.strokeText(d.text, d.x, d.y);
       let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 10);
 
-      // Add three color stops
-      let gradient_color_1 =
-        d.color === "green" ? "255, 255, 255" : "255, 0, 0";
-      let gradient_color_2 = d.color === "green" ? "255, 0, 0" : "0, 0, 0";
       gradient.addColorStop(0, `rgba(${gradient_color_1}, ` + d.alpha + ")");
       gradient.addColorStop(0.5, `rgba(${gradient_color_2},` + d.alpha + ")");
       gradient.addColorStop(1, `rgba(${gradient_color_1}, ` + d.alpha + ")");

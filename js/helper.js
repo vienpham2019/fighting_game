@@ -218,9 +218,7 @@ export function createPlatform(arr, type) {
 }
 
 export function createItem({ type, position, platform, itemsPanel }) {
-  let velocity_x = 1;
-  if (type === "Coints")
-    velocity_x = getRandomArbitrary(1, 5) * (Math.random() > 0.5 ? -1 : 1);
+  let velocity_x = getRandomArbitrary(1, 3) * (Math.random() > 0.5 ? -1 : 1);
   return new Item({
     position,
     ...items_data[type],

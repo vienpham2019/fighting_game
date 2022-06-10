@@ -47,7 +47,7 @@ export class Enemy extends Character {
     this.attack_again = true;
     this.in_attack_range = false;
     this.character_type = "enemy";
-    this.canStuntWhenAttack = true;
+    this.canStuntWhenAttack = false;
     this.addHp = false;
 
     this.itemsObj = [];
@@ -85,17 +85,16 @@ export class Enemy extends Character {
     this.position.y += move_postition.y;
   }
 
-  handelTakeHit(damage) {
+  handelTakeHit({ damage, type }) {
     this.get_hit = true;
 
-    this.health -= damage;
     if (this.health > 0) {
-      this.damgeEffect(this, damage);
-
-      if (this.canStuntWhenAttack || this.in_attack_range === false) {
-        this.updateSprite(this.sprites.takeHit);
-        this.flip = this.enemy.flip * -1;
-      }
+      this.damgeEffect({
+        target: this,
+        text: `${type === "crit" ? "✷" : ""} ${damage}`,
+        type,
+      });
+      this.health -= damage;
     }
     if (this.health <= 0) {
       this.updateSprite(this.sprites.death);
@@ -103,6 +102,9 @@ export class Enemy extends Character {
         this.enemy.handleHP(this.hp);
         this.addHp = true;
       }
+    } else if (this.in_attack_range === false) {
+      this.updateSprite(this.sprites.takeHit);
+      this.flip = this.enemy.flip * -1;
     }
   }
 
@@ -160,7 +162,13 @@ export class Enemy extends Character {
           --this.palseMoveCoolDown <= 0 &&
           this.setContinueMoveCoolDown === false
         ) {
-          if (Math.random() > 0.5) this.flip *= -1;
+          if (
+            Math.random() > 0.5 &&
+            this.platform.position.x < this.position.x + 10 &&
+            this.platform.position.x + this.platform.width >
+              this.position.x + this.width + 10
+          )
+            this.flip *= -1;
 
           this.setPalseMoveCoolDown = false;
           this.setContinueMoveCoolDown = true;

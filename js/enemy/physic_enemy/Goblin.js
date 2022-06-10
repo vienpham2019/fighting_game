@@ -41,7 +41,7 @@ export class Goblin extends PhysicEnemy {
     this.attack_cool_down_max = 10;
 
     this.maxHealth = 60;
-    this.level = 1;
+    this.level = 3;
     this.hp = 20;
   }
 
