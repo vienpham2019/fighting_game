@@ -5,10 +5,10 @@ import {
   createEnemy,
 } from "../../helper.js";
 
-import { MagicEnemy } from "../magic_enemy/MagicEnemy.js";
+import { Enemy } from "../Enemy.js";
 import { Sprite } from "../../Sprite.js";
 
-export class Sygnus extends MagicEnemy {
+export class Sygnus extends Enemy {
   constructor({
     position = { x: 0, y: 0 },
     velocity = { x: 0, y: 0 },

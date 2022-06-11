@@ -36,13 +36,17 @@ export class GreenCornian extends PhysicEnemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 200,
+      health: 250,
     });
     this.attack_cool_down = 50;
     this.attack_cool_down_max = 50;
 
-    this.maxHealth = 200;
+    this.damage = 18;
+
+    this.maxHealth = 250;
     this.hp = 70;
+
+    this.name = "Green Cornian";
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

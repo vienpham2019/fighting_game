@@ -54,9 +54,11 @@ export class IceDrake extends MagicEnemy {
 
     this.attack_cool_down = 50;
     this.attack_cool_down_max = 50;
-    this.maxHealth = 200;
 
-    this.hp = 220;
+    this.maxHealth = 200;
+    this.damage = 18;
+    this.hp = 250;
+    this.name = "Ice Drake";
   }
 
   drawHitBox() {

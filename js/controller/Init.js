@@ -101,6 +101,17 @@ export function int() {
     imageSrc: "../img/items_panel_details.png",
   });
 
+  const portal = new Sprite({
+    position: { x: 200, y: 200 },
+    offset: { x: 80, y: 30 },
+    width: 100,
+    height: 200,
+    scale: 0.5,
+    framesMax: 9,
+    framesHold: 7,
+    imageSrc: "../img/portal.png",
+  });
+
   const items = {
     healPotion: new Sprite({
       position: {
@@ -192,5 +203,6 @@ export function int() {
     itemsPanel,
     items,
     itemsPanelDetails,
+    portal,
   };
 }

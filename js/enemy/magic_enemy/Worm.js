@@ -53,8 +53,13 @@ export class Worm extends MagicEnemy {
     this.attack_cool_down = 70;
     this.attack_cool_down_max = 70;
     this.color = "green";
+
     this.maxHealth = 100;
+
+    this.damage = 15;
+
     this.hp = 120;
+    this.name = "Worm";
   }
 
   drawHitBox() {

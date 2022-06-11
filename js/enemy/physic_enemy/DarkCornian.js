@@ -40,8 +40,13 @@ export class DarkCornian extends PhysicEnemy {
     });
     this.attack_cool_down = 70;
     this.attack_cool_down_max = 70;
+
+    this.damage = 17;
+
     this.maxHealth = 300;
     this.hp = 75;
+
+    this.name = "Dark Cornian";
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

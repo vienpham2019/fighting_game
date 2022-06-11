@@ -79,10 +79,10 @@ export class MagicEnemy extends Enemy {
     ) {
       this.enemy_get_hit = true;
       if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-      this.enemy.handleTakeHit(this.sprites.attack[attack_n].damge);
+      this.enemy.handleTakeHit(this.damage);
       this.damgeEffect({
         target: this.enemy,
-        text: this.sprites.attack[attack_n].damge,
+        text: this.damage,
         type: "damage",
       });
     }

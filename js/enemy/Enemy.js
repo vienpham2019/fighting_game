@@ -119,6 +119,14 @@ export class Enemy extends Character {
     c.fillStyle = "#FF1C1C";
     c.lineWidth = 2;
 
+    c.font = "10px Arial";
+    c.fillStyle = "white";
+    c.fillText(
+      `${this.name} (${this.level})`,
+      this.position.x,
+      this.position.y - 13
+    );
+
     c.fillRect(
       this.position.x + health_bar_width,
       this.position.y - 10,
@@ -157,7 +165,7 @@ export class Enemy extends Character {
       if (this.setPalseMoveCoolDown === false) {
         this.setPalseMoveCoolDown = true;
         this.setContinueMoveCoolDown = false;
-        this.palseMoveCoolDown = getRandomArbitrary(100, 200);
+        this.palseMoveCoolDown = getRandomArbitrary(100, 300);
       }
 
       if (this.palseMoveCoolDown > 0) {
@@ -167,11 +175,12 @@ export class Enemy extends Character {
         ) {
           if (
             Math.random() > 0.5 &&
-            this.platform.position.x < this.position.x - 20 &&
-            this.platform.position.x + this.platform.width >
-              this.position.x + this.width + 20
-          )
+            this.platform.position.x + this.width + 10 < this.position.x &&
+            this.platform.position.x + this.platform.width - this.width - 10 >
+              this.position.x + this.width
+          ) {
             this.flip *= -1;
+          }
 
           this.setPalseMoveCoolDown = false;
           this.setContinueMoveCoolDown = true;

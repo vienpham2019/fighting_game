@@ -67,10 +67,10 @@ export class PhysicEnemy extends Enemy {
             ) {
               this.enemy_get_hit[this.frameCurrent] = true;
               if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-              this.enemy.handleTakeHit(this.sprites.attack[0].damge);
+              this.enemy.handleTakeHit(this.damage);
               this.damgeEffect({
                 target: this.enemy,
-                text: this.sprites.attack[0].damge,
+                text: this.damage,
                 type: "damage",
               });
             } else {

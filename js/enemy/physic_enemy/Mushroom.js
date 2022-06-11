@@ -40,8 +40,12 @@ export class Mushroom extends PhysicEnemy {
     this.attack_cool_down = 20;
     this.attack_cool_down_max = 20;
 
+    this.damage = 10;
+
     this.hp = 30;
     this.maxHealth = 60;
+
+    this.name = "Mushroom";
   }
 
   drawHitBox() {

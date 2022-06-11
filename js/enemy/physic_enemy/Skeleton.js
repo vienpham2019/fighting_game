@@ -35,13 +35,16 @@ export class Skeleton extends PhysicEnemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 100,
+      health: 120,
     });
     this.attack_cool_down = 50;
     this.attack_cool_down_max = 50;
 
-    this.maxHealth = 100;
+    this.damage = 12;
+
+    this.maxHealth = 120;
     this.hp = 40;
+    this.name = "Skeleton";
   }
 
   drawHitBox() {

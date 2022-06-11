@@ -41,8 +41,12 @@ export class WhiteWolf extends PhysicEnemy {
     this.attack_cool_down = 60;
     this.attack_cool_down_max = 60;
 
+    this.damage = 20;
+
     this.maxHealth = 250;
     this.hp = 200;
+
+    this.name = "White Wolf";
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

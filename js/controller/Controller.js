@@ -19,6 +19,7 @@ export class Controller {
     itemsPanel,
     items,
     itemsPanelDetails,
+    portal,
   }) {
     this.player = player;
     this.objs = objs;
@@ -38,6 +39,7 @@ export class Controller {
     });
 
     this.itemsObj = [];
+    this.portal = portal;
 
     // this.itemsObj.push(
     //   createItem({
@@ -250,6 +252,20 @@ export class Controller {
     );
   }
 
+  handlePortal() {
+    c.beginPath();
+    c.strokeStyle = "red";
+    c.rect(
+      this.portal.position.x,
+      this.portal.position.y,
+      this.portal.width,
+      this.portal.height
+    );
+    c.stroke();
+
+    this.portal.update();
+  }
+
   run() {
     for (let obj in this.objs) {
       this.objs[obj].update();
@@ -273,6 +289,9 @@ export class Controller {
     for (let i = 0; i < this.platforms.length; i++) {
       this.player.floorColition(this.platforms[i], this.camera);
     }
+
+    this.handlePortal();
+
     this.player.update();
     // Update player enemys
     if (this.player.enemys.length > 0) {

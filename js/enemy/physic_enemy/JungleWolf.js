@@ -41,8 +41,12 @@ export class JungleWolf extends PhysicEnemy {
     this.attack_cool_down = 60;
     this.attack_cool_down_max = 60;
 
+    this.damage = 25;
+
     this.maxHealth = 300;
     this.hp = 90;
+
+    this.name = "Jungle Wolf";
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {
