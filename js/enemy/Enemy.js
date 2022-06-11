@@ -52,6 +52,8 @@ export class Enemy extends Character {
 
     this.itemsObj = [];
 
+    this.dropItems = false;
+
     this.palseMoveCoolDown = 0;
     this.setPalseMoveCoolDown = false;
 

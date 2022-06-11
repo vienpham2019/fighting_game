@@ -1,4 +1,4 @@
-import { c } from "../main.js";
+import { c, canvas } from "../main.js";
 import { InfoPanel } from "./InfoPanel.js";
 import { UpdatePlayer } from "./UpdatePlayer.js";
 import { ShopPanel } from "./ShopPanel.js";
@@ -242,9 +242,8 @@ export class Controller {
 
   checkObjInPlayerRange(obj) {
     return (
-      obj.position.x > this.player.position.x - 600 &&
-      obj.position.x + obj.width <
-        this.player.position.x + this.player.width + 600 &&
+      obj.position.x > -100 &&
+      obj.position.x + obj.width <= canvas.width + 100 &&
       obj.position.y > this.player.position.y - 500 &&
       obj.position.y + obj.height <
         this.player.position.y + this.player.height + 500
@@ -283,18 +282,16 @@ export class Controller {
         if (this.checkObjInPlayerRange(e)) e.update();
       });
       this.player.enemys = this.player.enemys.filter((e) => {
-        if (!e.is_death) return true;
-        else {
-          if (e.health <= 0) {
-            e.itemsObj.forEach((i) => {
-              i.position = { ...e.position };
-              i.itemsPanel = this.itemsPanel;
-              i.player = this.player;
-              this.itemsObj.push(i);
-            });
-          }
-          return false;
+        if (e.health <= 0 && e.dropItems === false) {
+          e.dropItems = true;
+          e.itemsObj.forEach((i) => {
+            i.position = { ...e.position };
+            i.itemsPanel = this.itemsPanel;
+            i.player = this.player;
+            this.itemsObj.push(i);
+          });
         }
+        return !e.is_death;
       });
     }
 

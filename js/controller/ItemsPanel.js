@@ -63,29 +63,38 @@ export class ItemsPanel {
     if (this.player.playerItems[order - 1].isUse) return;
     this.player.playerItems[order - 1].isUse = true;
     this.player.playerItems[order - 1].amount--;
-
+    let text;
     switch (this.player.playerItems[order - 1].type) {
       case "healPotion":
         this.player.health += this.player.maxHealth * 0.2;
         if (this.player.health > this.player.maxHealth) {
           this.player.health = this.player.maxHealth;
         }
+        text = `+ ${this.player.maxHealth * 0.2} hp`;
         break;
       case "shieldPotion":
         this.player.shield += this.player.maxShield * 0.2;
         if (this.player.shield > this.player.maxShield) {
           this.player.shield = this.player.maxShield;
         }
+        text = `+ ${this.player.maxShield * 0.2} shield`;
         break;
       case "critPotion":
         this.player.info.crit_damage += 20;
         this.player.info.crit_chance += 10;
         this.player.useCritPotion = true;
+        text = `+ 20% crit damage and 10% crit chance`;
         break;
 
       default:
         break;
     }
+
+    this.player.damgeEffect({
+      target: this.player,
+      text,
+      type: "item",
+    });
 
     this.player.playerItems[order - 1].second =
       this.player.playerItems[order - 1].maxSecond;

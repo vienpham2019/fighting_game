@@ -80,7 +80,7 @@ export class Character extends Sprite {
       height: Math.floor(metrics.height),
       text,
       alpha: 1,
-      time: 30,
+      time: 60,
       type,
     });
   }
@@ -147,7 +147,7 @@ export class Character extends Sprite {
       c.strokeStyle = "black";
       c.lineWidth = 3;
       c.strokeText(d.text, d.x, d.y);
-      let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 10);
+      let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 5);
 
       gradient.addColorStop(0, `rgba(${gradient_color_1}, ` + d.alpha + ")");
       gradient.addColorStop(0.5, `rgba(${gradient_color_2},` + d.alpha + ")");
@@ -156,7 +156,7 @@ export class Character extends Sprite {
       c.fillStyle = gradient;
       c.fillText(d.text, d.x, d.y--);
       d.time--;
-      d.alpha -= 0.03;
+      d.alpha -= 0.009;
       if (d.time <= 0) {
         this.damges.splice(i, 1);
       }
