@@ -41,8 +41,6 @@ export class DarkCornian extends PhysicEnemy {
     this.attack_cool_down = 70;
     this.attack_cool_down_max = 70;
     this.maxHealth = 300;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
     this.hp = 75;
 
     this.attack_effects = [];

@@ -42,8 +42,6 @@ export class WhiteWolf extends PhysicEnemy {
     this.attack_cool_down_max = 60;
 
     this.maxHealth = 250;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
     this.hp = 200;
 
     this.attack_effects = [];

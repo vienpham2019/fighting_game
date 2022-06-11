@@ -1,7 +1,7 @@
 const swordsman = {
   height: 88,
   width: 52,
-  imageSrc: "./img/swordsman/Idle.png",
+  imageSrc: "./img/player_character/swordsman/Idle.png",
   scale: 1.7,
   framesMax: 8,
   framesHold: 4,
@@ -14,38 +14,39 @@ const swordsman = {
   },
   sprites: {
     idle: {
-      imageSrc: "./img/swordsman/Idle.png",
+      imageSrc: "./img/player_character/swordsman/Idle.png",
       framesMax: 8,
     },
     run: {
-      imageSrc: "./img/swordsman/Run.png",
+      imageSrc: "./img/player_character/swordsman/Run.png",
       framesMax: 8,
     },
     jump: {
-      imageSrc: "./img/swordsman/Jump.png",
+      imageSrc: "./img/player_character/swordsman/Jump.png",
       framesMax: 2,
     },
     fall: {
-      imageSrc: "./img/swordsman/Fall.png",
+      imageSrc: "./img/player_character/swordsman/Fall.png",
       framesMax: 2,
     },
     takeHit: {
-      imageSrc: "./img/swordsman/Take Hit - white silhouette.png",
+      imageSrc:
+        "./img/player_character/swordsman/Take Hit - white silhouette.png",
       framesMax: 4,
     },
     death: {
-      imageSrc: "./img/swordsman/Death.png",
+      imageSrc: "./img/player_character/swordsman/Death.png",
       framesMax: 6,
     },
     attack: [
       {
-        imageSrc: "./img/swordsman/Attack1.png",
+        imageSrc: "./img/player_character/swordsman/Attack1.png",
         hitFrame: 5,
         framesMax: 6,
         damge: 6,
       },
       {
-        imageSrc: "./img/swordsman/Attack2.png",
+        imageSrc: "./img/player_character/swordsman/Attack2.png",
         hitFrame: 5,
         framesMax: 6,
         damge: 6,
@@ -57,7 +58,7 @@ const swordsman = {
 const warior = {
   height: 88,
   width: 52,
-  imageSrc: "./img/warior/Idle.png",
+  imageSrc: "./img/player_character/warior/Idle.png",
   scale: 1.9,
   framesMax: 10,
   framesHold: 4,
@@ -70,44 +71,44 @@ const warior = {
   },
   sprites: {
     idle: {
-      imageSrc: "./img/warior/Idle.png",
+      imageSrc: "./img/player_character/warior/Idle.png",
       framesMax: 10,
     },
     run: {
-      imageSrc: "./img/warior/Run.png",
+      imageSrc: "./img/player_character/warior/Run.png",
       framesMax: 8,
     },
     jump: {
-      imageSrc: "./img/warior/Jump.png",
+      imageSrc: "./img/player_character/warior/Jump.png",
       framesMax: 3,
     },
     fall: {
-      imageSrc: "./img/warior/Fall.png",
+      imageSrc: "./img/player_character/warior/Fall.png",
       framesMax: 3,
     },
     takeHit: {
-      imageSrc: "./img/warior/Take hit.png",
+      imageSrc: "./img/player_character/warior/Take hit.png",
       framesMax: 3,
     },
     death: {
-      imageSrc: "./img/warior/Death.png",
+      imageSrc: "./img/player_character/warior/Death.png",
       framesMax: 7,
     },
     attack: [
       {
-        imageSrc: "./img/warior/Attack1.png",
+        imageSrc: "./img/player_character/warior/Attack1.png",
         hitFrame: 5,
         framesMax: 7,
         damge: 10,
       },
       {
-        imageSrc: "./img/warior/Attack2.png",
+        imageSrc: "./img/player_character/warior/Attack2.png",
         hitFrame: 3,
         framesMax: 7,
         damge: 10,
       },
       {
-        imageSrc: "./img/warior/Attack3.png",
+        imageSrc: "./img/player_character/warior/Attack3.png",
         hitFrame: 5,
         framesMax: 8,
         damge: 20,

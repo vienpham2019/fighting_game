@@ -47,7 +47,6 @@ export class Enemy extends Character {
     this.attack_again = true;
     this.in_attack_range = false;
     this.character_type = "enemy";
-    this.canStuntWhenAttack = false;
     this.addHp = false;
 
     this.itemsObj = [];
@@ -59,6 +58,8 @@ export class Enemy extends Character {
 
     this.continueMoveCoolDown = getRandomArbitrary(100, 500);
     this.setContinueMoveCoolDown = false;
+
+    this.level = 1;
 
     let random = getRandomArbitrary(2, 6);
     for (let i = 0; i < random; i++) {
@@ -166,9 +167,9 @@ export class Enemy extends Character {
         ) {
           if (
             Math.random() > 0.5 &&
-            this.platform.position.x < this.position.x + 10 &&
+            this.platform.position.x < this.position.x - 20 &&
             this.platform.position.x + this.platform.width >
-              this.position.x + this.width + 10
+              this.position.x + this.width + 20
           )
             this.flip *= -1;
 

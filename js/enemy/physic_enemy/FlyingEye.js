@@ -41,7 +41,6 @@ export class FlyingEye extends PhysicEnemy {
     this.attack_cool_down_max = 10;
 
     this.maxHealth = 50;
-    this.level = 3;
     this.hp = 20;
   }
 

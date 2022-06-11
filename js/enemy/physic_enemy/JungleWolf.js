@@ -42,8 +42,6 @@ export class JungleWolf extends PhysicEnemy {
     this.attack_cool_down_max = 60;
 
     this.maxHealth = 300;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
     this.hp = 90;
 
     this.attack_effects = [];

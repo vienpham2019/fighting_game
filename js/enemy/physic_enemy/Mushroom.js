@@ -42,8 +42,6 @@ export class Mushroom extends PhysicEnemy {
 
     this.hp = 30;
     this.maxHealth = 60;
-    this.canStuntWhenAttack = false;
-    this.level = 3;
   }
 
   drawHitBox() {

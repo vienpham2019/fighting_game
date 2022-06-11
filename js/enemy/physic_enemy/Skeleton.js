@@ -41,7 +41,6 @@ export class Skeleton extends PhysicEnemy {
     this.attack_cool_down_max = 50;
 
     this.maxHealth = 100;
-    this.level = 3;
     this.hp = 40;
   }
 
