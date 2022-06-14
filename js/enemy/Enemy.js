@@ -153,11 +153,7 @@ export class Enemy extends Character {
     if (this.continueMoveCoolDown-- > 0) {
       this.updateSprite(this.sprites.run);
 
-      if (this.flip === 1) {
-        this.velocity.x = this.speed.x;
-      } else {
-        this.velocity.x = -this.speed.x;
-      }
+      this.velocity.x = this.speed.x * this.flip;
     } else {
       this.velocity.x = 0;
       this.updateSprite(this.sprites.idle);

@@ -41,6 +41,10 @@ export class Controller {
     this.itemsObj = [];
     this.portal = portal;
 
+    this.gameLevel = 1;
+    this.updateGameLevelCoolDown = [100, 100];
+    this.updateGameLevel = false;
+
     // this.itemsObj.push(
     //   createItem({
     //     type: "permanetCritPotion",
@@ -70,6 +74,7 @@ export class Controller {
       this.objs.tree2BG.position.x += this.camera.x * -0.5;
       this.objs.tree1BG.position.x += this.camera.x * -0.7;
 
+      this.portal.position.x += this.camera.x * -1;
       this.platforms.forEach((p) => {
         p.position.x += this.camera.x * -1;
       });
@@ -115,6 +120,9 @@ export class Controller {
       this.itemsObj.forEach((i) => {
         i.position.y += this.camera.offset.diff * -1;
       });
+
+      // portal
+      this.portal.position.y += this.camera.offset.diff * -1;
 
       this.player.position.y += this.camera.offset.diff * -1;
       this.camera.offset.y += this.camera.offset.diff * -1;
@@ -252,6 +260,46 @@ export class Controller {
     );
   }
 
+  rectCollition() {
+    return (
+      this.portal.position.x + this.portal.width >= this.player.position.x &&
+      this.portal.position.x <= this.player.position.x + this.player.width &&
+      this.portal.position.y + this.portal.height >= this.player.position.y &&
+      this.portal.position.y <= this.player.position.y + this.player.height
+    );
+  }
+
+  resetPosition() {
+    for (let obj in this.objs) {
+      this.objs[obj].position = { x: 0, y: 0 };
+    }
+    this.objs.floorImage.position = { x: 0, y: 100 };
+    this.player.position = { x: 0, y: canvas.height - 200 };
+    this.camera = {
+      x1: 300,
+      x2: 500,
+      y: this.player.position.y + this.player.height / 2,
+      fall_offset: { y: 30, delay_frame: 5 },
+      offset: { y: 0, diff: 0, delay_frame: 25 },
+    };
+    this.updateGameLevelCoolDown[0] = this.updateGameLevelCoolDown[1];
+    this.updateGameLevel = false;
+  }
+
+  handleGameLevel() {
+    this.gameLevel++;
+
+    switch (this.gameLevel) {
+      case 2:
+        this.objs.floorImage.src = "..//img/platform lv1.png";
+        this.resetPosition();
+        break;
+
+      default:
+        break;
+    }
+  }
+
   handlePortal() {
     c.beginPath();
     c.strokeStyle = "red";
@@ -264,6 +312,15 @@ export class Controller {
     c.stroke();
 
     this.portal.update();
+    if (this.rectCollition() && this.updateGameLevel === false) {
+      console.log(this.updateGameLevelCoolDown);
+      if (--this.updateGameLevelCoolDown[0] <= 0) {
+        this.updateGameLevel = true;
+        this.handleGameLevel();
+      }
+    } else {
+      this.updateGameLevelCoolDown[0] = this.updateGameLevelCoolDown[1];
+    }
   }
 
   run() {
@@ -294,25 +351,25 @@ export class Controller {
 
     this.player.update();
     // Update player enemys
-    if (this.player.enemys.length > 0) {
-      // update each enemy
-      this.player.enemys.forEach((e) => {
-        // only load enemy if player in range
-        if (this.checkObjInPlayerRange(e)) e.update();
-      });
-      this.player.enemys = this.player.enemys.filter((e) => {
-        if (e.health <= 0 && e.dropItems === false) {
-          e.dropItems = true;
-          e.itemsObj.forEach((i) => {
-            i.position = { ...e.position };
-            i.itemsPanel = this.itemsPanel;
-            i.player = this.player;
-            this.itemsObj.push(i);
-          });
-        }
-        return !e.is_death;
-      });
-    }
+    // if (this.player.enemys.length > 0) {
+    //   // update each enemy
+    //   this.player.enemys.forEach((e) => {
+    //     // only load enemy if player in range
+    //     if (this.checkObjInPlayerRange(e)) e.update();
+    //   });
+    //   this.player.enemys = this.player.enemys.filter((e) => {
+    //     if (e.health <= 0 && e.dropItems === false) {
+    //       e.dropItems = true;
+    //       e.itemsObj.forEach((i) => {
+    //         i.position = { ...e.position };
+    //         i.itemsPanel = this.itemsPanel;
+    //         i.player = this.player;
+    //         this.itemsObj.push(i);
+    //       });
+    //     }
+    //     return !e.is_death;
+    //   });
+    // }
 
     // itemsObj
     if (this.itemsObj.length > 0) {

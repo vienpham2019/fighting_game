@@ -102,7 +102,7 @@ export function int() {
   });
 
   const portal = new Sprite({
-    position: { x: 200, y: 200 },
+    position: { x: 1300, y: 340 },
     offset: { x: 80, y: 30 },
     width: 100,
     height: 200,
