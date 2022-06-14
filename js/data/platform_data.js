@@ -204,4 +204,15 @@ const walls_1 = [
   { x: 12222, height: canvas_height * 5, offset: { x: 0, y: -1526 } },
 ];
 
-export let platform = { platforms_1, walls_1 };
+const platforms_2 = [{ x: 0, width: 3100, offset: { x: 0, y: -302 } }];
+
+const walls_2 = [
+  {
+    x: -1,
+    height: canvas_height * 5,
+    offset: { x: 0, y: -(canvas_height * 2) },
+  },
+  { x: 3100, height: canvas_height * 5, offset: { x: 0, y: -1526 } },
+];
+
+export let platform = { platforms_1, walls_1, platforms_2, walls_2 };

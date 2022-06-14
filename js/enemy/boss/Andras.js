@@ -1,5 +1,5 @@
 import { c } from "../../main.js";
-import { getCoordinate } from "../../helper.js";
+import { getCoordinate, getRandomArbitrary, createItem } from "../../helper.js";
 
 import { Sprite } from "../../Sprite.js";
 import { Enemy } from "../Enemy.js";
@@ -36,10 +36,10 @@ export class Andras extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 1000,
+      health: 100,
     });
 
-    this.maxHealth = 1000;
+    this.maxHealth = 100;
     this.canStuntWhenAttack = false;
     this.level = 3;
 
@@ -51,6 +51,24 @@ export class Andras extends Enemy {
     this.enemy_get_hit = false;
 
     this.select_attacks = [true, false];
+    for (let i = 0; i < 10; i++) {
+      this.itemsObj.push(createItem({ type: "coint", position, platform }));
+    }
+    let random = getRandomArbitrary(1, 3);
+    for (let i = 0; i < random; i++) {
+      this.itemsObj.push(
+        createItem({ type: "shieldPotion", position, platform })
+      );
+      this.itemsObj.push(
+        createItem({ type: "healPotion", position, platform })
+      );
+      this.itemsObj.push(
+        createItem({ type: "critPotion", position, platform })
+      );
+    }
+    this.itemsObj.push(
+      createItem({ type: "permanetCritPotion", position, platform })
+    );
 
     this.attack_effect = new Sprite({
       position: { x: position.x, y: position.y + 10 },
@@ -58,9 +76,10 @@ export class Andras extends Enemy {
     });
   }
 
-  handleGameMove({ position }) {
-    this.position.x += position.x;
-    this.attack_effects.position.x += position.x;
+  handleGameMove({ x, y }) {
+    super.handleGameMove({ x, y });
+    this.attack_effect.position.x += x;
+    this.attack_effect.position.y += y;
   }
 
   enemyGetHit(damage, knock_back) {
@@ -73,8 +92,8 @@ export class Andras extends Enemy {
     }
 
     if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-    this.enemy.handleTakeHit(damge);
-    this.damgeEffect(this.enemy, damage);
+    this.enemy.handleTakeHit(damage);
+    this.damgeEffect({ target: this.enemy, text: damage, type: "damage" });
   }
 
   handleAttack(attack_box, attack_n) {
@@ -198,5 +217,6 @@ export class Andras extends Enemy {
 
     this.detectAttack();
     super.update();
+    console.log(this.health);
   }
 }

@@ -3,7 +3,12 @@ import { InfoPanel } from "./InfoPanel.js";
 import { UpdatePlayer } from "./UpdatePlayer.js";
 import { ShopPanel } from "./ShopPanel.js";
 import { ItemsPanel } from "./ItemsPanel.js";
-import { createItem } from "../helper.js";
+import {
+  createEnemyByPlatform,
+  createPlatform,
+  createEnemy,
+} from "../helper.js";
+import { platform } from "../data/platform_data.js";
 
 export class Controller {
   constructor({
@@ -270,18 +275,38 @@ export class Controller {
   }
 
   resetPosition() {
+    this.objs.floorImage.image.src = `..//img/platform lv${this.gameLevel}.png`;
+    this.camera.x = 0;
+
     for (let obj in this.objs) {
       this.objs[obj].position = { x: 0, y: 0 };
     }
     this.objs.floorImage.position = { x: 0, y: 100 };
     this.player.position = { x: 0, y: canvas.height - 200 };
-    this.camera = {
-      x1: 300,
-      x2: 500,
-      y: this.player.position.y + this.player.height / 2,
-      fall_offset: { y: 30, delay_frame: 5 },
-      offset: { y: 0, diff: 0, delay_frame: 25 },
-    };
+    this.player.gameCurrentX = 0;
+
+    this.platforms = createPlatform(
+      platform[`platforms_${this.gameLevel}`],
+      "platform"
+    );
+    this.walls = createPlatform(platform[`walls_${this.gameLevel}`], "wall");
+    this.player.enemys = createEnemyByPlatform(this.platforms);
+    switch (this.gameLevel) {
+      case 2:
+        this.player.enemys.push(
+          createEnemy({
+            platform: this.platforms[0],
+            enemy_name: "andras",
+            enemy_type: "boss",
+          })
+        );
+        break;
+    }
+    this.player.enemys.forEach((e) => (e.enemy = this.player));
+
+    this.player.platform = this.platforms[0];
+    this.player.walls = this.walls;
+
     this.updateGameLevelCoolDown[0] = this.updateGameLevelCoolDown[1];
     this.updateGameLevel = false;
   }
@@ -291,8 +316,8 @@ export class Controller {
 
     switch (this.gameLevel) {
       case 2:
-        this.objs.floorImage.src = "..//img/platform lv1.png";
         this.resetPosition();
+        this.portal.position = { x: 3000, y: 170 };
         break;
 
       default:
@@ -313,7 +338,6 @@ export class Controller {
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
-      console.log(this.updateGameLevelCoolDown);
       if (--this.updateGameLevelCoolDown[0] <= 0) {
         this.updateGameLevel = true;
         this.handleGameLevel();
@@ -351,25 +375,25 @@ export class Controller {
 
     this.player.update();
     // Update player enemys
-    // if (this.player.enemys.length > 0) {
-    //   // update each enemy
-    //   this.player.enemys.forEach((e) => {
-    //     // only load enemy if player in range
-    //     if (this.checkObjInPlayerRange(e)) e.update();
-    //   });
-    //   this.player.enemys = this.player.enemys.filter((e) => {
-    //     if (e.health <= 0 && e.dropItems === false) {
-    //       e.dropItems = true;
-    //       e.itemsObj.forEach((i) => {
-    //         i.position = { ...e.position };
-    //         i.itemsPanel = this.itemsPanel;
-    //         i.player = this.player;
-    //         this.itemsObj.push(i);
-    //       });
-    //     }
-    //     return !e.is_death;
-    //   });
-    // }
+    if (this.player.enemys.length > 0) {
+      // update each enemy
+      this.player.enemys.forEach((e) => {
+        // only load enemy if player in range
+        if (this.checkObjInPlayerRange(e)) e.update();
+      });
+      this.player.enemys = this.player.enemys.filter((e) => {
+        if (e.health <= 0 && e.dropItems === false) {
+          e.dropItems = true;
+          e.itemsObj.forEach((i) => {
+            i.position = { ...e.position };
+            i.itemsPanel = this.itemsPanel;
+            i.player = this.player;
+            this.itemsObj.push(i);
+          });
+        }
+        return !e.is_death;
+      });
+    }
 
     // itemsObj
     if (this.itemsObj.length > 0) {

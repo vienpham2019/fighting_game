@@ -154,7 +154,7 @@ export function int() {
   const walls = createPlatform(platform.walls_1, "wall");
 
   const player = createPlayer({
-    position: { x: 0, y: canvas.height - 200 },
+    position: { x: 0, y: canvas.height - 300 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name: "warior",

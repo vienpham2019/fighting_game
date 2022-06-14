@@ -85,6 +85,11 @@ export class ItemsPanel {
         this.player.useCritPotion = true;
         text = `+ 20% crit damage and 10% crit chance`;
         break;
+      case "permanetCritPotion":
+        this.player.info.crit_damage += 10;
+        this.player.info.crit_chance += 15;
+        text = `+ 10% crit damage and 15% crit chance`;
+        break;
 
       default:
         break;
