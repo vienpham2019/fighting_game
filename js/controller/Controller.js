@@ -25,6 +25,7 @@ export class Controller {
     items,
     itemsPanelDetails,
     portal,
+    bossHealth,
   }) {
     this.player = player;
     this.objs = objs;
@@ -33,6 +34,7 @@ export class Controller {
     this.camera = camera;
     this.healthBar = healthBar;
     this.itemsPanel = itemsPanel;
+    this.bossHealth = bossHealth;
     this.playerInfoObj = new UpdatePlayer({ player, playerInfo });
     this.playerInfoPanel = new InfoPanel({ player, infoPanel });
     this.shopInfoPanel = new ShopPanel({ player, shopPanel, itemsPanel });
@@ -58,6 +60,29 @@ export class Controller {
       transparent: [0, 100],
     };
 
+    this.bossImage = new Image();
+    this.bossImage.src = "../img/boss/Andras/Idle.png";
+    this.bossName = "Andras";
+    this.bossOffset = {
+      Andras: {
+        src: "../img/boss/Andras/Idle.png",
+        offset: { x: 80, y: 80 },
+        frameMax: 4,
+        scale: 0.8,
+      },
+      InnerRage: {
+        src: "../img/boss/InnerRage/Idle.png",
+        offset: { x: -15, y: 0 },
+        frameMax: 8,
+        scale: 0.4,
+      },
+      Sygnus: {
+        src: "../img/boss/Sygnus/Idle.png",
+        offset: { x: -15, y: 0 },
+        frameMax: 8,
+        scale: 0.4,
+      },
+    };
     // this.itemsObj.push(
     //   createItem({
     //     type: "permanetCritPotion",
@@ -157,8 +182,9 @@ export class Controller {
     c.stroke();
   }
 
-  calculatePercent(n, start_n, end_n) {
-    let result = n - ((start_n - end_n) / start_n) * n;
+  calculatePercent(healthBarWidth, start_n, end_n) {
+    let result =
+      healthBarWidth - ((start_n - end_n) / start_n) * healthBarWidth;
     return result > 0 ? result : 0;
   }
 
@@ -264,6 +290,78 @@ export class Controller {
     );
   }
 
+  drawBossHealth() {
+    if (this.player.boss === null || this.player.boss.is_death === true) return;
+    c.fillStyle = "rgba(0,0,0,0.7)";
+
+    c.fillRect(
+      this.bossHealth.position.x + 66,
+      this.bossHealth.position.y + 15,
+      this.calculatePercent(
+        504,
+        this.player.boss.maxHealth,
+        this.player.boss.maxHealth
+      ),
+      17
+    );
+
+    c.fillStyle = "#FF1C1C";
+
+    c.fillRect(
+      this.bossHealth.position.x + 66,
+      this.bossHealth.position.y + 15,
+      this.calculatePercent(
+        504,
+        this.player.boss.maxHealth,
+        this.player.boss.health
+      ),
+      17
+    );
+    c.font = "10px Comic Sans MS";
+    c.fillStyle = "white";
+    c.fillText(
+      `${this.player.boss.maxHealth} / ${this.player.boss.maxHealth}`,
+      this.bossHealth.position.x + 270,
+      this.bossHealth.position.y + 28
+    );
+
+    this.bossHealth.update();
+
+    c.fillStyle = "rgba(0,0,0,0.5)";
+
+    c.fillRect(
+      this.bossHealth.position.x + 66,
+      this.bossHealth.position.y + 37,
+      c.measureText(this.bossName).width + 60,
+      20
+    );
+
+    c.font = "15px Comic Sans MS";
+    c.fillStyle = "white";
+    c.fillText(
+      this.bossName,
+      this.bossHealth.position.x + 88,
+      this.bossHealth.position.y + 52
+    );
+
+    let { frameMax, offset, src, scale } = this.bossOffset[this.bossName];
+    this.bossImage.src = src;
+
+    c.drawImage(
+      this.bossImage,
+      // crop image
+      0,
+      0,
+      this.bossImage.width / frameMax,
+      this.bossImage.height,
+      // crop image
+      this.bossHealth.position.x - offset.x,
+      this.bossHealth.position.y - offset.y,
+      (this.bossImage.width / frameMax) * scale,
+      this.bossImage.height * scale
+    );
+  }
+
   checkObjInPlayerRange(obj) {
     return (
       obj.position.x > -100 &&
@@ -303,13 +401,13 @@ export class Controller {
     this.player.enemys = createEnemyByPlatform(this.platforms);
     switch (this.gameLevel) {
       case 2:
-        this.player.enemys.push(
-          createEnemy({
-            platform: this.platforms[0],
-            enemy_name: "andras",
-            enemy_type: "boss",
-          })
-        );
+        this.player.boss = createEnemy({
+          platform: this.platforms[0],
+          enemy_name: "andras",
+          enemy_type: "boss",
+        });
+        this.bossName = "Andras";
+        this.player.enemys.push(this.player.boss);
         break;
     }
     this.player.enemys.forEach((e) => (e.enemy = this.player));
@@ -438,6 +536,7 @@ export class Controller {
     // camera
 
     // game object
+    this.drawBossHealth();
     this.drawPlayerHealthBar();
     this.playerInfoObj.run();
     this.playerInfoPanel.run();

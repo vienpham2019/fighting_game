@@ -101,6 +101,13 @@ export function int() {
     imageSrc: "../img/items_panel_details.png",
   });
 
+  const bossHealth = new Sprite({
+    position: { x: 800, y: 0 },
+    offset: { x: 0, y: 0 },
+    scale: 0.5,
+    imageSrc: "../img/boss health.png",
+  });
+
   const portal = new Sprite({
     position: { x: 1300, y: 340 },
     offset: { x: 80, y: 30 },
@@ -204,5 +211,6 @@ export function int() {
     items,
     itemsPanelDetails,
     portal,
+    bossHealth,
   };
 }

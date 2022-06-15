@@ -94,6 +94,7 @@ export class Player extends Character {
       shield: 100,
     };
 
+    this.boss = null;
     this.speed = moveSpeed;
     this.useCritPotion = false;
     this.playerItems = [

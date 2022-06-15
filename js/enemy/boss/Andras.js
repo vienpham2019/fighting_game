@@ -38,7 +38,7 @@ export class Andras extends Enemy {
       platform,
       health: 100,
     });
-
+    this.name = "Andras";
     this.maxHealth = 100;
     this.canStuntWhenAttack = false;
     this.level = 3;
