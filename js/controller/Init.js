@@ -154,7 +154,7 @@ export function int() {
   const walls = createPlatform(platform.walls_1, "wall");
 
   const player = createPlayer({
-    position: { x: 0, y: canvas.height - 300 },
+    position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name: "warior",
@@ -166,7 +166,7 @@ export function int() {
   const camera = {
     x1: 300,
     x2: 500,
-    y: player.position.y + player.height / 2,
+    y: platforms[0].position.y,
     fall_offset: { y: 30, delay_frame: 5 },
     offset: { y: 0, diff: 0, delay_frame: 25 },
   };

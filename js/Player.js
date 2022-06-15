@@ -125,7 +125,6 @@ export class Player extends Character {
         maxSecond: 15,
       },
     ];
-
     this.totalCoints = 0;
 
     this.character_type = "player";
@@ -143,7 +142,7 @@ export class Player extends Character {
 
   handleHP(hp) {
     this.hp += hp;
-    this.damgeEffect({ target: this, text: `+ ${hp}`, type: "hp" });
+    this.damgeEffect({ target: this, text: `+ ${hp} hp`, type: "hp" });
     if (this.hp > this.maxLevelHp) {
       this.level += Math.floor(this.hp / this.maxLevelHp);
       this.points.point[0] += Math.floor(this.hp / this.maxLevelHp);

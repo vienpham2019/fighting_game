@@ -83,7 +83,7 @@ export class Item extends Sprite {
       if (this.isPickUp) {
         this.player.damgeEffect({
           target: this.player,
-          text: `+ ${this.amount} ${this.text}`,
+          text: `+ ${this.amount} ${this.text} $`,
           type: "item",
         });
       }

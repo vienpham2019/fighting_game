@@ -50,6 +50,14 @@ export class Controller {
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
 
+    this.coverGameScreen = {
+      x: 0,
+      y: 0,
+      w: canvas.width,
+      h: canvas.height,
+      transparent: [0, 100],
+    };
+
     // this.itemsObj.push(
     //   createItem({
     //     type: "permanetCritPotion",
@@ -97,6 +105,7 @@ export class Controller {
     // X axis
 
     // Y axis
+
     if (
       (this.camera.offset.diff < 0 && this.camera.offset.y < 0) ||
       (this.camera.offset.diff > 0 && this.camera.offset.y > 0)
@@ -282,7 +291,7 @@ export class Controller {
       this.objs[obj].position = { x: 0, y: 0 };
     }
     this.objs.floorImage.position = { x: 0, y: 100 };
-    this.player.position = { x: 0, y: canvas.height - 200 };
+    this.player.position = { x: 0, y: 0 };
     this.player.gameCurrentX = 0;
 
     this.platforms = createPlatform(
@@ -290,6 +299,7 @@ export class Controller {
       "platform"
     );
     this.walls = createPlatform(platform[`walls_${this.gameLevel}`], "wall");
+    this.camera.y = this.platforms[0].position.y;
     this.player.enemys = createEnemyByPlatform(this.platforms);
     switch (this.gameLevel) {
       case 2:
@@ -338,13 +348,33 @@ export class Controller {
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
+      if (
+        this.coverGameScreen.transparent[0] <=
+        this.coverGameScreen.transparent[1]
+      ) {
+        this.coverGameScreen.transparent[0]++;
+      }
       if (--this.updateGameLevelCoolDown[0] <= 0) {
         this.updateGameLevel = true;
         this.handleGameLevel();
       }
     } else {
       this.updateGameLevelCoolDown[0] = this.updateGameLevelCoolDown[1];
+      if (this.coverGameScreen.transparent[0] > 0) {
+        this.coverGameScreen.transparent[0]--;
+      }
     }
+  }
+
+  handleCoverScreen() {
+    c.fillStyle = `rgba(0,0,0,${this.coverGameScreen.transparent[0] / 100})`;
+
+    c.fillRect(
+      this.coverGameScreen.x,
+      this.coverGameScreen.y,
+      this.coverGameScreen.w,
+      this.coverGameScreen.h
+    );
   }
 
   run() {
@@ -361,6 +391,7 @@ export class Controller {
     this.walls.forEach((p) => {
       p.draw();
     });
+    this.handlePortal();
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
     for (let i = 0; i < this.walls.length; i++) {
@@ -370,8 +401,6 @@ export class Controller {
     for (let i = 0; i < this.platforms.length; i++) {
       this.player.floorColition(this.platforms[i], this.camera);
     }
-
-    this.handlePortal();
 
     this.player.update();
     // Update player enemys
@@ -414,5 +443,8 @@ export class Controller {
     this.playerInfoPanel.run();
     // this.shopInfoPanel.run();
     this.itemsInfoPanel.run();
+
+    // game Screen
+    this.handleCoverScreen();
   }
 }

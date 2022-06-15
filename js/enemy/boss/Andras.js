@@ -54,8 +54,8 @@ export class Andras extends Enemy {
     for (let i = 0; i < 10; i++) {
       this.itemsObj.push(createItem({ type: "coint", position, platform }));
     }
-    let random = getRandomArbitrary(1, 3);
-    for (let i = 0; i < random; i++) {
+
+    for (let i = 0; i < 3; i++) {
       this.itemsObj.push(
         createItem({ type: "shieldPotion", position, platform })
       );

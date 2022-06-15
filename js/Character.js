@@ -1,3 +1,4 @@
+import { getRandomArbitrary } from "./helper.js";
 import { c, canvas } from "./main.js";
 import { Sprite } from "./Sprite.js";
 
@@ -70,6 +71,7 @@ export class Character extends Sprite {
   }
 
   damgeEffect({ target, text, type = "crit" }) {
+    if (type === "damage" || type === "crit") text = "⚔" + text;
     let metrics = c.measureText(text);
     target.damges.push({
       target,
@@ -120,13 +122,13 @@ export class Character extends Sprite {
       switch (d.type) {
         case "damage":
           gradient_color_1 = "255, 255, 255";
-          gradient_color_2 = "255, 0, 0";
+          gradient_color_2 = "214, 0, 0";
           fontSize = "20px";
           break;
         case "crit":
           gradient_color_1 = "255, 255, 255";
-          gradient_color_2 = "251, 255, 0";
-          fontSize = "20px";
+          gradient_color_2 = "255, 255, 255";
+          fontSize = "24px";
           break;
         case "item":
           gradient_color_1 = "255, 255, 255";
@@ -143,14 +145,19 @@ export class Character extends Sprite {
       }
 
       (d.x = d.target.position.x + d.target.width / 2 - d.width / 2),
-        (c.font = `bold ${fontSize} Arial`);
+        (c.font = `bold ${fontSize} Comic Sans MS`);
       c.strokeStyle = "black";
       c.lineWidth = 3;
       c.strokeText(d.text, d.x, d.y);
-      let gradient = c.createLinearGradient(d.x, d.y, d.x + d.width, d.y + 5);
+      let gradient = c.createLinearGradient(
+        d.x,
+        d.y,
+        d.x + d.width * 1.5,
+        d.y + d.width / 2
+      );
 
-      gradient.addColorStop(0, `rgba(${gradient_color_1}, ` + d.alpha + ")");
-      gradient.addColorStop(0.5, `rgba(${gradient_color_2},` + d.alpha + ")");
+      gradient.addColorStop(1, `rgba(${gradient_color_1}, ` + d.alpha + ")");
+      gradient.addColorStop(0, `rgba(${gradient_color_2},` + d.alpha + ")");
       gradient.addColorStop(1, `rgba(${gradient_color_1}, ` + d.alpha + ")");
 
       c.fillStyle = gradient;
