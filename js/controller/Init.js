@@ -7,11 +7,17 @@ import { Sprite } from "../Sprite.js";
 import { platform } from "../data/platform_data.js";
 import { canvas } from "../main.js";
 
+// let width = 1424;
+// let height = 676;
+
+let width = 9000;
+let height = 0;
+
 export function int() {
   const floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platforms/platform lv1.png",
+    imageSrc: "..//img/platforms/platform lv3.png",
     scale: 1.5,
   });
 
@@ -157,8 +163,8 @@ export function int() {
       imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
-  const platforms = createPlatform(platform.platforms_1, "platform");
-  const walls = createPlatform(platform.walls_1, "wall");
+  const platforms = createPlatform(platform.platforms_3, "platform");
+  const walls = createPlatform(platform.walls_3, "wall");
 
   const player = createPlayer({
     position: { x: 0, y: 0 },
@@ -180,6 +186,19 @@ export function int() {
 
   player.enemys = createEnemyByPlatform(platforms);
   player.enemys.forEach((e) => (e.enemy = player));
+
+  floorImage.position.x -= width;
+  floorImage.position.y -= height;
+
+  platforms.forEach((p) => {
+    p.position.x -= width;
+    p.position.y -= height;
+  });
+
+  walls.forEach((w) => {
+    w.position.x -= width;
+    w.position.y -= height;
+  });
 
   // let enemy = createEnemy({
   //   platform: platforms[3],

@@ -48,7 +48,7 @@ export class Controller {
     this.itemsObj = [];
     this.portal = portal;
 
-    this.gameLevel = 1;
+    this.gameLevel = 3;
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
 
@@ -489,7 +489,7 @@ export class Controller {
     this.walls.forEach((p) => {
       p.draw();
     });
-    this.handlePortal();
+    // this.handlePortal();
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
     for (let i = 0; i < this.walls.length; i++) {
@@ -500,27 +500,27 @@ export class Controller {
       this.player.floorColition(this.platforms[i], this.camera);
     }
 
-    this.player.update();
+    // this.player.update();
     // Update player enemys
-    if (this.player.enemys.length > 0) {
-      // update each enemy
-      this.player.enemys.forEach((e) => {
-        // only load enemy if player in range
-        if (this.checkObjInPlayerRange(e)) e.update();
-      });
-      this.player.enemys = this.player.enemys.filter((e) => {
-        if (e.health <= 0 && e.dropItems === false) {
-          e.dropItems = true;
-          e.itemsObj.forEach((i) => {
-            i.position = { ...e.position };
-            i.itemsPanel = this.itemsPanel;
-            i.player = this.player;
-            this.itemsObj.push(i);
-          });
-        }
-        return !e.is_death;
-      });
-    }
+    // if (this.player.enemys.length > 0) {
+    //   // update each enemy
+    //   this.player.enemys.forEach((e) => {
+    //     // only load enemy if player in range
+    //     if (this.checkObjInPlayerRange(e)) e.update();
+    //   });
+    //   this.player.enemys = this.player.enemys.filter((e) => {
+    //     if (e.health <= 0 && e.dropItems === false) {
+    //       e.dropItems = true;
+    //       e.itemsObj.forEach((i) => {
+    //         i.position = { ...e.position };
+    //         i.itemsPanel = this.itemsPanel;
+    //         i.player = this.player;
+    //         this.itemsObj.push(i);
+    //       });
+    //     }
+    //     return !e.is_death;
+    //   });
+    // }
 
     // itemsObj
     if (this.itemsObj.length > 0) {
@@ -532,16 +532,16 @@ export class Controller {
     }
 
     // Camera
-    this.handleCamera();
+    // this.handleCamera();
     // camera
 
     // game object
-    this.drawBossHealth();
-    this.drawPlayerHealthBar();
-    this.playerInfoObj.run();
-    this.playerInfoPanel.run();
-    // this.shopInfoPanel.run();
-    this.itemsInfoPanel.run();
+    // this.drawBossHealth();
+    // this.drawPlayerHealthBar();
+    // this.playerInfoObj.run();
+    // this.playerInfoPanel.run();
+    // // this.shopInfoPanel.run();
+    // this.itemsInfoPanel.run();
 
     // game Screen
     this.handleCoverScreen();
