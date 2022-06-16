@@ -11,7 +11,7 @@ export function int() {
   const floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platform lv1.png",
+    imageSrc: "..//img/platforms/platform lv1.png",
     scale: 1.5,
   });
 
@@ -63,49 +63,49 @@ export function int() {
     position: { x: 20, y: 0 },
     offset: { x: 0, y: 0 },
     scale: 0.5,
-    imageSrc: "../img/Health bar.png",
+    imageSrc: "../img/gameObj/Health bar.png",
   });
 
   const playerInfo = new Sprite({
     position: { x: 200, y: 200 },
     offset: { x: 0, y: 0 },
     scale: 1,
-    imageSrc: "../img/player info.png",
+    imageSrc: "../img/gameObj/player info.png",
   });
 
   const infoPanel = new Sprite({
     position: { x: -20, y: canvas.height - 190 },
     offset: { x: 0, y: 0 },
     scale: 0.7,
-    imageSrc: "../img/info panel.png",
+    imageSrc: "../img/gameObj/info panel.png",
   });
 
   const shopPanel = new Sprite({
     position: { x: 200, y: 200 },
     offset: { x: 0, y: 0 },
     scale: 1,
-    imageSrc: "../img/shop_panel.png",
+    imageSrc: "../img/gameObj/shop_panel.png",
   });
 
   const itemsPanel = new Sprite({
     position: { x: canvas.width - 260, y: canvas.height - 120 },
     offset: { x: 0, y: 0 },
     scale: 1,
-    imageSrc: "../img/items_panel.png",
+    imageSrc: "../img/gameObj/items_panel.png",
   });
 
   const itemsPanelDetails = new Sprite({
     position: { x: canvas.width - 256, y: canvas.height - 171 },
     offset: { x: 0, y: 0 },
     scale: 1,
-    imageSrc: "../img/items_panel_details.png",
+    imageSrc: "../img/gameObj/items_panel_details.png",
   });
 
   const bossHealth = new Sprite({
     position: { x: 800, y: 0 },
     offset: { x: 0, y: 0 },
     scale: 0.5,
-    imageSrc: "../img/boss health.png",
+    imageSrc: "../img/gameObj/boss health.png",
   });
 
   const portal = new Sprite({
@@ -116,7 +116,7 @@ export function int() {
     scale: 0.5,
     framesMax: 9,
     framesHold: 7,
-    imageSrc: "../img/portal.png",
+    imageSrc: "../img/gameObj/portal.png",
   });
 
   const items = {

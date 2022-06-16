@@ -382,7 +382,7 @@ export class Controller {
   }
 
   resetPosition() {
-    this.objs.floorImage.image.src = `..//img/platform lv${this.gameLevel}.png`;
+    this.objs.floorImage.image.src = `..//img/platforms/platform lv${this.gameLevel}.png`;
     this.camera.x = 0;
 
     for (let obj in this.objs) {

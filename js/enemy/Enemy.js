@@ -171,8 +171,8 @@ export class Enemy extends Character {
         ) {
           if (
             Math.random() > 0.5 &&
-            this.platform.position.x + this.width + 10 < this.position.x &&
-            this.platform.position.x + this.platform.width - this.width - 10 >
+            this.platform.position.x + this.width * 1.5 < this.position.x &&
+            this.platform.position.x + this.platform.width - this.width * 1.5 >
               this.position.x + this.width
           ) {
             this.flip *= -1;
