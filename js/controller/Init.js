@@ -10,7 +10,7 @@ import { canvas } from "../main.js";
 // let width = 1424;
 // let height = 676;
 
-let width = 9000;
+let width = 0;
 let height = 0;
 
 export function int() {
@@ -187,18 +187,18 @@ export function int() {
   player.enemys = createEnemyByPlatform(platforms);
   player.enemys.forEach((e) => (e.enemy = player));
 
-  floorImage.position.x -= width;
-  floorImage.position.y -= height;
+  // floorImage.position.x -= width;
+  // floorImage.position.y -= height;
 
-  platforms.forEach((p) => {
-    p.position.x -= width;
-    p.position.y -= height;
-  });
+  // platforms.forEach((p) => {
+  //   p.position.x -= width;
+  //   p.position.y -= height;
+  // });
 
-  walls.forEach((w) => {
-    w.position.x -= width;
-    w.position.y -= height;
-  });
+  // walls.forEach((w) => {
+  //   w.position.x -= width;
+  //   w.position.y -= height;
+  // });
 
   // let enemy = createEnemy({
   //   platform: platforms[3],

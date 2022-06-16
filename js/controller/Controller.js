@@ -500,7 +500,7 @@ export class Controller {
       this.player.floorColition(this.platforms[i], this.camera);
     }
 
-    // this.player.update();
+    this.player.update();
     // Update player enemys
     // if (this.player.enemys.length > 0) {
     //   // update each enemy
@@ -532,7 +532,7 @@ export class Controller {
     }
 
     // Camera
-    // this.handleCamera();
+    this.handleCamera();
     // camera
 
     // game object
