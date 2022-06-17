@@ -460,6 +460,48 @@ const walls_3 = [
   },
 ];
 
+const platforms_5 = [
+  { x: 0, width: 1080, offset: { x: 0, y: -210 } },
+  { x: 1080, width: 490, offset: { x: 0, y: -280 } },
+  { x: 1630, width: 210, offset: { x: 0, y: -208 } },
+  { x: 1800, width: 210, offset: { x: 0, y: -95 } },
+  { x: 1980, width: 210, offset: { x: 0, y: 45 } },
+  { x: 2200, width: 500, offset: { x: 0, y: 157 } },
+  { x: 2700, width: 810, offset: { x: 0, y: 230 } },
+  { x: 3510, width: 510, offset: { x: 0, y: 158 } },
+  { x: 4020, width: 310, offset: { x: 0, y: 85 } },
+  { x: 4370, width: 70, offset: { x: 0, y: 120 } },
+  { x: 4425, width: 210, offset: { x: 0, y: 186 } },
+  { x: 4595, width: 210, offset: { x: 0, y: 270 } },
+  { x: 4815, width: 70, offset: { x: 0, y: 353 } },
+  { x: 4900, width: 70, offset: { x: 0, y: 423 } },
+  { x: 5010, width: 210, offset: { x: 0, y: 497 } },
+  { x: 4815, width: 210, offset: { x: 0, y: 635 } },
+  { x: 4970, width: 1400, offset: { x: 0, y: 730 } },
+  { x: 6370, width: 450, offset: { x: 0, y: 805 } },
+  { x: 6820, width: 1080, offset: { x: 0, y: 877 } },
+  { x: 7900, width: 70, offset: { x: 0, y: 951 } },
+  { x: 7800, width: 210, offset: { x: 0, y: 761 } },
+  { x: 7990, width: 70, offset: { x: 0, y: 641 } },
+  { x: 8040, width: 210, offset: { x: 0, y: 510 } },
+  { x: 8280, width: 210, offset: { x: 0, y: 395 } },
+];
+
+const walls_5 = [
+  {
+    x: -1,
+    height: canvas_height * 5,
+    offset: { x: 0, y: -(canvas_height * 2) },
+  },
+  { x: 1080, height: 72, offset: { x: 0, y: -279 } },
+  { x: 2700, height: 72, offset: { x: 0, y: 159 } },
+  { x: 3510, height: 72, offset: { x: 0, y: 161 } },
+  { x: 4020, height: 72, offset: { x: 0, y: 90 } },
+  { x: 6370, height: 72, offset: { x: 0, y: 736 } },
+  { x: 6820, height: 72, offset: { x: 0, y: 808 } },
+  { x: 7900, height: 72, offset: { x: 0, y: 881 } },
+];
+
 export let platform = {
   platforms_1,
   walls_1,
@@ -467,4 +509,6 @@ export let platform = {
   walls_2,
   platforms_3,
   walls_3,
+  platforms_5,
+  walls_5,
 };
