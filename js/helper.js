@@ -211,6 +211,8 @@ export function createPlatform(arr, type) {
         width: type === "platform" ? e.width : 2,
         height: type === "wall" ? e.height : 2,
         offset,
+        portalPlatform: "portal" in e,
+        portalFlip: "portalFlip" in e ? -1 : 1,
       })
     );
   }

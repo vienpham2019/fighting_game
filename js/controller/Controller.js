@@ -489,7 +489,7 @@ export class Controller {
     this.walls.forEach((p) => {
       p.draw();
     });
-    // this.handlePortal();
+    this.handlePortal();
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
     for (let i = 0; i < this.walls.length; i++) {

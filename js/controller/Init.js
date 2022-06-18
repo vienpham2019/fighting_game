@@ -2,6 +2,7 @@ import {
   createPlayer,
   createPlatform,
   createEnemyByPlatform,
+  getRandomArbitrary,
 } from "../helper.js";
 import { Sprite } from "../Sprite.js";
 import { platform } from "../data/platform_data.js";
@@ -10,14 +11,14 @@ import { canvas } from "../main.js";
 // let width = 1424;
 // let height = 676;
 
-let width = 8000;
-let height = 1000;
+let width = 0;
+let height = 1100;
 
 export function int() {
   const floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platforms/platform lv5.png",
+    imageSrc: "..//img/platforms/platform lv1.png",
     scale: 1.5,
   });
 
@@ -114,17 +115,6 @@ export function int() {
     imageSrc: "../img/gameObj/boss health.png",
   });
 
-  const portal = new Sprite({
-    position: { x: 1300, y: 340 },
-    offset: { x: 80, y: 30 },
-    width: 100,
-    height: 200,
-    scale: 0.5,
-    framesMax: 9,
-    framesHold: 7,
-    imageSrc: "../img/gameObj/portal.png",
-  });
-
   const items = {
     healPotion: new Sprite({
       position: {
@@ -163,9 +153,28 @@ export function int() {
       imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
-  const platforms = createPlatform(platform.platforms_5, "platform");
-  const walls = createPlatform(platform.walls_5, "wall");
-
+  const platforms = createPlatform(platform.platforms_1, "platform");
+  const walls = createPlatform(platform.walls_1, "wall");
+  const portalPlatforms = platforms.filter((p) => p.portalPlatform);
+  const portalCordinate =
+    portalPlatforms[getRandomArbitrary(0, portalPlatforms.length)];
+  const portal = new Sprite({
+    position: {
+      x:
+        portalCordinate.position.x +
+        (portalCordinate.portalFlip === 1 ? portalCordinate.width - 100 : 0),
+      y: portalCordinate.position.y - 200,
+    },
+    offset: { x: 80, y: 30 },
+    width: 100,
+    height: 200,
+    scale: 0.5,
+    framesMax: 9,
+    framesHold: 7,
+    flip: portalCordinate.portalFlip,
+    imageSrc: "../img/gameObj/portal.png",
+  });
+  console.log(portal, portalCordinate);
   const player = createPlayer({
     position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },
@@ -189,7 +198,8 @@ export function int() {
 
   floorImage.position.x -= width;
   floorImage.position.y -= height;
-
+  portal.position.x -= width;
+  portal.position.y -= height;
   platforms.forEach((p) => {
     p.position.x -= width;
     p.position.y -= height;
@@ -199,12 +209,6 @@ export function int() {
     w.position.x -= width;
     w.position.y -= height;
   });
-
-  // let enemy = createEnemy({
-  //   platform: platforms[3],
-  //   enemy_name: "sygnus",
-  //   enemy_type: "boss",
-  // });
 
   // player.enemys = [];
 

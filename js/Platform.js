@@ -1,12 +1,21 @@
 import { c } from "./main.js";
 
 export class Platform {
-  constructor({ position, width, height, offset }) {
+  constructor({
+    position,
+    width,
+    height,
+    offset,
+    portalFlip = 1,
+    portalPlatform = false,
+  }) {
     this.position = position;
     this.width = width;
     this.height = height;
     this.offset = offset;
     this.color = "blue";
+    this.portalPlatform = portalPlatform;
+    this.portalFlip = portalFlip;
   }
 
   draw() {

@@ -4,7 +4,13 @@ const canvas_height = 576;
 const platforms_1 = [
   { x: 0, width: 95, offset: { x: 0, y: -272 } },
   { x: 0, width: 195, offset: { x: 0, y: 661 } },
-  { x: 0, width: 901, offset: { x: 0, y: 951 } },
+  {
+    x: 10,
+    width: 891,
+    offset: { x: 0, y: 951 },
+    portal: true,
+    portalFlip: true,
+  },
   { x: 95, width: 185, offset: { x: 0, y: -200 } },
   { x: 150, width: 75, offset: { x: 0, y: -368 } },
   { x: 195, width: 910, offset: { x: 0, y: 734 } },
@@ -81,13 +87,13 @@ const platforms_1 = [
   { x: 4415, width: 290, offset: { x: 0, y: 493 } },
   { x: 4680, width: 215, offset: { x: 0, y: 598 } },
   { x: 4850, width: 215, offset: { x: 0, y: 698 } },
-  { x: 3180, width: 190, offset: { x: 0, y: 943 } }, //
-  { x: 3370, width: 1373, offset: { x: 0, y: 1015 } }, //
-  { x: 4740, width: 80, offset: { x: 0, y: 932 } }, //
-  { x: 4820, width: 202, offset: { x: 0, y: 860 } }, //
+  { x: 3180, width: 190, offset: { x: 0, y: 943 } },
+  { x: 3370, width: 1373, offset: { x: 0, y: 1015 } },
+  { x: 4740, width: 80, offset: { x: 0, y: 932 } },
+  { x: 4820, width: 202, offset: { x: 0, y: 860 } },
   { x: 5020, width: 215, offset: { x: 0, y: 788 } },
   { x: 5235, width: 1980, offset: { x: 0, y: 861 } },
-  { x: 7215, width: 600, offset: { x: 0, y: 934 } },
+  { x: 7215, width: 600, offset: { x: 0, y: 934 } }, //
   { x: 4480, width: 85, offset: { x: 0, y: -7 } },
   { x: 4560, width: 210, offset: { x: 0, y: -78 } },
   { x: 4770, width: 210, offset: { x: 0, y: -150 } },
@@ -119,7 +125,7 @@ const platforms_1 = [
   { x: 11010, width: 300, offset: { x: 0, y: -544 } },
   { x: 11310, width: 230, offset: { x: 0, y: -472 } },
   { x: 11190, width: 210, offset: { x: 0, y: -613 } },
-  { x: 11190, width: 1040, offset: { x: 0, y: 61 } },
+  { x: 11190, width: 1030, offset: { x: 0, y: 61 } }, //
   { x: 11316, width: 67, offset: { x: 0, y: -678 } },
   { x: 11389, width: 67, offset: { x: 0, y: -748 } },
   { x: 11465, width: 210, offset: { x: 0, y: -824 } },
@@ -204,7 +210,9 @@ const walls_1 = [
   { x: 12222, height: canvas_height * 5, offset: { x: 0, y: -1526 } },
 ];
 
-const platforms_2 = [{ x: 0, width: 3100, offset: { x: 0, y: -302 } }];
+const platforms_2 = [
+  { x: 0, width: 3100, offset: { x: 0, y: -302 }, portal: true },
+];
 
 const walls_2 = [
   {
@@ -277,7 +285,7 @@ const platforms_3 = [
   { x: 8404, width: 215, offset: { x: 0, y: -1208 } },
   { x: 8604, width: 605, offset: { x: 0, y: -1272 } },
   { x: 9209, width: 1740, offset: { x: 0, y: -1343 } },
-  { x: 10949, width: 1340, offset: { x: 0, y: -1416 } },
+  { x: 10949, width: 1290, offset: { x: 0, y: -1416 }, portal: true },
   { x: 8316, width: 70, offset: { x: 0, y: -1130 } },
   { x: 8071, width: 215, offset: { x: 0, y: -1058 } },
   { x: 7840, width: 215, offset: { x: 0, y: -937 } },
@@ -306,7 +314,7 @@ const platforms_3 = [
   { x: 5130, width: 610, offset: { x: 0, y: 467 } },
   { x: 5740, width: 1745, offset: { x: 0, y: 397 } },
   { x: 7485, width: 3700, offset: { x: 0, y: 323 } },
-  { x: 11185, width: 1105, offset: { x: 0, y: 397 } },
+  { x: 11185, width: 1055, offset: { x: 0, y: 397 }, portal: true }, //
 ];
 
 const walls_3 = [
@@ -485,6 +493,79 @@ const platforms_5 = [
   { x: 7990, width: 70, offset: { x: 0, y: 641 } },
   { x: 8040, width: 210, offset: { x: 0, y: 510 } },
   { x: 8280, width: 210, offset: { x: 0, y: 395 } },
+  { x: 8430, width: 70, offset: { x: 0, y: 520 } },
+  { x: 8500, width: 1090, offset: { x: 0, y: 446 } },
+  { x: 9590, width: 445, offset: { x: 0, y: 374 } },
+  { x: 10035, width: 1835, offset: { x: 0, y: 302 } },
+  { x: 11870, width: 370, offset: { x: 0, y: 372 }, portal: true }, //
+  //
+  { x: 1215, width: 210, offset: { x: 0, y: -385 } },
+  { x: 1470, width: 210, offset: { x: 0, y: -505 } },
+  { x: 1705, width: 70, offset: { x: 0, y: -600 } },
+  { x: 1895, width: 70, offset: { x: 0, y: -655 } },
+  { x: 2100, width: 210, offset: { x: 0, y: -705 } },
+  { x: 2280, width: 730, offset: { x: 0, y: -625 } },
+  { x: 3010, width: 550, offset: { x: 0, y: -553 } },
+  { x: 3560, width: 440, offset: { x: 0, y: -627 } },
+  { x: 4000, width: 1885, offset: { x: 0, y: -698 } },
+  { x: 5885, width: 775, offset: { x: 0, y: -626 } },
+  { x: 6660, width: 1745, offset: { x: 0, y: -698 } },
+  { x: 8405, width: 2025, offset: { x: 0, y: -770 } },
+  { x: 10530, width: 210, offset: { x: 0, y: -660 } },
+  { x: 10710, width: 70, offset: { x: 0, y: -583 } },
+  { x: 10760, width: 210, offset: { x: 0, y: -500 } },
+  { x: 11000, width: 70, offset: { x: 0, y: -370 } },
+  { x: 11080, width: 70, offset: { x: 0, y: -250 } },
+  { x: 11150, width: 210, offset: { x: 0, y: -120 } },
+  { x: 11320, width: 210, offset: { x: 0, y: -2 } },
+  { x: 11520, width: 70, offset: { x: 0, y: 105 } },
+  { x: 11580, width: 210, offset: { x: 0, y: 210 } },
+  { x: 10220, width: 70, offset: { x: 0, y: -847 } },
+  { x: 10280, width: 210, offset: { x: 0, y: -940 } },
+  { x: 10490, width: 70, offset: { x: 0, y: -1005 } },
+  { x: 10540, width: 210, offset: { x: 0, y: -1070 } },
+  { x: 10820, width: 600, offset: { x: 0, y: -1120 } },
+  { x: 11420, width: 500, offset: { x: 0, y: -1192 }, portal: true }, //
+  //
+  { x: 420, width: 75, offset: { x: 0, y: -1185 } },
+  { x: 495, width: 1905, offset: { x: 0, y: -1257 } },
+  { x: 2400, width: 70, offset: { x: 0, y: -1185 } },
+  { x: 2490, width: 70, offset: { x: 0, y: -1145 } },
+  { x: 2570, width: 210, offset: { x: 0, y: -1070 } },
+  { x: 2840, width: 210, offset: { x: 0, y: -1135 } },
+  { x: 3125, width: 70, offset: { x: 0, y: -1142 } },
+  { x: 3275, width: 70, offset: { x: 0, y: -1136 } },
+  { x: 3345, width: 1090, offset: { x: 0, y: -1207 } },
+  { x: 4435, width: 445, offset: { x: 0, y: -1279 } },
+  { x: 4880, width: 2425, offset: { x: 0, y: -1350 } },
+  { x: 7305, width: 495, offset: { x: 0, y: -1421 } },
+  { x: 7855, width: 210, offset: { x: 0, y: -1361 } },
+  { x: 8075, width: 70, offset: { x: 0, y: -1296 } },
+  { x: 8155, width: 210, offset: { x: 0, y: -1230 } },
+  { x: 8415, width: 70, offset: { x: 0, y: -1130 } },
+  { x: 8535, width: 70, offset: { x: 0, y: -1065 } },
+  { x: 8640, width: 210, offset: { x: 0, y: -975 } },
+  { x: 8850, width: 210, offset: { x: 0, y: -870 } },
+  { x: 2760, width: 210, offset: { x: 0, y: -963 } },
+  { x: 2980, width: 70, offset: { x: 0, y: -888 } },
+  { x: 3070, width: 70, offset: { x: 0, y: -815 } },
+  { x: 3155, width: 210, offset: { x: 0, y: -755 } },
+  { x: 3405, width: 70, offset: { x: 0, y: -690 } },
+  //
+  {
+    x: 305,
+    width: 560,
+    offset: { x: 0, y: 1125 },
+    portal: true,
+    portalFlip: true,
+  },
+  { x: 865, width: 3410, offset: { x: 0, y: 1053 } },
+  { x: 4275, width: 70, offset: { x: 0, y: 1127 } },
+  { x: 4210, width: 210, offset: { x: 0, y: 952 } },
+  { x: 4420, width: 70, offset: { x: 0, y: 872 } },
+  { x: 4505, width: 210, offset: { x: 0, y: 799 } },
+  { x: 4707, width: 70, offset: { x: 0, y: 710 } },
+  { x: 4900, width: 65, offset: { x: 0, y: 803 } },
 ];
 
 const walls_5 = [
@@ -500,6 +581,35 @@ const walls_5 = [
   { x: 6370, height: 72, offset: { x: 0, y: 736 } },
   { x: 6820, height: 72, offset: { x: 0, y: 808 } },
   { x: 7900, height: 72, offset: { x: 0, y: 881 } },
+  { x: 8500, height: 72, offset: { x: 0, y: 452 } },
+  { x: 9590, height: 72, offset: { x: 0, y: 378 } },
+  { x: 10035, height: 72, offset: { x: 0, y: 306 } },
+  { x: 11870, height: 72, offset: { x: 0, y: 304 } },
+  //
+  { x: 3010, height: 72, offset: { x: 0, y: -622 } },
+  { x: 3560, height: 72, offset: { x: 0, y: -621 } },
+  { x: 4000, height: 72, offset: { x: 0, y: -696 } },
+  { x: 5885, height: 72, offset: { x: 0, y: -696 } },
+  { x: 6660, height: 72, offset: { x: 0, y: -695 } },
+  { x: 8405, height: 72, offset: { x: 0, y: -767 } },
+  { x: 11420, height: 72, offset: { x: 0, y: -1188 } },
+  //
+  { x: 495, height: 72, offset: { x: 0, y: -1254 } },
+  { x: 2400, height: 72, offset: { x: 0, y: -1255 } },
+  { x: 3345, height: 72, offset: { x: 0, y: -1205 } },
+  { x: 4435, height: 72, offset: { x: 0, y: -1275 } },
+  { x: 4880, height: 72, offset: { x: 0, y: -1347 } },
+  { x: 7305, height: 72, offset: { x: 0, y: -1417 } },
+  //
+  { x: 305, height: 200, offset: { x: 0, y: 928 } },
+  { x: 865, height: 72, offset: { x: 0, y: 1056 } },
+  { x: 4275, height: 75, offset: { x: 0, y: 1055 } },
+  { x: 4965, height: 72, offset: { x: 0, y: 734 } },
+  {
+    x: 12239,
+    height: canvas_height * 5,
+    offset: { x: 0, y: -1916 },
+  },
 ];
 
 export let platform = {
