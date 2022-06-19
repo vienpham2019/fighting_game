@@ -39,6 +39,9 @@ window.addEventListener("keydown", (e) => {
         player.attack();
         break;
 
+      case "r":
+        controller.resetPosition();
+
       case "p":
         controller.playerInfoPanel.open = !controller.playerInfoPanel.open;
         break;

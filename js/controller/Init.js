@@ -12,13 +12,13 @@ import { canvas } from "../main.js";
 // let height = 676;
 
 let width = 0;
-let height = 1100;
+let height = 0;
 
 export function int() {
   const floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platforms/platform lv1.png",
+    imageSrc: "..//img/platforms/platform lv3.png",
     scale: 1.5,
   });
 
@@ -153,8 +153,8 @@ export function int() {
       imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
-  const platforms = createPlatform(platform.platforms_1, "platform");
-  const walls = createPlatform(platform.walls_1, "wall");
+  const platforms = createPlatform(platform.platforms_3, "platform");
+  const walls = createPlatform(platform.walls_3, "wall");
   const portalPlatforms = platforms.filter((p) => p.portalPlatform);
   const portalCordinate =
     portalPlatforms[getRandomArbitrary(0, portalPlatforms.length)];
@@ -174,7 +174,6 @@ export function int() {
     flip: portalCordinate.portalFlip,
     imageSrc: "../img/gameObj/portal.png",
   });
-  console.log(portal, portalCordinate);
   const player = createPlayer({
     position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },

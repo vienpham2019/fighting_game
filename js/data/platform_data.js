@@ -211,7 +211,7 @@ const walls_1 = [
 ];
 
 const platforms_2 = [
-  { x: 0, width: 3100, offset: { x: 0, y: -302 }, portal: true },
+  { x: 0, width: 3100, offset: { x: 0, y: -302 }, portal: true, boss: true },
 ];
 
 const walls_2 = [
@@ -468,6 +468,23 @@ const walls_3 = [
   },
 ];
 
+const platforms_4 = [
+  { x: 10, width: 70, offset: { x: 0, y: -235 } },
+  { x: 80, width: 1827, offset: { x: 0, y: -303 } },
+  { x: 1907, width: 1090, offset: { x: 0, y: -230 }, portal: true, boss: true },
+  { x: 2997, width: 70, offset: { x: 0, y: -160 } },
+];
+const walls_4 = [
+  {
+    x: -1,
+    height: canvas_height * 5,
+    offset: { x: 0, y: -(canvas_height * 2) },
+  },
+  { x: 80, height: 70, offset: { x: 0, y: -301 } },
+  { x: 1907, height: 70, offset: { x: 0, y: -298 } },
+  { x: 2997, height: 70, offset: { x: 0, y: -228 } },
+];
+
 const platforms_5 = [
   { x: 0, width: 1080, offset: { x: 0, y: -210 } },
   { x: 1080, width: 490, offset: { x: 0, y: -280 } },
@@ -619,6 +636,8 @@ export let platform = {
   walls_2,
   platforms_3,
   walls_3,
+  platforms_4,
+  walls_4,
   platforms_5,
   walls_5,
 };

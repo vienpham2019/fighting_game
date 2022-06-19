@@ -7,6 +7,7 @@ import {
   createEnemyByPlatform,
   createPlatform,
   createEnemy,
+  getRandomArbitrary,
 } from "../helper.js";
 import { platform } from "../data/platform_data.js";
 
@@ -48,7 +49,7 @@ export class Controller {
     this.itemsObj = [];
     this.portal = portal;
 
-    this.gameLevel = 3;
+    this.gameLevel = 4;
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
 
@@ -396,20 +397,45 @@ export class Controller {
       platform[`platforms_${this.gameLevel}`],
       "platform"
     );
+    let portalPlatforms = this.platforms.filter((p) => p.portalPlatform);
+    let portalCordinate =
+      portalPlatforms[getRandomArbitrary(0, portalPlatforms.length)];
+    this.portal.position = {
+      x:
+        portalCordinate.position.x +
+        (portalCordinate.portalFlip === 1 ? portalCordinate.width - 100 : 0),
+      y: portalCordinate.position.y - 200,
+    };
+
     this.walls = createPlatform(platform[`walls_${this.gameLevel}`], "wall");
     this.camera.y = this.platforms[0].position.y;
     this.player.enemys = createEnemyByPlatform(this.platforms);
-    switch (this.gameLevel) {
-      case 2:
-        this.player.boss = createEnemy({
-          platform: this.platforms[0],
-          enemy_name: "andras",
-          enemy_type: "boss",
-        });
-        this.bossName = "Andras";
-        this.player.enemys.push(this.player.boss);
-        break;
+    if (this.gameLevel % 2 === 0) {
+      let bossName;
+      let enemy_name;
+      switch (this.gameLevel) {
+        case 2:
+          bossName = "Andras";
+          enemy_name = "andras";
+          break;
+        case 4:
+          bossName = "Inner Rage";
+          enemy_name = "inner_rage";
+          break;
+        case 6:
+          bossName = "Sygnus";
+          enemy_name = "sygnus";
+          break;
+      }
+      this.player.boss = createEnemy({
+        platform: this.platforms.find((p) => p.bossPlatform === true),
+        enemy_name,
+        enemy_type: "boss",
+      });
+      this.bossName = bossName;
+      this.player.enemys.push(this.player.boss);
     }
+
     this.player.enemys.forEach((e) => (e.enemy = this.player));
 
     this.player.platform = this.platforms[0];
@@ -421,16 +447,7 @@ export class Controller {
 
   handleGameLevel() {
     this.gameLevel++;
-
-    switch (this.gameLevel) {
-      case 2:
-        this.resetPosition();
-        this.portal.position = { x: 3000, y: 170 };
-        break;
-
-      default:
-        break;
-    }
+    this.resetPosition();
   }
 
   handlePortal() {
@@ -500,27 +517,27 @@ export class Controller {
       this.player.floorColition(this.platforms[i], this.camera);
     }
 
-    // this.player.update();
+    this.player.update();
     // Update player enemys
-    // if (this.player.enemys.length > 0) {
-    //   // update each enemy
-    //   this.player.enemys.forEach((e) => {
-    //     // only load enemy if player in range
-    //     if (this.checkObjInPlayerRange(e)) e.update();
-    //   });
-    //   this.player.enemys = this.player.enemys.filter((e) => {
-    //     if (e.health <= 0 && e.dropItems === false) {
-    //       e.dropItems = true;
-    //       e.itemsObj.forEach((i) => {
-    //         i.position = { ...e.position };
-    //         i.itemsPanel = this.itemsPanel;
-    //         i.player = this.player;
-    //         this.itemsObj.push(i);
-    //       });
-    //     }
-    //     return !e.is_death;
-    //   });
-    // }
+    if (this.player.enemys.length > 0) {
+      // update each enemy
+      this.player.enemys.forEach((e) => {
+        // only load enemy if player in range
+        if (this.checkObjInPlayerRange(e)) e.update();
+      });
+      this.player.enemys = this.player.enemys.filter((e) => {
+        if (e.health <= 0 && e.dropItems === false) {
+          e.dropItems = true;
+          e.itemsObj.forEach((i) => {
+            i.position = { ...e.position };
+            i.itemsPanel = this.itemsPanel;
+            i.player = this.player;
+            this.itemsObj.push(i);
+          });
+        }
+        return !e.is_death;
+      });
+    }
 
     // itemsObj
     if (this.itemsObj.length > 0) {
@@ -532,7 +549,7 @@ export class Controller {
     }
 
     // Camera
-    // this.handleCamera();
+    this.handleCamera();
     // camera
 
     // game object

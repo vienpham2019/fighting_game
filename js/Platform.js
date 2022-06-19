@@ -8,6 +8,7 @@ export class Platform {
     offset,
     portalFlip = 1,
     portalPlatform = false,
+    bossPlatform = false,
   }) {
     this.position = position;
     this.width = width;
@@ -16,6 +17,7 @@ export class Platform {
     this.color = "blue";
     this.portalPlatform = portalPlatform;
     this.portalFlip = portalFlip;
+    this.bossPlatform = bossPlatform;
   }
 
   draw() {

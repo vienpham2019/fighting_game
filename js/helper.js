@@ -213,6 +213,7 @@ export function createPlatform(arr, type) {
         offset,
         portalPlatform: "portal" in e,
         portalFlip: "portalFlip" in e ? -1 : 1,
+        bossPlatform: "boss" in e,
       })
     );
   }
