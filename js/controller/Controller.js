@@ -131,7 +131,15 @@ export class Controller {
     // X axis
 
     // Y axis
-
+    if (
+      this.objs["floorImage"].position.y +
+        this.objs["floorImage"].image.height <
+      this.player.position.y + this.player.height
+    ) {
+      this.camera.offset.diff = 0;
+      this.camera.offset.y = 0;
+      this.player.health = 0;
+    }
     if (
       (this.camera.offset.diff < 0 && this.camera.offset.y < 0) ||
       (this.camera.offset.diff > 0 && this.camera.offset.y > 0)
@@ -506,7 +514,7 @@ export class Controller {
     this.walls.forEach((p) => {
       p.draw();
     });
-    this.handlePortal();
+    if (this.gameLevel < 6) this.handlePortal();
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
     for (let i = 0; i < this.walls.length; i++) {
@@ -518,26 +526,26 @@ export class Controller {
     }
 
     this.player.update();
-    // Update player enemys
-    if (this.player.enemys.length > 0) {
-      // update each enemy
-      this.player.enemys.forEach((e) => {
-        // only load enemy if player in range
-        if (this.checkObjInPlayerRange(e)) e.update();
-      });
-      this.player.enemys = this.player.enemys.filter((e) => {
-        if (e.health <= 0 && e.dropItems === false) {
-          e.dropItems = true;
-          e.itemsObj.forEach((i) => {
-            i.position = { ...e.position };
-            i.itemsPanel = this.itemsPanel;
-            i.player = this.player;
-            this.itemsObj.push(i);
-          });
-        }
-        return !e.is_death;
-      });
-    }
+    // // Update player enemys
+    // if (this.player.enemys.length > 0) {
+    //   // update each enemy
+    //   this.player.enemys.forEach((e) => {
+    //     // only load enemy if player in range
+    //     if (this.checkObjInPlayerRange(e)) e.update();
+    //   });
+    //   this.player.enemys = this.player.enemys.filter((e) => {
+    //     if (e.health <= 0 && e.dropItems === false) {
+    //       e.dropItems = true;
+    //       e.itemsObj.forEach((i) => {
+    //         i.position = { ...e.position };
+    //         i.itemsPanel = this.itemsPanel;
+    //         i.player = this.player;
+    //         this.itemsObj.push(i);
+    //       });
+    //     }
+    //     return !e.is_death;
+    //   });
+    // }
 
     // itemsObj
     if (this.itemsObj.length > 0) {
