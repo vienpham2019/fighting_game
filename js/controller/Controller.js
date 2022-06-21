@@ -49,7 +49,7 @@ export class Controller {
     this.itemsObj = [];
     this.portal = portal;
 
-    this.gameLevel = 4;
+    this.gameLevel = 6;
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
 
@@ -177,18 +177,18 @@ export class Controller {
     }
     // Y axis
 
-    c.beginPath();
-    c.moveTo(this.player.position.x, this.camera.y);
-    c.lineTo(this.player.position.x + this.player.width, this.camera.y);
-    c.stroke();
+    // c.beginPath();
+    // c.moveTo(this.player.position.x, this.camera.y);
+    // c.lineTo(this.player.position.x + this.player.width, this.camera.y);
+    // c.stroke();
 
-    c.beginPath();
-    c.moveTo(this.player.position.x, this.camera.y + this.camera.fall_offset.y);
-    c.lineTo(
-      this.player.position.x + this.player.width,
-      this.camera.y + this.camera.fall_offset.y
-    );
-    c.stroke();
+    // c.beginPath();
+    // c.moveTo(this.player.position.x, this.camera.y + this.camera.fall_offset.y);
+    // c.lineTo(
+    //   this.player.position.x + this.player.width,
+    //   this.camera.y + this.camera.fall_offset.y
+    // );
+    // c.stroke();
   }
 
   calculatePercent(healthBarWidth, start_n, end_n) {
@@ -459,15 +459,15 @@ export class Controller {
   }
 
   handlePortal() {
-    c.beginPath();
-    c.strokeStyle = "red";
-    c.rect(
-      this.portal.position.x,
-      this.portal.position.y,
-      this.portal.width,
-      this.portal.height
-    );
-    c.stroke();
+    // c.beginPath();
+    // c.strokeStyle = "red";
+    // c.rect(
+    //   this.portal.position.x,
+    //   this.portal.position.y,
+    //   this.portal.width,
+    //   this.portal.height
+    // );
+    // c.stroke();
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
@@ -507,13 +507,12 @@ export class Controller {
     this.player.floorImage.x =
       this.objs.floorImage.image.width * this.objs.floorImage.scale;
 
-    // enemy.update();
-    this.platforms.forEach((p) => {
-      p.draw();
-    });
-    this.walls.forEach((p) => {
-      p.draw();
-    });
+    // this.platforms.forEach((p) => {
+    //   p.draw();
+    // });
+    // this.walls.forEach((p) => {
+    //   p.draw();
+    // });
     if (this.gameLevel < 6) this.handlePortal();
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
@@ -527,30 +526,30 @@ export class Controller {
 
     this.player.update();
     // // Update player enemys
-    // if (this.player.enemys.length > 0) {
-    //   // update each enemy
-    //   this.player.enemys.forEach((e) => {
-    //     // only load enemy if player in range
-    //     if (this.checkObjInPlayerRange(e)) e.update();
-    //   });
-    //   this.player.enemys = this.player.enemys.filter((e) => {
-    //     if (e.health <= 0 && e.dropItems === false) {
-    //       e.dropItems = true;
-    //       e.itemsObj.forEach((i) => {
-    //         i.position = { ...e.position };
-    //         i.itemsPanel = this.itemsPanel;
-    //         i.player = this.player;
-    //         this.itemsObj.push(i);
-    //       });
-    //     }
-    //     return !e.is_death;
-    //   });
-    // }
+    if (this.player.enemys.length > 0) {
+      // update each enemy
+      this.player.enemys.forEach((e) => {
+        // only load enemy if player in range
+        if (this.level % 2 != 0 && this.checkObjInPlayerRange(e)) e.update();
+      });
+      this.player.enemys = this.player.enemys.filter((e) => {
+        if (e.health <= 0 && e.dropItems === false) {
+          e.dropItems = true;
+          e.itemsObj.forEach((i) => {
+            i.position = { ...e.position };
+            i.itemsPanel = this.itemsPanel;
+            i.player = this.player;
+            this.itemsObj.push(i);
+          });
+        }
+        return !e.is_death;
+      });
+    }
 
     // itemsObj
     if (this.itemsObj.length > 0) {
       this.itemsObj.forEach((i) => {
-        if (this.checkObjInPlayerRange(i)) i.run();
+        if (this.level % 2 != 0 && this.checkObjInPlayerRange(i)) i.run();
         if (--i.coolDown <= 0) i.isPickUp = true;
       });
       this.itemsObj = this.itemsObj.filter((i) => i.isPickUp === false);
@@ -561,12 +560,12 @@ export class Controller {
     // camera
 
     // game object
-    // this.drawBossHealth();
-    // this.drawPlayerHealthBar();
-    // this.playerInfoObj.run();
-    // this.playerInfoPanel.run();
-    // // this.shopInfoPanel.run();
-    // this.itemsInfoPanel.run();
+    this.drawBossHealth();
+    this.drawPlayerHealthBar();
+    this.playerInfoObj.run();
+    this.playerInfoPanel.run();
+    this.shopInfoPanel.run();
+    this.itemsInfoPanel.run();
 
     // game Screen
     this.handleCoverScreen();

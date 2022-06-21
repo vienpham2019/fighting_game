@@ -45,10 +45,14 @@ export class Boomer extends Enemy {
     this.enemy_get_hit = false;
   }
 
+  handleGameMove({ x, y }) {
+    super.handleGameMove({ x, y });
+  }
+
   enemyGetHit(damage) {
     if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-    this.enemy.handleTakeHit(damge);
-    this.damgeEffect(this.enemy, damage);
+    this.enemy.handleTakeHit(damage);
+    this.damgeEffect({ target: this.enemy, text: damage, type: "damage" });
   }
 
   detect_attack() {

@@ -161,11 +161,17 @@ export class Sygnus extends Enemy {
     this.attack_5_continue = false;
   }
 
-  handleGameMove({ position }) {
-    this.position.x += position.x;
-    this.obj.forEach((e) => (e.af.position.x += position.x));
+  handleGameMove({ x, y }) {
+    super.handleGameMove({ x, y });
+    this.obj.forEach((e) => {
+      e.af.position.x += x;
+      e.af.position.y += y;
+    });
     if (this.currentAttackIndex == 4)
-      this.boomers.forEach((e) => (e.position.x += position.x));
+      this.boomers.forEach((e) => {
+        e.position.x += x;
+        e.position.y += y;
+      });
   }
 
   selectAttack() {
@@ -177,8 +183,8 @@ export class Sygnus extends Enemy {
 
   enemyGetHit(damage) {
     if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
-    this.enemy.handleTakeHit(damge);
-    this.damgeEffect(this.enemy, damage);
+    this.enemy.handleTakeHit(damage);
+    this.damgeEffect({ target: this.enemy, text: damage, type: "damage" });
   }
 
   setAttackEffect({
@@ -270,13 +276,13 @@ export class Sygnus extends Enemy {
 
   createBoomer(n) {
     while (n > 0) {
-      this.boomers.push(
-        createEnemy({
-          platform: this.platform,
-          enemy_name: "boomer",
-          enemy_type: "boss",
-        })
-      );
+      let boomer = createEnemy({
+        platform: this.platform,
+        enemy_name: "boomer",
+        enemy_type: "boss",
+      });
+      boomer.flip = this.flip;
+      this.boomers.push(boomer);
       n--;
     }
   }
@@ -341,13 +347,8 @@ export class Sygnus extends Enemy {
     //set attack effect
     this.setAttackEffect({
       attack_effect_n: 1,
-      amount: [2, 3],
-      attack_box: {
-        x: this.platform.position.x,
-        y: this.platform.position.y,
-        w: this.platform.width,
-        h: attack_box.h,
-      },
+      amount: [3, 4],
+      attack_box,
     });
 
     // trigger attack effect
@@ -383,12 +384,7 @@ export class Sygnus extends Enemy {
       attack_effect_n: 2,
       amount: [4, 4],
       coolDown: [0, 50],
-      attack_box: {
-        x: this.platform.position.x,
-        y: this.platform.position.y,
-        w: this.platform.width,
-        h: attack_box.h,
-      },
+      attack_box,
     });
 
     // trigger attack effect

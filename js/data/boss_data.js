@@ -138,7 +138,7 @@ const sygnus = {
   offset: { x: 50, y: 40 },
   attack_box: {
     position: { x: 0, y: 0 },
-    width: 300,
+    width: 600,
     height: 100,
     offset: { x: 0, y: 0 },
   },
@@ -164,7 +164,7 @@ const sygnus = {
         imageSrc: "./img/boss/Sygnus/Attack 1.png",
         framesMax: 58,
         damge: 6,
-        width: 300,
+        width: 400,
       },
       {
         imageSrc: "./img/boss/Sygnus/Attack 2.png",
@@ -184,20 +184,20 @@ const sygnus = {
       {
         imageSrc: "./img/boss/Sygnus/Attack 3.png",
         framesMax: 24,
-        width: 400,
+        width: 600,
         damge: 10,
       },
       {
         imageSrc: "./img/boss/Sygnus/Attack 4.png",
         framesMax: 38,
         damge: 30,
-        width: 400,
+        width: 800,
       },
       {
         imageSrc: "./img/boss/Sygnus/Attack 5.png",
         framesMax: 24,
         trigger_frame: 13,
-        width: 400,
+        width: 800,
       },
     ],
     attack_effect: [

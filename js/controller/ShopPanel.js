@@ -5,7 +5,7 @@ export class ShopPanel {
     this.player = player;
     this.itemsPanel = itemsPanel;
 
-    this.open = true;
+    this.open = false;
     this.shopDetails = [
       { type: "healPotion", amount: 1, cost: 40 },
       { type: "shieldPotion", amount: 1, cost: 40 },

@@ -48,6 +48,9 @@ window.addEventListener("keydown", (e) => {
       case "u":
         controller.playerInfoObj.open = !controller.playerInfoObj.open;
         break;
+      case "i":
+        controller.shopInfoPanel.open = !controller.shopInfoPanel.open;
+        break;
 
       case "1":
         controller.itemsInfoPanel.handleUseItems(1);
