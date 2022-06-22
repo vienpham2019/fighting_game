@@ -186,7 +186,7 @@ export function createEnemyByPlatform(platforms) {
   ];
 
   platforms.forEach((p) => {
-    if (p.width >= 200) {
+    if (p.width >= 200 && p.bossPlatform === false) {
       let number_of_enemy = Math.min(
         getRandomArbitrary(1, Math.floor(p.width / 100)),
         3

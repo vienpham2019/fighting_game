@@ -38,6 +38,7 @@ export class InnerRage extends Enemy {
       platform,
       health: 1000,
     });
+    this.name = "Inner Rage";
     this.attack_cool_down = 60;
     this.attack_cool_down_max = 60;
 

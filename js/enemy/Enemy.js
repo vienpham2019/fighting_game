@@ -169,12 +169,7 @@ export class Enemy extends Character {
           --this.palseMoveCoolDown <= 0 &&
           this.setContinueMoveCoolDown === false
         ) {
-          if (
-            Math.random() > 0.5 &&
-            this.platform.position.x + this.width * 1.5 < this.position.x &&
-            this.platform.position.x + this.platform.width - this.width * 1.5 >
-              this.position.x + this.width
-          ) {
+          if (Math.random() > 0.5) {
             this.flip *= -1;
           }
 

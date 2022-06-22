@@ -169,7 +169,7 @@ const sygnus = {
       {
         imageSrc: "./img/boss/Sygnus/Attack 2.png",
         framesMax: 21,
-        damge: 10,
+        damge: 20,
         width: 160,
         hitFrame: {
           [10]: true,

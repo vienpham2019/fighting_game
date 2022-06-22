@@ -71,6 +71,7 @@ export class Sygnus extends Enemy {
     this.maxHealth = 1000;
     this.canStuntWhenAttack = false;
     this.level = 3;
+    this.name = "Sygnus";
 
     this.sprites_offset = {
       idle: {
@@ -133,7 +134,7 @@ export class Sygnus extends Enemy {
     this.switchAttack = false;
 
     this.setAttackEffectAction = false;
-    this.currentAttackIndex = 0;
+    this.currentAttackIndex = 4;
 
     // Attack 2
     this.magic_obj = {
@@ -153,11 +154,8 @@ export class Sygnus extends Enemy {
     this.finish_attack_action = false;
 
     // Attack 5
-    this.boomers = [
-      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
-      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
-      createEnemy({ platform, enemy_name: "boomer", enemy_type: "boss" }),
-    ];
+    this.bots = [];
+    this.setBoomer = false;
     this.attack_5_continue = false;
   }
 
@@ -167,17 +165,20 @@ export class Sygnus extends Enemy {
       e.af.position.x += x;
       e.af.position.y += y;
     });
-    if (this.currentAttackIndex == 4)
-      this.boomers.forEach((e) => {
-        e.position.x += x;
-        e.position.y += y;
-      });
+    // if (this.currentAttackIndex == 4)
+    //   this.boomers.forEach((e) => {
+    //     e.position.x += x;
+    //     e.position.y += y;
+    //   });
   }
 
   selectAttack() {
     if (this.switchAttack === false) {
       this.switchAttack = true;
       this.currentAttackIndex = getRandomArbitrary(0, 5);
+      if (this.bots.length > 2 && this.currentAttackIndex === 4) {
+        this.currentAttackIndex = getRandomArbitrary(0, 4);
+      }
     }
   }
 
@@ -269,22 +270,10 @@ export class Sygnus extends Enemy {
     this.attackEffect1 = [];
     this.obj = [];
     this.finish_attack_action = false;
-    if (this.currentAttackIndex == 4) {
-      this.createBoomer(getRandomArbitrary(2, 6));
-    }
-  }
-
-  createBoomer(n) {
-    while (n > 0) {
-      let boomer = createEnemy({
-        platform: this.platform,
-        enemy_name: "boomer",
-        enemy_type: "boss",
-      });
-      boomer.flip = this.flip;
-      this.boomers.push(boomer);
-      n--;
-    }
+    this.setBoomer = false;
+    // if (this.currentAttackIndex == 4) {
+    //   this.createBoomer(getRandomArbitrary(2, 6));
+    // }
   }
 
   handleAttack1(attack_box) {
@@ -414,27 +403,30 @@ export class Sygnus extends Enemy {
     }
     let { framesMax, trigger_frame } = this.sprites.attack[4];
     if (
-      (this.image === this.sprites.attack[4].image &&
-        this.frameCurrent >= trigger_frame) ||
-      this.attack_5_continue
+      this.image === this.sprites.attack[4].image &&
+      this.frameCurrent >= trigger_frame
     ) {
       this.attack_5_continue = true;
-      this.boomers.forEach((b) => {
-        b.enemy = this.enemy;
-        if (!b.is_death) b.update();
-      });
+      if (this.setBoomer === false) {
+        this.setBoomer = true;
+        if (this.bots.length < 5) {
+          let amount = getRandomArbitrary(2, 5 - this.bots.length);
+          while (amount-- >= 0) {
+            let bot = createEnemy({
+              platform: this.platform,
+              enemy_name: "white_wolf",
+            });
+            bot.enemy = this.enemy;
+            this.enemy.enemys.push(bot);
+            this.bots.push(bot);
+          }
+        }
+      }
     }
     //reset frame
     if (this.frameCurrent === framesMax - 1) {
-      this.finish_attack_action = true;
-      this.offset = this.sprites_offset.idle[this.flip];
-      this.updateSprite(this.sprites.idle);
-    }
-
-    if (this.boomers.every((e) => e.is_death)) {
-      this.attack_5_continue = false;
-      this.finish_attack_action = false;
       this.resetFrame();
+      this.finish_attack_action = false;
     }
   }
 
@@ -443,16 +435,20 @@ export class Sygnus extends Enemy {
       this.enemy.updateSprite(this.enemy.sprites.death);
 
     let [x1, x2, y1] = getCoordinate(this);
-    let a_x1 =
-      this.flip === 1
-        ? x2
-        : x1 - this.sprites.attack[this.currentAttackIndex].width;
+    let width = Math.min(
+      this.sprites.attack[this.currentAttackIndex].width,
+      this.flip === -1
+        ? x1 - this.platform.position.x
+        : this.platform.position.x + this.platform.width - x2
+    );
+    let a_x1 = this.flip === 1 ? x2 : x1 - width;
     let attack_box = {
       x: a_x1,
       y: y1,
-      w: this.sprites.attack[this.currentAttackIndex].width,
+      w: width,
       h: this.height,
     };
+    c.fillRect(attack_box.x, attack_box.y, attack_box.w, attack_box.h);
 
     if (
       (this.attackBoxCollition(attack_box, true) || this.in_attack_range) &&

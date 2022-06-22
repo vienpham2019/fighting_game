@@ -630,8 +630,8 @@ const walls_5 = [
 ];
 
 const platforms_6 = [
-  { x: 0, width: 610, offset: { x: 0, y: -260 } },
-  { x: 610, width: 490, offset: { x: 0, y: -332 } },
+  { x: 0, width: 610, offset: { x: 0, y: -260 }, boss: true },
+  { x: 610, width: 490, offset: { x: 0, y: -330 } },
   { x: 1120, width: 210, offset: { x: 0, y: -210 } },
   { x: 1290, width: 210, offset: { x: 0, y: -90 } },
   { x: 1500, width: 70, offset: { x: 0, y: -5 } },
@@ -641,7 +641,7 @@ const platforms_6 = [
   { x: 2015, width: 70, offset: { x: 0, y: 365 } },
   { x: 2090, width: 70, offset: { x: 0, y: 445 } },
   { x: 200, width: 60, offset: { x: 0, y: 735 } },
-  { x: 260, width: 2940, offset: { x: 0, y: 664 }, boss: true, portal: true },
+  { x: 260, width: 2940, offset: { x: 0, y: 664 }, portal: true },
   { x: 3200, width: 60, offset: { x: 0, y: 736 } },
   //
   { x: 1000, width: 210, offset: { x: 0, y: -422 } },

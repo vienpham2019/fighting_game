@@ -43,6 +43,7 @@ export class Boomer extends Enemy {
     this.level = 1;
     this.damage = 20;
     this.enemy_get_hit = false;
+    this.name = "Boomer";
   }
 
   handleGameMove({ x, y }) {
