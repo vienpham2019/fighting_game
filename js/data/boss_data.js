@@ -290,6 +290,15 @@ const sygnus = {
         scale: 0.3,
       },
     },
+    summon: {
+      offset: { x: 30, y: 40 },
+      scale: 1,
+      width: 90,
+      height: 140,
+      framesMax: 6,
+      framesHold: 6,
+      imageSrc: "./img/boss/Sygnus/summon.png",
+    },
   },
 };
 

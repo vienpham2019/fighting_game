@@ -155,6 +155,7 @@ export class Sygnus extends Enemy {
 
     // Attack 5
     this.bots = [];
+    this.summons = [];
     this.setBoomer = false;
     this.attack_5_continue = false;
   }
@@ -175,7 +176,8 @@ export class Sygnus extends Enemy {
   selectAttack() {
     if (this.switchAttack === false) {
       this.switchAttack = true;
-      this.currentAttackIndex = getRandomArbitrary(0, 5);
+      // this.currentAttackIndex = getRandomArbitrary(0, 5);
+      this.currentAttackIndex = 4;
       if (this.bots.length > 2 && this.currentAttackIndex === 4) {
         this.currentAttackIndex = getRandomArbitrary(0, 4);
       }
@@ -409,14 +411,43 @@ export class Sygnus extends Enemy {
       this.attack_5_continue = true;
       if (this.setBoomer === false) {
         this.setBoomer = true;
-        if (this.bots.length < 5) {
-          let amount = getRandomArbitrary(2, 5 - this.bots.length);
-          while (amount-- >= 0) {
+        if (this.bots.length < 6) {
+          let amount = getRandomArbitrary(2, 6 - this.bots.length);
+          let enemy_names = [
+            "jungle_wolf",
+            "white_wolf",
+            "green_cornian",
+            "dark_cornian",
+            "worm",
+            "dark_drake",
+            "ice_drake",
+          ];
+          while (amount-- > 0) {
             let bot = createEnemy({
               platform: this.platform,
-              enemy_name: "white_wolf",
+              enemy_name:
+                enemy_names[getRandomArbitrary(0, enemy_names.length)],
             });
+
+            let summon_pos = {
+              x:
+                bot.position.x -
+                Math.floor((this.sprites.summon.width - bot.width) / 2),
+              y: this.platform.position.y - this.sprites.summon.height,
+            };
+            this.summons.push(
+              new Sprite({
+                position: summon_pos,
+                ...this.sprites.summon,
+              })
+            );
             bot.enemy = this.enemy;
+            bot.palseMoveCoolDown = getRandomArbitrary(20, 50);
+            bot.setPalseMoveCoolDown = true;
+
+            bot.continueMoveCoolDown = 0;
+            bot.setContinueMoveCoolDown = false;
+
             this.enemy.enemys.push(bot);
             this.bots.push(bot);
           }
@@ -448,7 +479,6 @@ export class Sygnus extends Enemy {
       w: width,
       h: this.height,
     };
-    c.fillRect(attack_box.x, attack_box.y, attack_box.w, attack_box.h);
 
     if (
       (this.attackBoxCollition(attack_box, true) || this.in_attack_range) &&
@@ -511,7 +541,19 @@ export class Sygnus extends Enemy {
     // c.fillRect(b_x1, y1, this.attack_box.width, this.attack_box.height);
   }
 
+  handleSummon() {
+    if (this.summons.length > 0) {
+      this.summons.forEach((s) => {
+        s.update();
+      });
+      this.summons = this.summons.filter(
+        (s) => s.frameCurrent < s.framesMax - 1
+      );
+    }
+  }
+
   update() {
+    this.bots = this.bots.filter((b) => !b.is_death);
     this.detectAttack();
     super.update();
   }

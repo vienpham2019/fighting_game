@@ -546,6 +546,7 @@ export class Controller {
       });
     }
 
+    c.stroke();
     // itemsObj
     if (this.itemsObj.length > 0) {
       this.itemsObj.forEach((i) => {
@@ -553,6 +554,11 @@ export class Controller {
         if (--i.coolDown <= 0) i.isPickUp = true;
       });
       this.itemsObj = this.itemsObj.filter((i) => i.isPickUp === false);
+    }
+
+    // last boss summon
+    if (this.gameLevel >= 6 && this.player.boss != null) {
+      this.player.boss.handleSummon();
     }
 
     // Camera
@@ -569,5 +575,8 @@ export class Controller {
 
     // game Screen
     this.handleCoverScreen();
+
+    this.player.drawDamageEffect();
+    this.player.enemys.forEach((e) => e.drawDamageEffect());
   }
 }

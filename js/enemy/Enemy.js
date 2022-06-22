@@ -170,6 +170,7 @@ export class Enemy extends Character {
           this.setContinueMoveCoolDown === false
         ) {
           if (Math.random() > 0.5) {
+            this.velocity.x *= -1;
             this.flip *= -1;
           }
 
