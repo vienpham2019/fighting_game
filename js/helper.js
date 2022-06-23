@@ -43,6 +43,7 @@ export function getCoordinate(p) {
 }
 
 export function getRandomArbitrary(min, max) {
+  if (max < min) return max;
   return Math.floor(Math.random() * (max - min) + min);
 }
 

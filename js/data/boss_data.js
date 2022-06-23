@@ -163,13 +163,13 @@ const sygnus = {
       {
         imageSrc: "./img/boss/Sygnus/Attack 1.png",
         framesMax: 58,
-        damge: 6,
+        damge: 10,
         width: 400,
       },
       {
         imageSrc: "./img/boss/Sygnus/Attack 2.png",
         framesMax: 21,
-        damge: 20,
+        damge: 30,
         width: 160,
         hitFrame: {
           [10]: true,
@@ -185,7 +185,7 @@ const sygnus = {
         imageSrc: "./img/boss/Sygnus/Attack 3.png",
         framesMax: 24,
         width: 600,
-        damge: 10,
+        damge: 15,
       },
       {
         imageSrc: "./img/boss/Sygnus/Attack 4.png",
@@ -230,7 +230,7 @@ const sygnus = {
         width: 300,
         imageSrc: "./img/boss/Sygnus/Attack 3 Effect.png",
         framesMax: 27,
-        framesHold: 10,
+        framesHold: 7,
         offset: { x: 60, y: 185 },
         scale: 0.7,
         hitFrame: {

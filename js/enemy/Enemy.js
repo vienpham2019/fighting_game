@@ -169,8 +169,11 @@ export class Enemy extends Character {
           --this.palseMoveCoolDown <= 0 &&
           this.setContinueMoveCoolDown === false
         ) {
-          if (Math.random() > 0.5) {
-            this.velocity.x *= -1;
+          if (
+            Math.random() > 0.5 &&
+            (x1 + this.velocity.x <= p_x1 + Math.floor(this.width / 2) ||
+              x2 + this.velocity.x >= p_x2 - Math.floor(this.width))
+          ) {
             this.flip *= -1;
           }
 
@@ -180,6 +183,7 @@ export class Enemy extends Character {
         }
       }
     }
+
     if (x1 <= p_x1 || x2 >= p_x2) {
       this.velocity.x *= -1;
       this.flip *= -1;

@@ -329,7 +329,7 @@ export class Controller {
     c.font = "10px Comic Sans MS";
     c.fillStyle = "white";
     c.fillText(
-      `${this.player.boss.maxHealth} / ${this.player.boss.maxHealth}`,
+      `${this.player.boss.health} / ${this.player.boss.maxHealth}`,
       this.bossHealth.position.x + 270,
       this.bossHealth.position.y + 28
     );
@@ -372,6 +372,7 @@ export class Controller {
   }
 
   checkObjInPlayerRange(obj) {
+    if (this.gameLevel % 2 === 0) return true;
     return (
       obj.position.x > -100 &&
       obj.position.x + obj.width <= canvas.width + 100 &&
@@ -459,15 +460,7 @@ export class Controller {
   }
 
   handlePortal() {
-    // c.beginPath();
-    // c.strokeStyle = "red";
-    // c.rect(
-    //   this.portal.position.x,
-    //   this.portal.position.y,
-    //   this.portal.width,
-    //   this.portal.height
-    // );
-    // c.stroke();
+    if (this.gameLevel % 2 === 0 && !this.player.boss.is_death) return;
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
@@ -530,7 +523,7 @@ export class Controller {
       // update each enemy
       this.player.enemys.forEach((e) => {
         // only load enemy if player in range
-        if (this.level % 2 != 0 && this.checkObjInPlayerRange(e)) e.update();
+        if (this.checkObjInPlayerRange(e)) e.update();
       });
       this.player.enemys = this.player.enemys.filter((e) => {
         if (e.health <= 0 && e.dropItems === false) {
@@ -550,7 +543,7 @@ export class Controller {
     // itemsObj
     if (this.itemsObj.length > 0) {
       this.itemsObj.forEach((i) => {
-        if (this.level % 2 != 0 && this.checkObjInPlayerRange(i)) i.run();
+        if (this.checkObjInPlayerRange(i)) i.run();
         if (--i.coolDown <= 0) i.isPickUp = true;
       });
       this.itemsObj = this.itemsObj.filter((i) => i.isPickUp === false);

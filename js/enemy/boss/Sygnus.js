@@ -40,7 +40,7 @@ export class Sygnus extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 1000,
+      health: 10000,
     });
 
     // this.magic_obj = {
@@ -68,7 +68,7 @@ export class Sygnus extends Enemy {
 
     this.attack_cool_down = 50;
     this.attack_cool_down_max = 50;
-    this.maxHealth = 1000;
+    this.maxHealth = 10000;
     this.canStuntWhenAttack = false;
     this.level = 3;
     this.name = "Sygnus";
@@ -156,7 +156,7 @@ export class Sygnus extends Enemy {
     // Attack 5
     this.bots = [];
     this.summons = [];
-    this.setBoomer = false;
+    this.setBots = false;
     this.attack_5_continue = false;
   }
 
@@ -166,18 +166,17 @@ export class Sygnus extends Enemy {
       e.af.position.x += x;
       e.af.position.y += y;
     });
-    // if (this.currentAttackIndex == 4)
-    //   this.boomers.forEach((e) => {
-    //     e.position.x += x;
-    //     e.position.y += y;
-    //   });
+
+    this.summons.forEach((s) => {
+      s.position.x += x;
+      s.position.y += y;
+    });
   }
 
   selectAttack() {
     if (this.switchAttack === false) {
       this.switchAttack = true;
-      // this.currentAttackIndex = getRandomArbitrary(0, 5);
-      this.currentAttackIndex = 4;
+      this.currentAttackIndex = getRandomArbitrary(0, 5);
       if (this.bots.length > 2 && this.currentAttackIndex === 4) {
         this.currentAttackIndex = getRandomArbitrary(0, 4);
       }
@@ -272,10 +271,7 @@ export class Sygnus extends Enemy {
     this.attackEffect1 = [];
     this.obj = [];
     this.finish_attack_action = false;
-    this.setBoomer = false;
-    // if (this.currentAttackIndex == 4) {
-    //   this.createBoomer(getRandomArbitrary(2, 6));
-    // }
+    this.setBots = false;
   }
 
   handleAttack1(attack_box) {
@@ -287,7 +283,7 @@ export class Sygnus extends Enemy {
     //set attack effect
     this.setAttackEffect({
       attack_effect_n: 0,
-      amount: [3, 6],
+      amount: [5, 8],
       attack_box,
       coolDown: [0, 100],
     });
@@ -308,7 +304,11 @@ export class Sygnus extends Enemy {
 
     if (
       this.attackBoxCollition(attack_box, true) &&
-      hitFrame[this.frameCurrent] === true
+      hitFrame[this.frameCurrent] === true &&
+      ((this.flip === 1 &&
+        this.position.x + this.width <= this.enemy.position.x) ||
+        (this.flip === -1 &&
+          this.position.x >= this.enemy.position.x + this.enemy.width))
     ) {
       hitFrame[this.frameCurrent] = false;
       this.enemyGetHit(damge);
@@ -409,16 +409,15 @@ export class Sygnus extends Enemy {
       this.frameCurrent >= trigger_frame
     ) {
       this.attack_5_continue = true;
-      if (this.setBoomer === false) {
-        this.setBoomer = true;
-        if (this.bots.length < 6) {
-          let amount = getRandomArbitrary(2, 6 - this.bots.length);
+      if (this.setBots === false) {
+        this.setBots = true;
+        if (this.bots.length < 11) {
+          let amount = getRandomArbitrary(2, 11 - this.bots.length);
           let enemy_names = [
             "jungle_wolf",
             "white_wolf",
             "green_cornian",
             "dark_cornian",
-            "worm",
             "dark_drake",
             "ice_drake",
           ];
@@ -461,29 +460,43 @@ export class Sygnus extends Enemy {
     }
   }
 
+  calculateAttackBox() {
+    let [x1, x2, y1] = getCoordinate(this);
+    let width = Math.min(
+      this.sprites.attack[this.currentAttackIndex].width,
+      x1 - this.platform.position.x
+    );
+    let a_x1 = x1 - width;
+
+    let attack_box = {
+      x: a_x1,
+      y: y1,
+      w:
+        width +
+        this.width +
+        Math.min(
+          this.sprites.attack[this.currentAttackIndex].width,
+          this.platform.position.x + this.platform.width - x2
+        ),
+      h: this.height,
+    };
+    // c.beginPath();
+    // c.strokeStyle = "red";
+    // c.rect(attack_box.x, attack_box.y, attack_box.w, attack_box.h);
+    // c.stroke();
+    return attack_box;
+  }
+
   detectAttack() {
     if (this.enemy.health <= 0)
       this.enemy.updateSprite(this.enemy.sprites.death);
 
-    let [x1, x2, y1] = getCoordinate(this);
-    let width = Math.min(
-      this.sprites.attack[this.currentAttackIndex].width,
-      this.flip === -1
-        ? x1 - this.platform.position.x
-        : this.platform.position.x + this.platform.width - x2
-    );
-    let a_x1 = this.flip === 1 ? x2 : x1 - width;
-    let attack_box = {
-      x: a_x1,
-      y: y1,
-      w: width,
-      h: this.height,
-    };
-
     if (
-      (this.attackBoxCollition(attack_box, true) || this.in_attack_range) &&
+      (this.attackBoxCollition(this.calculateAttackBox(), true) ||
+        this.in_attack_range) &&
       this.enemy.health > 0
     ) {
+      let attack_box = this.calculateAttackBox();
       this.in_attack_range = true;
       this.velocity.x = 0;
       if (this.attack_again) {
@@ -506,6 +519,8 @@ export class Sygnus extends Enemy {
         }
       } else {
         if (--this.attack_cool_down[this.currentAttackIndex].cool_down < 0) {
+          this.flip = this.position.x - this.enemy.position.x > 0 ? -1 : 1;
+
           this.selectAttack();
           this.attack_cool_down[this.currentAttackIndex].cool_down =
             this.attack_cool_down[this.currentAttackIndex].max;
@@ -533,8 +548,8 @@ export class Sygnus extends Enemy {
     c.rect(x, y, this.width, this.height);
     c.stroke();
 
-    // this.offset = this.sprites_offset.attack[0][this.flip];
-    // this.updateSprite(this.sprites.attack[0]);
+    this.offset = this.sprites_offset.death[this.flip];
+    this.updateSprite(this.sprites.death);
     // this.attack_effects[0].update();
     // this.updateSprite(this.sprites.run);
     // c.fillStyle = "green";
@@ -555,6 +570,9 @@ export class Sygnus extends Enemy {
   update() {
     this.bots = this.bots.filter((b) => !b.is_death);
     this.detectAttack();
+    if (this.health <= 0) {
+      this.offset = this.sprites_offset.death[this.flip];
+    }
     super.update();
   }
 }
