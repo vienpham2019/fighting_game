@@ -84,15 +84,6 @@ export class Controller {
         scale: 0.4,
       },
     };
-    // this.itemsObj.push(
-    //   createItem({
-    //     type: "permanetCritPotion",
-    //     position: { x: 200, y: 300 },
-    //     platform: this.platforms[3],
-    //     itemsPanel,
-    //   })
-    // );
-    // this.itemsObj[0].player = player;
   }
 
   handleCamera() {

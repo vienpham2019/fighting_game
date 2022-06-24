@@ -1,5 +1,7 @@
 import { Controller } from "./controller/Controller.js";
-import { int } from "./controller/Init.js";
+import { int, updatePlayer } from "./controller/Init.js";
+import { StartGame } from "./controller/StartGame.js";
+import { createPlayer } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -9,14 +11,23 @@ canvas.height = 676;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const controller = new Controller(int());
-const player = controller.player;
+const initObj = int();
+let controller = new Controller(initObj);
+let player = initObj.player;
+const gameStart = new StartGame({
+  imageSrc: "./img/background/start game cover.png",
+  player,
+});
 
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
-  controller.run();
+  if (gameStart.isStartGame === false) {
+    gameStart.run();
+  } else {
+    controller.run();
+  }
 }
 
 animate();
@@ -125,4 +136,39 @@ canvas.addEventListener("click", (e) => {
       controller.itemsInfoPanel.openItemInfo = true;
     }
   });
+
+  if (gameStart.isStartGame === false) {
+    gameStart.buttons.forEach((b) => {
+      if (
+        b.x <= offsetX &&
+        b.x + b.w >= offsetX &&
+        b.y <= offsetY &&
+        b.y + b.h >= offsetY
+      ) {
+        if (b.type === "start") {
+          player.position.x = 0;
+          player.position.y = 0;
+          gameStart.isStartGame = true;
+        } else if (b.type === "options") {
+          gameStart.selectPlayer.open = true;
+        }
+      }
+    });
+
+    if (gameStart.selectPlayer.open === true) {
+      gameStart.selectPlayer.buttons.forEach((b) => {
+        if (
+          b.x <= offsetX &&
+          b.x + b.w >= offsetX &&
+          b.y <= offsetY &&
+          b.y + b.h >= offsetY
+        ) {
+          player = updatePlayer({ player_name: b.name });
+          gameStart.player = player;
+          controller.player = player;
+          gameStart.selectPlayer.open = false;
+        }
+      });
+    }
+  }
 });

@@ -18,6 +18,7 @@ export class Player extends Character {
     flip = 1,
     attack_box,
     moveSpeed,
+    damage,
   }) {
     super({
       position,
@@ -70,8 +71,8 @@ export class Player extends Character {
     this.maxShield = 100;
 
     this.level = 1;
-    this.hp = 0;
-    this.maxLevelHp = 100;
+    this.xp = 0;
+    this.maxLevelXp = 100;
 
     this.temp_point = [19, 19];
     this.points = {
@@ -90,7 +91,7 @@ export class Player extends Character {
       attack_speed: 20,
       crit_damage: 20,
       crit_chance: 10,
-      damage: 30,
+      damage,
       shield: 100,
     };
 
@@ -142,16 +143,16 @@ export class Player extends Character {
   }
 
   handleHP(hp) {
-    this.hp += hp;
+    this.xp += hp;
     this.damgeEffect({ target: this, text: `+ ${hp} hp`, type: "hp" });
-    if (this.hp > this.maxLevelHp) {
-      this.level += Math.floor(this.hp / this.maxLevelHp);
-      this.points.point[0] += Math.floor(this.hp / this.maxLevelHp);
-      this.points.point[1] += Math.floor(this.hp / this.maxLevelHp);
-      this.temp_point[0] += Math.floor(this.hp / this.maxLevelHp);
-      this.temp_point[1] += Math.floor(this.hp / this.maxLevelHp);
-      this.hp = this.hp % this.maxLevelHp;
-      this.maxLevelHp += Math.floor(this.level * 100 * 0.3);
+    if (this.xp > this.maxLevelXp) {
+      this.level += Math.floor(this.xp / this.maxLevelXp);
+      this.points.point[0] += Math.floor(this.xp / this.maxLevelXp);
+      this.points.point[1] += Math.floor(this.xp / this.maxLevelXp);
+      this.temp_point[0] += Math.floor(this.xp / this.maxLevelXp);
+      this.temp_point[1] += Math.floor(this.xp / this.maxLevelXp);
+      this.xp = this.xp % this.maxLevelXp;
+      this.maxLevelXp += Math.floor(this.level * 100 * 0.3);
       this.damgeEffect({ target: this, text: `LV ${this.level}`, type: "hp" });
     }
   }
@@ -293,9 +294,12 @@ export class Player extends Character {
           this.rectCollition(e)
         ) {
           let damage = this.info.damage;
+          if ("heavyAttack" in sprite) {
+            damage = Math.floor(damage * sprite["heavyAttack"]);
+          }
           let type = "damage";
           if (Math.random() > (100 - this.info.crit_chance) / 100) {
-            damage += this.info.damage * (this.info.crit_damage / 100);
+            damage += Math.floor(damage * (this.info.crit_damage / 100));
             type = "crit";
           }
           e.handelTakeHit({ damage, type });

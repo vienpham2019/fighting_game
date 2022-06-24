@@ -150,6 +150,11 @@ export class Enemy extends Character {
 
     let [p_x1, p_x2] = getCoordinate(this.platform);
 
+    if (x1 <= p_x1 || x2 >= p_x2) {
+      this.velocity.x *= -1;
+      this.flip *= -1;
+    }
+
     if (this.continueMoveCoolDown-- > 0) {
       this.updateSprite(this.sprites.run);
 
@@ -182,11 +187,6 @@ export class Enemy extends Character {
           this.continueMoveCoolDown = getRandomArbitrary(100, 500);
         }
       }
-    }
-
-    if (x1 <= p_x1 || x2 >= p_x2) {
-      this.velocity.x *= -1;
-      this.flip *= -1;
     }
   }
 

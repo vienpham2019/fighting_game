@@ -13,52 +13,74 @@ import { canvas } from "../main.js";
 
 // let width = 2000;
 // let height = -900;
+let obj = {
+  floorImage: null,
+  tree1BG: null,
+  tree2BG: null,
+  tree3BG: null,
+  tree4BG: null,
+  mountainBG: null,
+  cloudBG: null,
+  healthBar: null,
+  playerInfo: null,
+  infoPanel: null,
+  shopPanel: null,
+  itemsPanel: null,
+  itemsPanelDetails: null,
+  bossHealth: null,
+  items: null,
+  platforms: null,
+  walls: null,
+  player: null,
+  camera: null,
+  portal: null,
+};
 
 export function int() {
-  const floorImage = new Sprite({
+  obj.floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
     imageSrc: "..//img/platforms/platform lv6.png",
     scale: 1.5,
   });
 
-  const tree1BG = new Sprite({
+  obj.tree1BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/tree1BG.png",
   });
 
-  const tree2BG = new Sprite({
+  obj.tree2BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/tree2BG.png",
   });
 
-  const tree3BG = new Sprite({
+  obj.tree3BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/tree3BG.png",
   });
 
-  const tree4BG = new Sprite({
+  obj.tree4BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/tree4BG.png",
   });
 
-  const mountainBG = new Sprite({
+  obj.mountainBG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/mountainBG.png",
   });
 
-  const cloudBG = new Sprite({
+  obj.cloudBG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     imageSrc: "../img/background/cloudBG.png",
   });
 
-  const shop = new Sprite({
+  let shop = new Sprite({
     position: { x: 630, y: 127 },
     imageSrc: "../img/shop_anim.png",
     scale: 2.75,
@@ -66,60 +88,60 @@ export function int() {
     framesHold: 5,
   });
 
-  const healthBar = new Sprite({
+  obj.healthBar = new Sprite({
     position: { x: 20, y: 0 },
     offset: { x: 0, y: 0 },
     scale: 0.5,
     imageSrc: "../img/gameObj/Health bar.png",
   });
 
-  const playerInfo = new Sprite({
+  obj.playerInfo = new Sprite({
     position: { x: 200, y: 200 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/gameObj/player info.png",
   });
 
-  const infoPanel = new Sprite({
+  obj.infoPanel = new Sprite({
     position: { x: -20, y: canvas.height - 190 },
     offset: { x: 0, y: 0 },
     scale: 0.7,
     imageSrc: "../img/gameObj/info panel.png",
   });
 
-  const shopPanel = new Sprite({
+  obj.shopPanel = new Sprite({
     position: { x: 200, y: 200 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/gameObj/shop_panel.png",
   });
 
-  const itemsPanel = new Sprite({
+  obj.itemsPanel = new Sprite({
     position: { x: canvas.width - 260, y: canvas.height - 120 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/gameObj/items_panel.png",
   });
 
-  const itemsPanelDetails = new Sprite({
+  obj.itemsPanelDetails = new Sprite({
     position: { x: canvas.width - 256, y: canvas.height - 171 },
     offset: { x: 0, y: 0 },
     scale: 1,
     imageSrc: "../img/gameObj/items_panel_details.png",
   });
 
-  const bossHealth = new Sprite({
+  obj.bossHealth = new Sprite({
     position: { x: 800, y: 0 },
     offset: { x: 0, y: 0 },
     scale: 0.5,
     imageSrc: "../img/gameObj/boss health.png",
   });
 
-  const items = {
+  obj.items = {
     healPotion: new Sprite({
       position: {
-        x: itemsPanel.position.x + 28,
-        y: itemsPanel.position.y + 34,
+        x: obj.itemsPanel.position.x + 28,
+        y: obj.itemsPanel.position.y + 34,
       },
       offset: { x: 0, y: 0 },
       scale: 1,
@@ -127,8 +149,8 @@ export function int() {
     }),
     shieldPotion: new Sprite({
       position: {
-        x: itemsPanel.position.x + 25,
-        y: itemsPanel.position.y + 34,
+        x: obj.itemsPanel.position.x + 25,
+        y: obj.itemsPanel.position.y + 34,
       },
       offset: { x: 0, y: 0 },
       scale: 1,
@@ -136,8 +158,8 @@ export function int() {
     }),
     critPotion: new Sprite({
       position: {
-        x: itemsPanel.position.x + 21,
-        y: itemsPanel.position.y + 34,
+        x: obj.itemsPanel.position.x + 21,
+        y: obj.itemsPanel.position.y + 34,
       },
       offset: { x: 0, y: 0 },
       scale: 1,
@@ -145,20 +167,20 @@ export function int() {
     }),
     permanetCritPotion: new Sprite({
       position: {
-        x: itemsPanel.position.x + 20,
-        y: itemsPanel.position.y + 34,
+        x: obj.itemsPanel.position.x + 20,
+        y: obj.itemsPanel.position.y + 34,
       },
       offset: { x: 0, y: 0 },
       scale: 1,
       imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
-  const platforms = createPlatform(platform.platforms_6, "platform");
-  const walls = createPlatform(platform.walls_6, "wall");
-  const portalPlatforms = platforms.filter((p) => p.portalPlatform);
+  obj.platforms = createPlatform(platform.platforms_6, "platform");
+  obj.walls = createPlatform(platform.walls_6, "wall");
+  const portalPlatforms = obj.platforms.filter((p) => p.portalPlatform);
   const portalCordinate =
     portalPlatforms[getRandomArbitrary(0, portalPlatforms.length)];
-  const portal = new Sprite({
+  obj.portal = new Sprite({
     position: {
       x:
         portalCordinate.position.x +
@@ -174,26 +196,26 @@ export function int() {
     flip: portalCordinate.portalFlip,
     imageSrc: "../img/gameObj/portal.png",
   });
-  const player = createPlayer({
+  obj.player = createPlayer({
     position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name: "warior",
   });
 
-  player.platform = platforms[0];
-  player.walls = walls;
+  obj.player.platform = obj.platforms[0];
+  obj.player.walls = obj.walls;
 
-  const camera = {
+  obj.camera = {
     x1: 300,
     x2: 500,
-    y: platforms[0].position.y,
+    y: obj.platforms[0].position.y,
     fall_offset: { y: 30, delay_frame: 5 },
     offset: { y: 0, diff: 0, delay_frame: 25 },
   };
 
-  player.enemys = createEnemyByPlatform(platforms);
-  player.enemys.forEach((e) => (e.enemy = player));
+  obj.player.enemys = createEnemyByPlatform(obj.platforms);
+  obj.player.enemys.forEach((e) => (e.enemy = obj.player));
 
   // floorImage.position.x -= width;
   // floorImage.position.y -= height;
@@ -210,29 +232,44 @@ export function int() {
   // });
 
   // player.enemys = [];
-
   return {
     objs: {
-      cloudBG,
-      mountainBG,
-      tree4BG,
-      tree3BG,
-      tree2BG,
-      tree1BG,
-      floorImage,
+      cloudBG: obj.cloudBG,
+      mountainBG: obj.mountainBG,
+      tree4BG: obj.tree4BG,
+      tree3BG: obj.tree3BG,
+      tree2BG: obj.tree2BG,
+      tree1BG: obj.tree1BG,
+      floorImage: obj.floorImage,
     },
-    player,
-    platforms,
-    walls,
-    camera,
-    healthBar,
-    playerInfo,
-    infoPanel,
-    shopPanel,
-    itemsPanel,
-    items,
-    itemsPanelDetails,
-    portal,
-    bossHealth,
+    player: obj.player,
+    platforms: obj.platforms,
+    walls: obj.walls,
+    camera: obj.camera,
+    healthBar: obj.healthBar,
+    playerInfo: obj.playerInfo,
+    infoPanel: obj.infoPanel,
+    shopPanel: obj.shopPanel,
+    itemsPanel: obj.itemsPanel,
+    items: obj.items,
+    itemsPanelDetails: obj.itemsPanelDetails,
+    portal: obj.portal,
+    bossHealth: obj.bossHealth,
   };
+}
+
+export function updatePlayer({ player_name }) {
+  let u_player = createPlayer({
+    position: { x: 0, y: 0 },
+    velocity: { x: 0, y: 0 },
+    moveSpeed: { x: 4, y: 15 },
+    player_name,
+  });
+
+  u_player.enemys = obj.player.enemys;
+  u_player.platform = obj.platforms[0];
+  u_player.walls = obj.walls;
+  u_player.enemys.forEach((e) => (e.enemy = u_player));
+  obj.player = u_player;
+  return obj.player;
 }
