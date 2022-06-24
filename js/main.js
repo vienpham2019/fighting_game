@@ -146,9 +146,7 @@ canvas.addEventListener("click", (e) => {
         b.y + b.h >= offsetY
       ) {
         if (b.type === "start") {
-          player.position.x = 0;
-          player.position.y = 0;
-          gameStart.isStartGame = true;
+          gameStart.handleStartGame();
         } else if (b.type === "options") {
           gameStart.selectPlayer.open = true;
         }

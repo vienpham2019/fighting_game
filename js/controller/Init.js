@@ -197,7 +197,7 @@ export function int() {
     imageSrc: "../img/gameObj/portal.png",
   });
   obj.player = createPlayer({
-    position: { x: 0, y: 0 },
+    position: { y: 395, x: 600 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name: "warior",
@@ -260,7 +260,7 @@ export function int() {
 
 export function updatePlayer({ player_name }) {
   let u_player = createPlayer({
-    position: { x: 0, y: 0 },
+    position: { y: 395, x: 600 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name,

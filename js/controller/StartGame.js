@@ -23,11 +23,19 @@ export class StartGame extends Sprite {
     });
   }
 
+  handleStartGame() {
+    this.player.velocity.x = 6;
+    this.player.updateSprite(this.player.sprites["run"]);
+  }
+
   run() {
     super.update();
-    this.player.position.y = 395;
-    this.player.position.x = 600;
     this.player.update();
+    if (this.player.position.x > this.width) {
+      this.player.position = { x: 0, y: 0 };
+      this.player.velocity.x = 0;
+      this.isStartGame = true;
+    }
     if (this.selectPlayer.open === true) {
       this.selectPlayer.run();
     }
