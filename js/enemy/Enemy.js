@@ -60,6 +60,7 @@ export class Enemy extends Character {
     this.setContinueMoveCoolDown = false;
 
     this.level = 1;
+    this.updateFlip = false;
 
     let random = getRandomArbitrary(2, 6);
     for (let i = 0; i < random; i++) {
@@ -145,7 +146,7 @@ export class Enemy extends Character {
       this.velocity.x = 0;
       this.flip = this.enemy.flip * -1;
     }
-
+    this.updateFlip = false;
     let [x1, x2] = getCoordinate(this);
 
     let [p_x1, p_x2] = getCoordinate(this.platform);
@@ -153,6 +154,7 @@ export class Enemy extends Character {
     if (x1 <= p_x1 || x2 >= p_x2) {
       this.velocity.x *= -1;
       this.flip *= -1;
+      this.updateFlip = true;
     }
 
     if (this.continueMoveCoolDown-- > 0) {
@@ -176,8 +178,9 @@ export class Enemy extends Character {
         ) {
           if (
             Math.random() > 0.5 &&
-            (x1 + this.velocity.x <= p_x1 + Math.floor(this.width / 2) ||
-              x2 + this.velocity.x >= p_x2 - Math.floor(this.width))
+            (x1 < p_x1 + Math.floor(this.width * 2) ||
+              x2 > p_x2 - Math.floor(this.width * 4)) &&
+            this.updateFlip === false
           ) {
             this.flip *= -1;
           }
