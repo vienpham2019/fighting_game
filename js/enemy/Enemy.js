@@ -178,10 +178,11 @@ export class Enemy extends Character {
         ) {
           if (
             Math.random() > 0.5 &&
-            (x1 < p_x1 + Math.floor(this.width * 2) ||
-              x2 > p_x2 - Math.floor(this.width * 4)) &&
+            x1 + this.velocity.x > p_x1 + Math.floor(this.width) &&
+            x2 + this.velocity.x < p_x2 - Math.floor(this.width) &&
             this.updateFlip === false
           ) {
+            this.velocity.x *= -1;
             this.flip *= -1;
           }
 

@@ -19,6 +19,7 @@ export class Player extends Character {
     attack_box,
     moveSpeed,
     damage,
+    name,
   }) {
     super({
       position,
@@ -34,6 +35,7 @@ export class Player extends Character {
       flip,
       attack_box,
     });
+    this.name = name;
     this.last_key = [];
     this.is_jump = false;
     this.platform;
@@ -64,11 +66,11 @@ export class Player extends Character {
       w: 0,
     };
     this.enemys;
-    this.health = 10000;
-    this.maxHealth = 10000;
+    this.health = 1;
+    this.maxHealth = 1;
 
-    this.shield = 100;
-    this.maxShield = 100;
+    this.shield = 1;
+    this.maxShield = 1;
 
     this.level = 1;
     this.xp = 0;

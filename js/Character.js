@@ -174,6 +174,6 @@ export class Character extends Sprite {
     super.update();
 
     this.position.y += this.velocity.y;
-    this.position.x += this.velocity.x;
+    if (this.health > 0) this.position.x += this.velocity.x;
   }
 }

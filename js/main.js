@@ -1,4 +1,5 @@
 import { Controller } from "./controller/Controller.js";
+import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
 import { createPlayer } from "./helper.js";
@@ -11,11 +12,16 @@ canvas.height = 676;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const initObj = int();
+let initObj = int();
 let controller = new Controller(initObj);
 let player = initObj.player;
-const gameStart = new StartGame({
+let gameStart = new StartGame({
   imageSrc: "./img/background/start game cover.png",
+  player,
+});
+
+let endGame = new EndGame({
+  imageSrc: "./img/background/End Game.png",
   player,
 });
 
@@ -23,10 +29,15 @@ function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
+  endGame.isEndGame = controller.player.health <= 0;
+
   if (gameStart.isStartGame === false) {
     gameStart.run();
   } else {
-    controller.run();
+    if (endGame.opacity < 1) controller.run();
+    if (endGame.isEndGame === true) {
+      endGame.run();
+    }
   }
 }
 
@@ -168,5 +179,35 @@ canvas.addEventListener("click", (e) => {
         }
       });
     }
+  }
+  if (endGame.openEndGame === true) {
+    endGame.buttons.forEach((b) => {
+      if (
+        b.x <= offsetX &&
+        b.x + b.w >= offsetX &&
+        b.y <= offsetY &&
+        b.y + b.h >= offsetY
+      ) {
+        initObj = int();
+        player = updatePlayer({ player_name: player.name });
+
+        gameStart = new StartGame({
+          imageSrc: "./img/background/start game cover.png",
+          player,
+        });
+
+        if (b.type === "yes") {
+          gameStart.isStartGame = true;
+          player.position = { x: 0, y: 0 };
+          player.gameCurrentX = 0;
+        }
+
+        controller = new Controller({ ...initObj, player });
+        endGame = new EndGame({
+          imageSrc: "./img/background/End Game.png",
+          player,
+        });
+      }
+    });
   }
 });

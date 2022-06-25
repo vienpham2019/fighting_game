@@ -69,7 +69,7 @@ export class StartGame extends Sprite {
     }
     this.player.update();
     this.handleStartGameAnimation();
-    if (this.selectPlayer.open === true) {
+    if (this.selectPlayer.open === true && !this.openPortal) {
       this.selectPlayer.run();
     }
   }

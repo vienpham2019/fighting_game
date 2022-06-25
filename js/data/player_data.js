@@ -1,4 +1,5 @@
 const swordsman = {
+  name: "swordsman",
   height: 88,
   width: 52,
   imageSrc: "./img/player_character/swordsman/Idle.png",
@@ -55,6 +56,7 @@ const swordsman = {
 };
 
 const warior = {
+  name: "warior",
   height: 88,
   width: 52,
   imageSrc: "./img/player_character/warior/Idle.png",
