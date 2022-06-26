@@ -2,15 +2,14 @@ import { c } from "../main.js";
 import { Sprite } from "../Sprite.js";
 import { SelectPlayer } from "./SelectPlayer.js";
 export class StartGame extends Sprite {
-  constructor({
-    position = { x: 0, y: 0 },
-    imageSrc,
-    offset = { x: 0, y: 0 },
-    width = 1424,
-    height = 676,
-    player,
-  }) {
-    super({ position, imageSrc, offset, width, height });
+  constructor({ player }) {
+    super({
+      position: { x: 0, y: 0 },
+      imageSrc: "../../img/background/start game cover.png",
+      offset: { x: 0, y: 0 },
+      width: 1424,
+      height: 676,
+    });
     this.player = player;
     this.isStartGame = false;
     this.buttons = [

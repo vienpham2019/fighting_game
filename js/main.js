@@ -2,6 +2,7 @@ import { Controller } from "./controller/Controller.js";
 import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
+import { WinGame } from "./controller/WinGame.js";
 import { createPlayer } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
@@ -16,12 +17,14 @@ let initObj = int();
 let controller = new Controller(initObj);
 let player = initObj.player;
 let gameStart = new StartGame({
-  imageSrc: "./img/background/start game cover.png",
   player,
 });
 
 let endGame = new EndGame({
-  imageSrc: "./img/background/End Game.png",
+  player,
+});
+
+let gameWin = new WinGame({
   player,
 });
 
@@ -31,14 +34,15 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   endGame.isEndGame = controller.player.health <= 0;
 
-  if (gameStart.isStartGame === false) {
-    gameStart.run();
-  } else {
-    if (endGame.opacity < 1) controller.run();
-    if (endGame.isEndGame === true) {
-      endGame.run();
-    }
-  }
+  gameWin.run();
+  // if (gameStart.isStartGame === false) {
+  //   gameStart.run();
+  // } else {
+  //   if (endGame.opacity < 1) controller.run();
+  //   if (endGame.isEndGame === true) {
+  //     endGame.run();
+  //   }
+  // }
 }
 
 animate();

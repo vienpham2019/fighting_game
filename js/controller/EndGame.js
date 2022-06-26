@@ -1,15 +1,14 @@
 import { c } from "../main.js";
 import { Sprite } from "../Sprite.js";
 export class EndGame extends Sprite {
-  constructor({
-    position = { x: 0, y: 0 },
-    imageSrc,
-    offset = { x: 0, y: 0 },
-    width = 1424,
-    height = 676,
-    player,
-  }) {
-    super({ position, imageSrc, offset, width, height });
+  constructor({ player }) {
+    super({
+      position: { x: 0, y: 0 },
+      imageSrc: "../../img/background/EndGame.png",
+      offset: { x: 0, y: 0 },
+      width: 1424,
+      height: 676,
+    });
     this.isEndGame = false;
     this.player = player;
     this.buttons = [
