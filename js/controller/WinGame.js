@@ -10,7 +10,7 @@ export class WinGame extends Sprite {
       width: 1424,
       height: 676,
     });
-    this.isWinGame = false;
+    this.isWinGame = true;
     this.player = player;
     this.goldChest = new Sprite({
       position: { x: 570, y: 388 },
@@ -176,6 +176,11 @@ export class WinGame extends Sprite {
       width: 60,
       height: 39,
     });
+
+    this.isOpenGoldChest = false;
+    this.winGameCoverOpen = false;
+
+    this.opacity = 0;
   }
 
   handleDraw() {
@@ -187,16 +192,31 @@ export class WinGame extends Sprite {
       g.update();
     });
 
-    this.goldChest.frameCurrent = 0;
-    this.goldChest.update();
-
+    this.goldChest.draw();
+    if (this.isOpenGoldChest === true) {
+      // open chest and stop animate when it hit max frames.
+      if (this.goldChest.frameCurrent < this.goldChest.framesMax - 1) {
+        this.goldChest.frame_animate();
+      }
+    }
     this.campFires.forEach((c) => c.update());
     this.flag1.update();
     this.waterFountain.update();
   }
 
+  openGoldChest() {
+    this.isOpenGoldChest = true;
+  }
+
   run() {
     super.update();
     this.handleDraw();
+
+    // if (this.winGameCoverOpen === false) {
+    //   this.handleDraw();
+    // } else {
+    //   c.fillStyle = `rgba(0,0,0,${(this.opacity += 0.01)})`;
+    //   c.fillRect(0, 0, this.width, this.height);
+    // }
   }
 }

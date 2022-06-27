@@ -214,4 +214,15 @@ canvas.addEventListener("click", (e) => {
       }
     });
   }
+
+  if (gameWin.isWinGame === true) {
+    if (
+      gameWin.goldChest.position.x <= offsetX &&
+      gameWin.goldChest.position.x + gameWin.goldChest.width >= offsetX &&
+      gameWin.goldChest.position.y <= offsetY &&
+      gameWin.goldChest.position.y + gameWin.goldChest.height >= offsetY
+    ) {
+      gameWin.openGoldChest();
+    }
+  }
 });
