@@ -2,7 +2,7 @@ import { getRandomArbitrary } from "../helper.js";
 import { c } from "../main.js";
 import { Sprite } from "../Sprite.js";
 export class WinGame extends Sprite {
-  constructor({ player }) {
+  constructor() {
     super({
       position: { x: 0, y: 0 },
       imageSrc: "../../img/platforms/win platform.png",
@@ -11,7 +11,6 @@ export class WinGame extends Sprite {
       height: 676,
     });
     this.isWinGame = true;
-    this.player = player;
     this.goldChest = new Sprite({
       position: { x: 570, y: 388 },
       imageSrc: "../../img/gameObj/Chest.png",

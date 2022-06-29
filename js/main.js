@@ -2,7 +2,6 @@ import { Controller } from "./controller/Controller.js";
 import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
-import { WinGame } from "./controller/WinGame.js";
 import { createPlayer } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
@@ -23,26 +22,26 @@ let gameStart = new StartGame({
 let endGame = new EndGame({
   player,
 });
-
-let gameWin = new WinGame({
-  player,
-});
+gameStart.isStartGame = true;
 
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   endGame.isEndGame = controller.player.health <= 0;
-
-  gameWin.run();
-  // if (gameStart.isStartGame === false) {
-  //   gameStart.run();
-  // } else {
-  //   if (endGame.opacity < 1) controller.run();
-  //   if (endGame.isEndGame === true) {
-  //     endGame.run();
-  //   }
-  // }
+  if (gameStart.isStartGame === false || controller.gameLevel === 8) {
+    if (controller.gameLevel === 8) {
+      reset();
+    }
+    gameStart.run();
+  } else {
+    if (endGame.opacity < 1) {
+      controller.run();
+    }
+    if (endGame.isEndGame === true) {
+      endGame.run();
+    }
+  }
 }
 
 animate();
@@ -192,37 +191,64 @@ canvas.addEventListener("click", (e) => {
         b.y <= offsetY &&
         b.y + b.h >= offsetY
       ) {
-        initObj = int();
-        player = updatePlayer({ player_name: player.name });
+        // initObj = int();
+        // player = updatePlayer({ player_name: player.name });
 
-        gameStart = new StartGame({
-          imageSrc: "./img/background/start game cover.png",
-          player,
-        });
+        // gameStart = new StartGame({
+        //   imageSrc: "./img/background/start game cover.png",
+        //   player,
+        // });
 
-        if (b.type === "yes") {
-          gameStart.isStartGame = true;
-          player.position = { x: 0, y: 0 };
-          player.gameCurrentX = 0;
-        }
+        // if (b.type === "yes") {
+        //   gameStart.isStartGame = true;
+        //   player.position = { x: 0, y: 0 };
+        //   player.gameCurrentX = 0;
+        // }
 
-        controller = new Controller({ ...initObj, player });
-        endGame = new EndGame({
-          imageSrc: "./img/background/End Game.png",
-          player,
-        });
+        // controller = new Controller({ ...initObj, player });
+        // endGame = new EndGame({
+        //   imageSrc: "./img/background/End Game.png",
+        //   player,
+        // });
+        reset(b.type);
       }
     });
   }
 
-  if (gameWin.isWinGame === true) {
+  if (controller.gameWin.isWinGame === true) {
     if (
-      gameWin.goldChest.position.x <= offsetX &&
-      gameWin.goldChest.position.x + gameWin.goldChest.width >= offsetX &&
-      gameWin.goldChest.position.y <= offsetY &&
-      gameWin.goldChest.position.y + gameWin.goldChest.height >= offsetY
+      controller.gameWin.goldChest.position.x <= offsetX &&
+      controller.gameWin.goldChest.position.x +
+        controller.gameWin.goldChest.width >=
+        offsetX &&
+      controller.gameWin.goldChest.position.y <= offsetY &&
+      controller.gameWin.goldChest.position.y +
+        controller.gameWin.goldChest.height >=
+        offsetY
     ) {
-      gameWin.openGoldChest();
+      controller.gameWin.openGoldChest();
     }
   }
 });
+
+function reset(type = "no") {
+  initObj = int();
+  player = updatePlayer({ player_name: player.name });
+
+  gameStart = new StartGame({
+    imageSrc: "./img/background/start game cover.png",
+    player,
+  });
+
+  if (type === "yes") {
+    gameStart.isStartGame = true;
+    player.position = { x: 0, y: 0 };
+    player.gameCurrentX = 0;
+  }
+
+  controller = new Controller({ ...initObj, player });
+  endGame = new EndGame({
+    imageSrc: "./img/background/End Game.png",
+    player,
+  });
+}

@@ -669,6 +669,23 @@ const walls_6 = [
   { x: 3215, height: 72, offset: { x: 0, y: -1113 } },
 ];
 
+const platforms_7 = [
+  { x: 0, width: 1425, offset: { x: 0, y: -251 }, portal: true },
+];
+
+const walls_7 = [
+  {
+    x: -1,
+    height: canvas_height * 5,
+    offset: { x: 0, y: -(canvas_height * 2) },
+  },
+  {
+    x: 1422,
+    height: canvas_height,
+    offset: { x: 0, y: -canvas_height - 100 },
+  },
+];
+
 export let platform = {
   platforms_1,
   walls_1,
@@ -682,4 +699,6 @@ export let platform = {
   walls_5,
   platforms_6,
   walls_6,
+  platforms_7,
+  walls_7,
 };

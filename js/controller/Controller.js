@@ -10,6 +10,7 @@ import {
   getRandomArbitrary,
 } from "../helper.js";
 import { platform } from "../data/platform_data.js";
+import { WinGame } from "./WinGame.js";
 
 export class Controller {
   constructor({
@@ -46,10 +47,12 @@ export class Controller {
       itemsPanelDetails,
     });
 
+    this.gameWin = new WinGame();
+
     this.itemsObj = [];
     this.portal = portal;
 
-    this.gameLevel = 6;
+    this.gameLevel = 7;
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
 
@@ -383,14 +386,17 @@ export class Controller {
   }
 
   resetPosition() {
-    this.objs.floorImage.image.src = `..//img/platforms/platform lv${this.gameLevel}.png`;
-    this.camera.x = 0;
+    if (this.gameLevel <= 6) {
+      this.objs.floorImage.image.src = `..//img/platforms/platform lv${this.gameLevel}.png`;
 
-    for (let obj in this.objs) {
-      this.objs[obj].position = { x: 0, y: 0 };
+      for (let obj in this.objs) {
+        this.objs[obj].position = { x: 0, y: 0 };
+      }
+      this.objs.floorImage.position = { x: 0, y: 100 };
     }
-    this.objs.floorImage.position = { x: 0, y: 100 };
+
     this.player.position = { x: 0, y: 0 };
+    this.camera.x = 0;
     this.player.gameCurrentX = 0;
 
     this.platforms = createPlatform(
@@ -409,34 +415,37 @@ export class Controller {
 
     this.walls = createPlatform(platform[`walls_${this.gameLevel}`], "wall");
     this.camera.y = this.platforms[0].position.y;
-    this.player.enemys = createEnemyByPlatform(this.platforms);
-    if (this.gameLevel % 2 === 0) {
-      let bossName;
-      let enemy_name;
-      switch (this.gameLevel) {
-        case 2:
-          bossName = "Andras";
-          enemy_name = "andras";
-          break;
-        case 4:
-          bossName = "Inner Rage";
-          enemy_name = "inner_rage";
-          break;
-        case 6:
-          bossName = "Sygnus";
-          enemy_name = "sygnus";
-          break;
-      }
-      this.player.boss = createEnemy({
-        platform: this.platforms.find((p) => p.bossPlatform === true),
-        enemy_name,
-        enemy_type: "boss",
-      });
-      this.bossName = bossName;
-      this.player.enemys.push(this.player.boss);
-    }
 
-    this.player.enemys.forEach((e) => (e.enemy = this.player));
+    if (this.gameLevel <= 6) {
+      this.player.enemys = createEnemyByPlatform(this.platforms);
+      if (this.gameLevel % 2 === 0) {
+        let bossName;
+        let enemy_name;
+        switch (this.gameLevel) {
+          case 2:
+            bossName = "Andras";
+            enemy_name = "andras";
+            break;
+          case 4:
+            bossName = "Inner Rage";
+            enemy_name = "inner_rage";
+            break;
+          case 6:
+            bossName = "Sygnus";
+            enemy_name = "sygnus";
+            break;
+        }
+        this.player.boss = createEnemy({
+          platform: this.platforms.find((p) => p.bossPlatform === true),
+          enemy_name,
+          enemy_type: "boss",
+        });
+        this.bossName = bossName;
+        this.player.enemys.push(this.player.boss);
+      }
+
+      this.player.enemys.forEach((e) => (e.enemy = this.player));
+    }
 
     this.player.platform = this.platforms[0];
     this.player.walls = this.walls;
@@ -447,11 +456,16 @@ export class Controller {
 
   handleGameLevel() {
     this.gameLevel++;
-    this.resetPosition();
+    if (this.gameLevel < 8) this.resetPosition();
   }
 
   handlePortal() {
-    if (this.gameLevel % 2 === 0 && !this.player.boss.is_death) return;
+    if (
+      this.gameLevel % 2 === 0 &&
+      this.player.boss != null &&
+      !this.player.boss.is_death
+    )
+      return;
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
@@ -485,19 +499,23 @@ export class Controller {
   }
 
   run() {
-    for (let obj in this.objs) {
-      this.objs[obj].update();
+    if (this.gameLevel <= 6) {
+      for (let obj in this.objs) {
+        this.objs[obj].update();
+      }
+      this.player.floorImage.x =
+        this.objs.floorImage.image.width * this.objs.floorImage.scale;
+    } else {
+      this.gameWin.run();
     }
-    this.player.floorImage.x =
-      this.objs.floorImage.image.width * this.objs.floorImage.scale;
 
-    // this.platforms.forEach((p) => {
-    //   p.draw();
-    // });
-    // this.walls.forEach((p) => {
-    //   p.draw();
-    // });
-    if (this.gameLevel < 6) this.handlePortal();
+    this.platforms.forEach((p) => {
+      p.draw();
+    });
+    this.walls.forEach((p) => {
+      p.draw();
+    });
+
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);
     for (let i = 0; i < this.walls.length; i++) {
@@ -507,10 +525,11 @@ export class Controller {
     for (let i = 0; i < this.platforms.length; i++) {
       this.player.floorColition(this.platforms[i], this.camera);
     }
-
+    //portal
+    if (this.gameLevel <= 7) this.handlePortal();
     this.player.update();
     // // Update player enemys
-    if (this.player.enemys.length > 0) {
+    if (this.player.enemys.length > 0 && this.gameLevel < 7) {
       // update each enemy
       this.player.enemys.forEach((e) => {
         // only load enemy if player in range
@@ -541,26 +560,28 @@ export class Controller {
     }
 
     // last boss summon
-    if (this.gameLevel >= 6 && this.player.boss != null) {
+    if (this.gameLevel === 6 && this.player.boss != null) {
       this.player.boss.handleSummon();
     }
 
-    // Camera
-    this.handleCamera();
-    // camera
-
     // game object
-    this.drawBossHealth();
-    this.drawPlayerHealthBar();
-    this.playerInfoObj.run();
-    this.playerInfoPanel.run();
-    this.shopInfoPanel.run();
-    this.itemsInfoPanel.run();
 
-    // game Screen
+    if (this.gameLevel <= 6) {
+      // Camera
+      this.handleCamera();
+      // camera
+      this.drawPlayerHealthBar();
+      this.drawBossHealth();
+      this.playerInfoObj.run();
+      this.playerInfoPanel.run();
+      this.shopInfoPanel.run();
+      this.itemsInfoPanel.run();
+
+      // game Screen
+      this.player.drawDamageEffect();
+      this.player.enemys.forEach((e) => e.drawDamageEffect());
+    }
+
     this.handleCoverScreen();
-
-    this.player.drawDamageEffect();
-    this.player.enemys.forEach((e) => e.drawDamageEffect());
   }
 }
