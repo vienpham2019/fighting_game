@@ -21,6 +21,7 @@ let obj = {
   tree4BG: null,
   mountainBG: null,
   cloudBG: null,
+  landBG: null,
   healthBar: null,
   playerInfo: null,
   infoPanel: null,
@@ -40,44 +41,50 @@ export function int() {
   obj.floorImage = new Sprite({
     position: { x: 0, y: 100 },
     offset: { x: 0, y: 1000 },
-    imageSrc: "..//img/platforms/platform lv6.png",
+    imageSrc: "..//img/platforms/platform lv1.png",
     scale: 1.5,
+  });
+
+  obj.landBG = new Sprite({
+    position: { x: 0, y: 0 },
+    offset: { x: 0, y: 0 },
+    imageSrc: "../img/background/land.png",
   });
 
   obj.tree1BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/tree1BG.png",
+    imageSrc: "../img/background/tree 4.png",
   });
 
   obj.tree2BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/tree2BG.png",
+    imageSrc: "../img/background/tree 3.png",
   });
 
   obj.tree3BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/tree3BG.png",
+    imageSrc: "../img/background/tree 2.png",
   });
 
   obj.tree4BG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/tree4BG.png",
+    imageSrc: "../img/background/tree 1.png",
   });
 
   obj.mountainBG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/mountainBG.png",
+    imageSrc: "../img/background/mountain.png",
   });
 
   obj.cloudBG = new Sprite({
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
-    imageSrc: "../img/background/cloudBG.png",
+    imageSrc: "../img/background/cloud.png",
   });
 
   let shop = new Sprite({
@@ -175,8 +182,8 @@ export function int() {
       imageSrc: "../img/items/permanent crit potion.png",
     }),
   };
-  obj.platforms = createPlatform(platform.platforms_6, "platform");
-  obj.walls = createPlatform(platform.walls_6, "wall");
+  obj.platforms = createPlatform(platform.platforms_1, "platform");
+  obj.walls = createPlatform(platform.walls_1, "wall");
   const portalPlatforms = obj.platforms.filter((p) => p.portalPlatform);
   const portalCordinate =
     portalPlatforms[getRandomArbitrary(0, portalPlatforms.length)];
@@ -240,6 +247,7 @@ export function int() {
       tree3BG: obj.tree3BG,
       tree2BG: obj.tree2BG,
       tree1BG: obj.tree1BG,
+      landBG: obj.landBG,
       floorImage: obj.floorImage,
     },
     player: obj.player,

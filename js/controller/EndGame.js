@@ -4,7 +4,7 @@ export class EndGame extends Sprite {
   constructor({ player }) {
     super({
       position: { x: 0, y: 0 },
-      imageSrc: "../../img/background/EndGame.png",
+      imageSrc: "../../img/background/End Game.png",
       offset: { x: 0, y: 0 },
       width: 1424,
       height: 676,

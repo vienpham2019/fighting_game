@@ -2,7 +2,6 @@ import { Controller } from "./controller/Controller.js";
 import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
-import { createPlayer } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -22,7 +21,7 @@ let gameStart = new StartGame({
 let endGame = new EndGame({
   player,
 });
-gameStart.isStartGame = true;
+// gameStart.isStartGame = true;
 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -37,9 +36,11 @@ function animate() {
   } else {
     if (endGame.opacity < 1) {
       controller.run();
+      controller.gameRun = true;
     }
     if (endGame.isEndGame === true) {
       endGame.run();
+      controller.gameRun = false;
     }
   }
 }
@@ -47,7 +48,7 @@ function animate() {
 animate();
 
 window.addEventListener("keydown", (e) => {
-  if (player.health > 0) {
+  if (player.health > 0 && controller.gameRun) {
     switch (e.key) {
       case "d":
         player.keys.d.pressed = true;
@@ -94,7 +95,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
-  if (player.health > 0) {
+  if (player.health > 0 && controller.gameRun) {
     switch (e.key) {
       case "d":
         player.keys.d.pressed = false;
@@ -191,25 +192,6 @@ canvas.addEventListener("click", (e) => {
         b.y <= offsetY &&
         b.y + b.h >= offsetY
       ) {
-        // initObj = int();
-        // player = updatePlayer({ player_name: player.name });
-
-        // gameStart = new StartGame({
-        //   imageSrc: "./img/background/start game cover.png",
-        //   player,
-        // });
-
-        // if (b.type === "yes") {
-        //   gameStart.isStartGame = true;
-        //   player.position = { x: 0, y: 0 };
-        //   player.gameCurrentX = 0;
-        // }
-
-        // controller = new Controller({ ...initObj, player });
-        // endGame = new EndGame({
-        //   imageSrc: "./img/background/End Game.png",
-        //   player,
-        // });
         reset(b.type);
       }
     });

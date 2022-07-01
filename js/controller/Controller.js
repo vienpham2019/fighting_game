@@ -52,9 +52,11 @@ export class Controller {
     this.itemsObj = [];
     this.portal = portal;
 
-    this.gameLevel = 7;
+    this.gameLevel = 1;
     this.updateGameLevelCoolDown = [100, 100];
     this.updateGameLevel = false;
+
+    this.gameRun = false;
 
     this.coverGameScreen = {
       x: 0,
@@ -105,7 +107,8 @@ export class Controller {
       this.objs.tree4BG.position.x += this.camera.x * -0.2;
       this.objs.tree3BG.position.x += this.camera.x * -0.3;
       this.objs.tree2BG.position.x += this.camera.x * -0.5;
-      this.objs.tree1BG.position.x += this.camera.x * -0.7;
+      this.objs.tree1BG.position.x += this.camera.x * -0.55;
+      this.objs.landBG.position.x += this.camera.x * -0.55;
 
       this.portal.position.x += this.camera.x * -1;
       this.platforms.forEach((p) => {
@@ -265,14 +268,14 @@ export class Controller {
     c.fillRect(
       this.healthBar.position.x + 52,
       this.healthBar.position.y + 44,
-      this.calculatePercent(144, this.player.maxLevelHp, this.player.hp),
+      this.calculatePercent(144, this.player.maxLevelXp, this.player.xp),
       8
     );
 
     c.fillStyle = "white";
     c.font = "bold 7px Arial";
     c.fillText(
-      `${this.player.hp > 0 ? this.player.hp : 0} / ${this.player.maxLevelHp}`,
+      `${this.player.xp > 0 ? this.player.xp : 0} / ${this.player.maxLevelXp}`,
       this.healthBar.position.x + 140,
       this.healthBar.position.y + 52
     );
@@ -509,12 +512,12 @@ export class Controller {
       this.gameWin.run();
     }
 
-    this.platforms.forEach((p) => {
-      p.draw();
-    });
-    this.walls.forEach((p) => {
-      p.draw();
-    });
+    // this.platforms.forEach((p) => {
+    //   p.draw();
+    // });
+    // this.walls.forEach((p) => {
+    //   p.draw();
+    // });
 
     // player move
     this.player.move({ left: "a", right: "d" }, this.camera);

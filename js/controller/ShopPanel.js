@@ -151,6 +151,7 @@ export class ShopPanel {
   }
 
   drawShopInfo() {
+    if (this.open === false) return;
     this.shopPanel.update();
 
     // Health
@@ -254,6 +255,6 @@ export class ShopPanel {
   }
 
   run() {
-    if (this.open) this.drawShopInfo();
+    this.drawShopInfo();
   }
 }
