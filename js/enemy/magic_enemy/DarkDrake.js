@@ -56,8 +56,46 @@ export class DarkDrake extends MagicEnemy {
     this.attack_cool_down_max = 50;
     this.damage = 20;
     this.maxHealth = 200;
-    this.hp = 220;
+    this.xp = 220;
     this.name = "Dark Drake";
+    this.updateLevel = {
+      xp: {
+        1: 1,
+        2: 1.2,
+        3: 1.6,
+        4: 1.9,
+        5: 2.1,
+        6: 2.5,
+        7: 2.9,
+        8: 3.4,
+        9: 3.8,
+        10: 4.3,
+      },
+      damage: {
+        1: 1,
+        2: 1.2,
+        3: 1.5,
+        4: 1.7,
+        5: 1.9,
+        6: 2.3,
+        7: 2.7,
+        8: 3.4,
+        9: 3.8,
+        10: 4.3,
+      },
+      health: {
+        1: 1,
+        2: 1.4,
+        3: 1.9,
+        4: 2.3,
+        5: 2.8,
+        6: 3.2,
+        7: 3.8,
+        8: 4.1,
+        9: 4.5,
+        10: 4.9,
+      },
+    };
   }
 
   drawHitBox() {

@@ -66,8 +66,8 @@ export class Player extends Character {
       w: 0,
     };
     this.enemys;
-    this.health = 1000;
-    this.maxHealth = 1000;
+    this.health = 100;
+    this.maxHealth = 100;
 
     this.shield = 100;
     this.maxShield = 100;
@@ -76,14 +76,14 @@ export class Player extends Character {
     this.xp = 0;
     this.maxLevelXp = 100;
 
-    this.temp_point = [19, 19];
+    this.temp_point = [0, 0];
     this.points = {
-      point: [19, 19],
-      health: [0, 30],
+      point: [0, 0],
+      health: [0, 40],
       speed: [0, 3],
-      shield: [0, 20],
+      shield: [0, 30],
       "attack speed": [0, 19],
-      damage: [0, 40],
+      damage: [0, 50],
     };
 
     this.info = {
@@ -103,7 +103,7 @@ export class Player extends Character {
     this.playerItems = [
       {
         type: "shieldPotion",
-        amount: 10,
+        amount: 5,
         isUse: false,
         box: {},
         miliSecond: 0,
@@ -112,21 +112,12 @@ export class Player extends Character {
       },
       {
         type: "healPotion",
-        amount: 10,
+        amount: 5,
         isUse: false,
         box: {},
         miliSecond: 0,
         second: 1,
         maxSecond: 1,
-      },
-      {
-        type: "critPotion",
-        amount: 3,
-        isUse: false,
-        box: {},
-        miliSecond: 0,
-        second: 15,
-        maxSecond: 15,
       },
     ];
     this.totalCoints = 0;
@@ -144,9 +135,9 @@ export class Player extends Character {
     this.updateSprite(this.sprites.takeHit);
   }
 
-  handleHP(hp) {
-    this.xp += hp;
-    this.damgeEffect({ target: this, text: `+ ${hp} hp`, type: "hp" });
+  handleHP(xp) {
+    this.xp += xp;
+    this.damgeEffect({ target: this, text: `+ ${xp} xp`, type: "xp" });
     if (this.xp > this.maxLevelXp) {
       this.level += Math.floor(this.xp / this.maxLevelXp);
       this.points.point[0] += Math.floor(this.xp / this.maxLevelXp);
@@ -155,7 +146,7 @@ export class Player extends Character {
       this.temp_point[1] += Math.floor(this.xp / this.maxLevelXp);
       this.xp = this.xp % this.maxLevelXp;
       this.maxLevelXp += Math.floor(this.level * 100 * 0.3);
-      this.damgeEffect({ target: this, text: `LV ${this.level}`, type: "hp" });
+      this.damgeEffect({ target: this, text: `LV ${this.level}`, type: "xp" });
     }
   }
 

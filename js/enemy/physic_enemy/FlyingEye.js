@@ -43,9 +43,48 @@ export class FlyingEye extends PhysicEnemy {
     this.damage = 5;
 
     this.maxHealth = 50;
-    this.hp = 20;
+    this.xp = 20;
 
     this.name = "Flying Eye";
+
+    this.updateLevel = {
+      xp: {
+        1: 1,
+        2: 1.2,
+        3: 1.6,
+        4: 1.9,
+        5: 2.1,
+        6: 2.3,
+        7: 2.6,
+        8: 2.9,
+        9: 3.1,
+        10: 3.3,
+      },
+      damage: {
+        1: 1,
+        2: 1.2,
+        3: 1.5,
+        4: 1.7,
+        5: 1.9,
+        6: 2.1,
+        7: 2.4,
+        8: 2.8,
+        9: 3.1,
+        10: 3.4,
+      },
+      health: {
+        1: 1,
+        2: 1.2,
+        3: 1.4,
+        4: 1.6,
+        5: 1.8,
+        6: 2.3,
+        7: 2.5,
+        8: 2.8,
+        9: 3.1,
+        10: 3.4,
+      },
+    };
   }
 
   drawHitBox() {

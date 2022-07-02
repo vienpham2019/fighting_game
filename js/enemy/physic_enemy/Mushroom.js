@@ -42,10 +42,49 @@ export class Mushroom extends PhysicEnemy {
 
     this.damage = 10;
 
-    this.hp = 30;
+    this.xp = 30;
     this.maxHealth = 60;
 
     this.name = "Mushroom";
+
+    this.updateLevel = {
+      xp: {
+        1: 1,
+        2: 1.2,
+        3: 1.6,
+        4: 1.9,
+        5: 2.1,
+        6: 2.3,
+        7: 2.6,
+        8: 2.9,
+        9: 3.1,
+        10: 3.3,
+      },
+      damage: {
+        1: 1,
+        2: 1.2,
+        3: 1.5,
+        4: 1.7,
+        5: 1.9,
+        6: 2.1,
+        7: 2.4,
+        8: 2.8,
+        9: 3.1,
+        10: 3.4,
+      },
+      health: {
+        1: 1,
+        2: 1.2,
+        3: 1.4,
+        4: 1.6,
+        5: 1.8,
+        6: 2.3,
+        7: 2.5,
+        8: 2.8,
+        9: 3.1,
+        10: 3.4,
+      },
+    };
   }
 
   drawHitBox() {

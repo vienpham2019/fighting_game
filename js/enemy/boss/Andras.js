@@ -36,16 +36,16 @@ export class Andras extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 100,
+      health: 3000,
     });
     this.name = "Andras";
-    this.maxHealth = 100;
+    this.maxHealth = 3000;
     this.canStuntWhenAttack = false;
     this.level = 3;
 
     this.attack_cool_down = [
-      { cool_down: 100, max: 100 },
-      { cool_down: 100, max: 100 },
+      { cool_down: 30, max: 30 },
+      { cool_down: 30, max: 30 },
     ];
 
     this.enemy_get_hit = false;
@@ -217,6 +217,5 @@ export class Andras extends Enemy {
 
     this.detectAttack();
     super.update();
-    console.log(this.health);
   }
 }

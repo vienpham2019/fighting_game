@@ -221,7 +221,10 @@ export function int() {
     offset: { y: 0, diff: 0, delay_frame: 25 },
   };
 
-  obj.player.enemys = createEnemyByPlatform(obj.platforms);
+  obj.player.enemys = createEnemyByPlatform({
+    platforms: obj.platforms,
+    gameLevel: 1,
+  });
   obj.player.enemys.forEach((e) => (e.enemy = obj.player));
 
   // floorImage.position.x -= width;

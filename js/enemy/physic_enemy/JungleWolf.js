@@ -44,9 +44,48 @@ export class JungleWolf extends PhysicEnemy {
     this.damage = 25;
 
     this.maxHealth = 300;
-    this.hp = 90;
+    this.xp = 90;
 
     this.name = "Jungle Wolf";
+
+    this.updateLevel = {
+      xp: {
+        1: 1,
+        2: 1.5,
+        3: 1.9,
+        4: 2.3,
+        5: 2.5,
+        6: 2.9,
+        7: 3.3,
+        8: 3.7,
+        9: 4.2,
+        10: 4.5,
+      },
+      damage: {
+        1: 1,
+        2: 1.4,
+        3: 1.9,
+        4: 2.4,
+        5: 2.9,
+        6: 3.4,
+        7: 3.8,
+        8: 4.3,
+        9: 4.7,
+        10: 5.1,
+      },
+      health: {
+        1: 1,
+        2: 1.4,
+        3: 1.7,
+        4: 2.1,
+        5: 2.5,
+        6: 2.9,
+        7: 3.4,
+        8: 3.8,
+        9: 4.3,
+        10: 4.9,
+      },
+    };
 
     this.attack_effects = [];
     for (let a of sprites.attack_effect) {

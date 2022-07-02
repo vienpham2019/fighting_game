@@ -117,13 +117,17 @@ export class ShopPanel {
 
   handleBuyItems({ type, amount }) {
     this.player.totalCoints -= amount * 30;
+    this.player.damgeEffect({
+      target: this.player,
+      text: `+ ${amount} ${type}`,
+      type: "item",
+    });
     for (let i = 0; i < this.player.playerItems.length; i++) {
       if (this.player.playerItems[i].type === type) {
         this.player.playerItems[i].amount += amount;
         if (this.player.playerItems[i].amount > 15) {
           amount = this.player.playerItems[i].amount % 15;
           this.player.playerItems[i].amount = 15;
-
           if (amount === 0) return;
         } else {
           return;

@@ -135,7 +135,7 @@ export class Character extends Sprite {
           gradient_color_2 = "0, 255, 247";
           fontSize = "16px";
           break;
-        case "hp":
+        case "xp":
           gradient_color_1 = "255, 255, 255";
           gradient_color_2 = "0, 255, 143";
           fontSize = "16px";

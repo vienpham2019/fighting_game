@@ -36,13 +36,13 @@ export class InnerRage extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 1000,
+      health: 7000,
     });
     this.name = "Inner Rage";
     this.attack_cool_down = 60;
     this.attack_cool_down_max = 60;
 
-    this.maxHealth = 1000;
+    this.maxHealth = 7000;
     this.canStuntWhenAttack = false;
     this.level = 3;
 

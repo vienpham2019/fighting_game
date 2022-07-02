@@ -170,13 +170,9 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
   }
 }
 
-export function createEnemyByPlatform(platforms) {
+export function createEnemyByPlatform({ platforms, gameLevel }) {
   let result = [];
   let enemyOption = [
-    "skeleton",
-    "mushroom",
-    "goblin",
-    "flying_eye",
     "jungle_wolf",
     "white_wolf",
     "green_cornian",
@@ -185,6 +181,17 @@ export function createEnemyByPlatform(platforms) {
     "dark_drake",
     "ice_drake",
   ];
+
+  if (gameLevel === 1) {
+    enemyOption = [
+      "skeleton",
+      "mushroom",
+      "goblin",
+      "flying_eye",
+      "worm",
+      "dark_drake",
+    ];
+  }
 
   platforms.forEach((p) => {
     if (p.width >= 200 && p.bossPlatform === false) {
@@ -195,7 +202,9 @@ export function createEnemyByPlatform(platforms) {
 
       for (let i = 0; i < number_of_enemy; i++) {
         let enemy_name = enemyOption[getRandomArbitrary(0, enemyOption.length)];
-        result.push(createEnemy({ platform: p, enemy_name }));
+        let enemy = createEnemy({ platform: p, enemy_name });
+        enemy.handleUpdateLevel(getRandomArbitrary(gameLevel, gameLevel + 2));
+        result.push(enemy);
       }
     }
   });

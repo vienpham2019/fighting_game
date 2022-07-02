@@ -47,7 +47,7 @@ export class Enemy extends Character {
     this.attack_again = true;
     this.in_attack_range = false;
     this.character_type = "enemy";
-    this.addHp = false;
+    this.addXp = false;
 
     this.itemsObj = [];
 
@@ -84,6 +84,14 @@ export class Enemy extends Character {
     }
   }
 
+  handleUpdateLevel(level) {
+    this.xp = Math.floor(this.xp * this.updateLevel.xp[level]);
+    this.health = Math.floor(this.health * this.updateLevel.health[level]);
+    this.maxHealth = this.health;
+    this.damage = Math.floor(this.damage * this.updateLevel.damage[level]);
+    this.level = level;
+  }
+
   handleGameMove(move_postition) {
     this.position.x += move_postition.x;
     this.position.y += move_postition.y;
@@ -102,9 +110,9 @@ export class Enemy extends Character {
     }
     if (this.health <= 0) {
       this.updateSprite(this.sprites.death);
-      if (!this.addHp) {
-        this.enemy.handleHP(this.hp);
-        this.addHp = true;
+      if (!this.addXp) {
+        this.enemy.handleHP(this.xp);
+        this.addXp = true;
       }
     } else if (this.in_attack_range === false) {
       this.updateSprite(this.sprites.takeHit);

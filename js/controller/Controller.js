@@ -420,7 +420,10 @@ export class Controller {
     this.camera.y = this.platforms[0].position.y;
 
     if (this.gameLevel <= 6) {
-      this.player.enemys = createEnemyByPlatform(this.platforms);
+      this.player.enemys = createEnemyByPlatform({
+        platforms: this.platforms,
+        gameLevel: this.gameLevel,
+      });
       if (this.gameLevel % 2 === 0) {
         let bossName;
         let enemy_name;
@@ -463,12 +466,12 @@ export class Controller {
   }
 
   handlePortal() {
-    if (
-      this.gameLevel % 2 === 0 &&
-      this.player.boss != null &&
-      !this.player.boss.is_death
-    )
-      return;
+    // if (
+    //   this.gameLevel % 2 === 0 &&
+    //   this.player.boss != null &&
+    //   !this.player.boss.is_death
+    // )
+    //   return;
 
     this.portal.update();
     if (this.rectCollition() && this.updateGameLevel === false) {
@@ -584,7 +587,6 @@ export class Controller {
       this.player.drawDamageEffect();
       this.player.enemys.forEach((e) => e.drawDamageEffect());
     }
-
     this.handleCoverScreen();
   }
 }

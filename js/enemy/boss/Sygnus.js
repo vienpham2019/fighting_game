@@ -40,7 +40,7 @@ export class Sygnus extends Enemy {
       attack_box,
       moveSpeed,
       platform,
-      health: 10000,
+      health: 12000,
     });
 
     // this.magic_obj = {
@@ -68,7 +68,7 @@ export class Sygnus extends Enemy {
 
     this.attack_cool_down = 50;
     this.attack_cool_down_max = 50;
-    this.maxHealth = 10000;
+    this.maxHealth = 12000;
     this.canStuntWhenAttack = false;
     this.level = 3;
     this.name = "Sygnus";
