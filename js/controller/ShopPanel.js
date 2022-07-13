@@ -34,8 +34,8 @@ export class ShopPanel {
       },
       {
         type: "heal_buy",
-        x: shopPanel.position.x + 315,
-        y: shopPanel.position.y + 93,
+        x: shopPanel.position.x + 305,
+        y: shopPanel.position.y + 90,
         w: 60,
         h: 20,
       },
@@ -55,7 +55,7 @@ export class ShopPanel {
       },
       {
         type: "shield_buy",
-        x: shopPanel.position.x + 315,
+        x: shopPanel.position.x + 305,
         y: shopPanel.position.y + 171,
         w: 60,
         h: 20,
@@ -182,19 +182,9 @@ export class ShopPanel {
 
     c.fillText(
       "BUY",
-      this.shopPanel.position.x + 330,
-      this.shopPanel.position.y + 108
+      this.shopPanel.position.x + 320,
+      this.shopPanel.position.y + 105
     );
-
-    c.beginPath();
-    c.strokeStyle = "gray";
-    c.rect(
-      this.shopPanel.position.x + 315,
-      this.shopPanel.position.y + 93,
-      60,
-      20
-    );
-    c.stroke();
 
     c.font = "13px Arial";
 
@@ -229,19 +219,9 @@ export class ShopPanel {
 
     c.fillText(
       "BUY",
-      this.shopPanel.position.x + 330,
+      this.shopPanel.position.x + 320,
       this.shopPanel.position.y + 186
     );
-
-    c.beginPath();
-    c.strokeStyle = "gray";
-    c.rect(
-      this.shopPanel.position.x + 315,
-      this.shopPanel.position.y + 171,
-      60,
-      20
-    );
-    c.stroke();
 
     c.font = "13px Arial";
 
