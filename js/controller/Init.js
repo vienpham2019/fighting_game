@@ -39,8 +39,8 @@ let obj = {
 
 export function int() {
   obj.floorImage = new Sprite({
-    position: { x: 0, y: 100 },
-    offset: { x: 0, y: 1000 },
+    position: { x: 0, y: -900 },
+    offset: { x: 0, y: 0 },
     imageSrc: "..//img/platforms/platform lv1.png",
     scale: 1.5,
   });

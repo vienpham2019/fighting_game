@@ -76,7 +76,7 @@ export class Controller {
         frameMax: 4,
         scale: 0.8,
       },
-      InnerRage: {
+      "Inner Rage": {
         src: "../img/boss/InnerRage/Idle.png",
         offset: { x: -15, y: 0 },
         frameMax: 8,
@@ -93,6 +93,18 @@ export class Controller {
 
   handleCamera() {
     this.player.gameCurrentX += this.camera.x;
+
+    if (
+      this.objs["floorImage"].image.height * this.objs["floorImage"].scale >
+        0 &&
+      this.objs["floorImage"].image.height * this.objs["floorImage"].scale <=
+        Math.abs(this.objs["floorImage"].position.y - canvas.height)
+    ) {
+      this.camera.offset.diff = 0;
+      this.camera.offset.y = 0;
+      this.camera.x = 0;
+      this.player.health = 0;
+    }
 
     // X axis
     if (
@@ -128,15 +140,6 @@ export class Controller {
     // X axis
 
     // Y axis
-    if (
-      this.objs["floorImage"].position.y +
-        this.objs["floorImage"].image.height <
-      this.player.position.y + this.player.height
-    ) {
-      this.camera.offset.diff = 0;
-      this.camera.offset.y = 0;
-      this.player.health = 0;
-    }
     if (
       (this.camera.offset.diff < 0 && this.camera.offset.y < 0) ||
       (this.camera.offset.diff > 0 && this.camera.offset.y > 0)
@@ -466,14 +469,16 @@ export class Controller {
   }
 
   handlePortal() {
-    // if (
-    //   this.gameLevel % 2 === 0 &&
-    //   this.player.boss != null &&
-    //   !this.player.boss.is_death
-    // )
-    //   return;
-
+    if (
+      this.gameLevel % 2 === 0 &&
+      this.player.boss != null &&
+      this.player.boss.health > 0 &&
+      this.coverGameScreen.transparent[0] <= 0
+    ) {
+      return;
+    }
     this.portal.update();
+
     if (this.rectCollition() && this.updateGameLevel === false) {
       if (
         this.coverGameScreen.transparent[0] <=
@@ -483,6 +488,7 @@ export class Controller {
       }
       if (--this.updateGameLevelCoolDown[0] <= 0) {
         this.updateGameLevel = true;
+
         this.handleGameLevel();
       }
     } else {
@@ -532,7 +538,9 @@ export class Controller {
       this.player.floorColition(this.platforms[i], this.camera);
     }
     //portal
-    if (this.gameLevel <= 7) this.handlePortal();
+    if (this.gameLevel <= 7) {
+      this.handlePortal();
+    }
     this.player.update();
     // // Update player enemys
     if (this.player.enemys.length > 0 && this.gameLevel < 7) {
@@ -577,7 +585,9 @@ export class Controller {
       this.handleCamera();
       // camera
       this.drawPlayerHealthBar();
-      this.drawBossHealth();
+      if (this.gameLevel % 2 === 0) {
+        this.drawBossHealth();
+      }
       this.playerInfoObj.run();
       this.playerInfoPanel.run();
       this.shopInfoPanel.run();
