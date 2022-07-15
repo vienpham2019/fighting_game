@@ -17,6 +17,7 @@ import { DarkCornian } from "./enemy/physic_enemy/DarkCornian.js";
 import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
 import { IceDrake } from "./enemy/magic_enemy/IceDrake.js";
 import { Worm } from "./enemy/magic_enemy/Worm.js";
+import { Bain } from "./enemy/magic_enemy/Bain.js";
 
 // Boss
 import { InnerRage } from "./enemy/boss/InnerRage.js";
@@ -96,8 +97,8 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
     ),
     y: platform.position.y - enemy.height,
   };
-  let flip = Math.random() > 0.5 ? -1 : 1;
-  // let flip = 1;
+  // let flip = Math.random() > 0.5 ? -1 : 1;
+  let flip = 1;
   let obj_val = {
     ...enemy,
     position,
@@ -147,6 +148,10 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
       });
     case "ice_drake":
       return new IceDrake({
+        ...obj_val,
+      });
+    case "bain":
+      return new Bain({
         ...obj_val,
       });
 

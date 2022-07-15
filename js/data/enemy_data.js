@@ -578,6 +578,68 @@ const ice_drake = {
   },
 };
 
+const bain = {
+  height: 80,
+  width: 100,
+  imageSrc: "./img/bot/Bain/Idle.png",
+  scale: 1,
+  framesMax: 4,
+  framesHold: 7,
+  offset: { x: 50, y: 72 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 170,
+    height: 80,
+    offset: { x: 0, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/Bain/Idle.png",
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: "./img/bot/Bain/Walk.png",
+      framesMax: 8,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/Bain/Take hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/Bain/Death.png",
+      framesMax: 5,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/Bain/Attack.png",
+        framesMax: 16,
+        hitFrame: { [6]: true },
+        damge: 30,
+      },
+    ],
+    magic_obj: {
+      move: {
+        height: 30,
+        width: 30,
+        imageSrc: "./img/bot/Bain/Fire ball.png",
+        framesMax: 2,
+        framesHold: 4,
+        offset: { x: 110, y: 70 },
+        scale: 1,
+      },
+      explosion: {
+        height: 20,
+        width: 20,
+        imageSrc: "./img/bot/Bain/Explosion.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 90, y: 90 },
+        scale: 1,
+      },
+    },
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -590,4 +652,5 @@ export let enemy_data = {
   dark_cornian,
   dark_drake,
   ice_drake,
+  bain,
 };

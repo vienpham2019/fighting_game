@@ -2,6 +2,7 @@ import { Controller } from "./controller/Controller.js";
 import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
+import { createEnemy, createPlatform } from "./helper.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -23,6 +24,16 @@ let endGame = new EndGame({
 });
 // gameStart.isStartGame = true;
 
+let enemy = createEnemy({
+  platform: createPlatform(
+    [{ x: 300, width: 500, offset: { x: 0, y: -272 } }],
+    "platform"
+  )[0],
+  enemy_name: "bain",
+});
+
+enemy.enemy = player;
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -43,6 +54,8 @@ function animate() {
       controller.gameRun = false;
     }
   }
+
+  enemy.update();
 }
 
 animate();
