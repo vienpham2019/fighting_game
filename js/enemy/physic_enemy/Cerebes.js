@@ -132,8 +132,8 @@ export class Cerebes extends PhysicEnemy {
       this.offset.y = 52;
     }
     // this.drawHitBox();
+    this.detect_attack({ x1: 0, x2: 0 });
     this.drawHealthBar();
-    this.detect_attack();
     this.deteckAttackEffect();
     super.update();
   }

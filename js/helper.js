@@ -194,7 +194,7 @@ export function createEnemyByPlatform({ platforms, gameLevel }) {
     "cerebes",
   ];
 
-  enemyOption = ["bain"];
+  enemyOption = ["white_wolf"];
 
   if (gameLevel === 1 && false) {
     enemyOption = [

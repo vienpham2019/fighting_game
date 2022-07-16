@@ -113,13 +113,16 @@ export class PhysicEnemy extends Enemy {
         let [x1, x2, y1] = getCoordinate(this);
         for (let i = 0; i < this.attack_effects.length; i++) {
           this.attack_effects[i].flip = this.flip * -1;
-          let x = this.flip === 1 ? x2 + offset.x2 : x1 + offset.x1;
           this.attack_effects[i].position = {
-            x,
+            x: this.enemy.position.x + offset.x2,
             y: y1 + 10,
           };
-          if (this.frameCurrent === this.sprites.attack_effect[i].trigger_frame)
+          if (
+            this.frameCurrent === this.sprites.attack_effect[i].trigger_frame &&
+            this.attackBoxCollition()
+          ) {
             this.attack_effects[i].update();
+          }
         }
       }
     }
