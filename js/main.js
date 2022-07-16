@@ -29,7 +29,7 @@ let enemy = createEnemy({
     [{ x: 300, width: 500, offset: { x: 0, y: -272 } }],
     "platform"
   )[0],
-  enemy_name: "bain",
+  enemy_name: "cerebes",
 });
 
 enemy.enemy = player;
@@ -55,7 +55,7 @@ function animate() {
     }
   }
 
-  enemy.update();
+  // enemy.update();
 }
 
 animate();

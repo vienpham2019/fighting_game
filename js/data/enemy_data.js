@@ -640,6 +640,64 @@ const bain = {
   },
 };
 
+const cerebes = {
+  height: 90,
+  width: 120,
+  imageSrc: "./img/bot/Cerebes/Idle.png",
+  scale: 1.2,
+  framesMax: 4,
+  framesHold: 7,
+  offset: { x: 30, y: 45 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 90,
+    height: 90,
+    offset: { x: 80, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/Cerebes/Idle.png",
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: "./img/bot/Cerebes/Walk.png",
+      framesMax: 8,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/Cerebes/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/Cerebes/Death.png",
+      framesMax: 5,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/Cerebes/Attack.png",
+        framesMax: 11,
+        hitFrame: { [8]: true },
+        damge: 35,
+        offset: [
+          { x: 30, y: 45 },
+          { x: 35, y: 52 },
+        ],
+      },
+    ],
+    attack_effect: [
+      {
+        height: 40,
+        width: 40,
+        imageSrc: "./img/bot/Cerebes/Attack Effect.png",
+        framesMax: 2,
+        framesHold: 4,
+        offset: { x: 45, y: 45 },
+        scale: 0.8,
+        trigger_frame: 8,
+      },
+    ],
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -653,4 +711,5 @@ export let enemy_data = {
   dark_drake,
   ice_drake,
   bain,
+  cerebes,
 };

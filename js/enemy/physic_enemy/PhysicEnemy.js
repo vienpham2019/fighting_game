@@ -49,11 +49,19 @@ export class PhysicEnemy extends Enemy {
       this.enemy.updateSprite(this.enemy.sprites.death);
     }
 
+    if ("offset" in this.sprites.attack[0]) {
+      this.offset = this.sprites.attack[0].offset[0];
+    }
+
     if (
       (this.attackBoxCollition() || this.in_attack_range) &&
       this.enemy.health > 0
     ) {
       this.in_attack_range = true;
+      if ("offset" in this.sprites.attack[0]) {
+        this.offset = this.sprites.attack[0].offset[1];
+      }
+
       this.color = "red";
       this.velocity.x = 0;
       if (this.attack_again) {

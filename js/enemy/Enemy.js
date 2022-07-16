@@ -211,8 +211,13 @@ export class Enemy extends Character {
       b_y1 = attack_box.y;
       b_y2 = attack_box.y + attack_box.h;
     } else {
-      b_x1 = this.flip === 1 ? x2 : x1 - attack_box.width;
-      b_x2 = this.flip === 1 ? x2 + attack_box.width : x1;
+      b_x1 =
+        this.flip === 1
+          ? x2 - this.attack_box.offset.x
+          : x1 - this.attack_box.width + this.attack_box.offset.x;
+
+      b_x2 = b_x1 + attack_box.width;
+
       b_y1 = y1;
       b_y2 = y1 + attack_box.height;
     }

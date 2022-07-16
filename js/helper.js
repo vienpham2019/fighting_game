@@ -12,6 +12,7 @@ import { JungleWolf } from "./enemy/physic_enemy/JungleWolf.js";
 import { WhiteWolf } from "./enemy/physic_enemy/WhiteWolf.js";
 import { GreenCornian } from "./enemy/physic_enemy/GreenCornian.js";
 import { DarkCornian } from "./enemy/physic_enemy/DarkCornian.js";
+import { Cerebes } from "./enemy/physic_enemy/Cerebes.js";
 
 // magic Enemy
 import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
@@ -154,6 +155,10 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
       return new Bain({
         ...obj_val,
       });
+    case "cerebes":
+      return new Cerebes({
+        ...obj_val,
+      });
 
     // Boss
     case "inner_rage":
@@ -185,9 +190,13 @@ export function createEnemyByPlatform({ platforms, gameLevel }) {
     "worm",
     "dark_drake",
     "ice_drake",
+    "bain",
+    "cerebes",
   ];
 
-  if (gameLevel === 1) {
+  enemyOption = ["bain"];
+
+  if (gameLevel === 1 && false) {
     enemyOption = [
       "skeleton",
       "mushroom",

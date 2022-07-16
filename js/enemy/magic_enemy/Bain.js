@@ -18,7 +18,7 @@ export class Bain extends MagicEnemy {
     sprites,
     flip = 1,
     attack_box,
-    moveSpeed = { x: 1.5, y: 0 },
+    moveSpeed = { x: 1, y: 0 },
     platform,
   }) {
     super({
