@@ -1,4 +1,4 @@
-import { getCoordinate } from "../../helper.js";
+import { getCoordinate, getRandomArbitrary } from "../../helper.js";
 
 import { Enemy } from "../Enemy.js";
 
@@ -42,15 +42,17 @@ export class PhysicEnemy extends Enemy {
     for (let hf in sprites.attack[0].hitFrame) {
       this.enemy_get_hit[hf] = false;
     }
+    this.attack_index = 0;
+    this.set_attack_index = false;
   }
 
-  detect_attack() {
+  detect_attack(last_index = 0) {
     if (this.enemy.health <= 0) {
       this.enemy.updateSprite(this.enemy.sprites.death);
     }
 
-    if ("offset" in this.sprites.attack[0]) {
-      this.offset = this.sprites.attack[0].offset[0];
+    if ("offset" in this.sprites.attack[this.attack_index]) {
+      this.offset = this.sprites.attack[this.attack_index].offset[0];
     }
 
     if (
@@ -58,15 +60,17 @@ export class PhysicEnemy extends Enemy {
       this.enemy.health > 0
     ) {
       this.in_attack_range = true;
-      if ("offset" in this.sprites.attack[0]) {
-        this.offset = this.sprites.attack[0].offset[1];
+      if ("offset" in this.sprites.attack[this.attack_index]) {
+        this.offset = this.sprites.attack[this.attack_index].offset[1];
       }
 
       this.color = "red";
       this.velocity.x = 0;
       if (this.attack_again) {
-        if (this.image === this.sprites.attack[0].image) {
-          if (this.sprites.attack[0].hitFrame[this.frameCurrent]) {
+        if (this.image === this.sprites.attack[this.attack_index].image) {
+          if (
+            this.sprites.attack[this.attack_index].hitFrame[this.frameCurrent]
+          ) {
             this.start_attack = true;
 
             if (
@@ -88,13 +92,18 @@ export class PhysicEnemy extends Enemy {
           }
           this.attack_again = this.frameCurrent < this.framesMax - 1;
         }
-        this.updateSprite(this.sprites.attack[0]);
+        this.updateSprite(this.sprites.attack[this.attack_index]);
       } else {
         this.updateSprite(this.sprites.idle);
+        if (this.set_attack_index === false) {
+          this.attack_index = getRandomArbitrary(0, last_index + 1);
+          this.set_attack_index = true;
+        }
         if (this.attack_cool_down-- <= 0) {
           this.attack_again = true;
+          this.set_attack_index = false;
           this.attack_cool_down = this.attack_cool_down_max;
-          for (let hf in this.sprites.attack[0].hitFrame) {
+          for (let hf in this.sprites.attack[this.attack_index].hitFrame) {
             this.enemy_get_hit[hf] = false;
           }
         }

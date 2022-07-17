@@ -698,6 +698,66 @@ const cerebes = {
   },
 };
 
+const turtle = {
+  height: 110,
+  width: 130,
+  imageSrc: "./img/bot/Turtle/Idle.png",
+  scale: 1,
+  framesMax: 6,
+  framesHold: 7,
+  offset: { x: 40, y: 75 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 130,
+    height: 90,
+    offset: { x: 100, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/Turtle/Idle.png",
+      framesMax: 6,
+    },
+    run: {
+      imageSrc: "./img/bot/Turtle/Walk.png",
+      framesMax: 6,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/Turtle/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/Turtle/Death.png",
+      framesMax: 8,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/Turtle/Attack 1.png",
+        framesMax: 9,
+        hitFrame: { [5]: true },
+        damge: 35,
+      },
+      {
+        imageSrc: "./img/bot/Turtle/Attack 2.png",
+        framesMax: 11,
+        hitFrame: { [5]: true, [7]: true },
+        damge: 35,
+      },
+    ],
+    attack_effect: [
+      {
+        height: 60,
+        width: 65,
+        imageSrc: "./img/bot/Turtle/Attack Effect.png",
+        framesMax: 3,
+        framesHold: 4,
+        offset: { x: 60, y: 90 },
+        scale: 0.8,
+        trigger_frame: 5,
+      },
+    ],
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -712,4 +772,5 @@ export let enemy_data = {
   ice_drake,
   bain,
   cerebes,
+  turtle,
 };

@@ -26,10 +26,10 @@ let endGame = new EndGame({
 
 let enemy = createEnemy({
   platform: createPlatform(
-    [{ x: 300, width: 500, offset: { x: 0, y: -272 } }],
+    [{ x: 300, width: 500, offset: { x: 0, y: -252 } }],
     "platform"
   )[0],
-  enemy_name: "cerebes",
+  enemy_name: "turtle",
 });
 
 enemy.enemy = player;
