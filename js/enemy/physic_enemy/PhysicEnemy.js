@@ -80,6 +80,11 @@ export class PhysicEnemy extends Enemy {
               this.enemy_get_hit[this.frameCurrent] = true;
               if (!this.enemy.is_attacking) this.enemy.flip = this.flip * -1;
               this.enemy.handleTakeHit(this.damage);
+              if ("knockBack" in this.sprites.attack[this.attack_index]) {
+                this.enemy.position.x -=
+                  this.sprites.attack[this.attack_index].knockBack *
+                  this.enemy.flip;
+              }
               this.damgeEffect({
                 target: this.enemy,
                 text: this.damage,
@@ -94,11 +99,12 @@ export class PhysicEnemy extends Enemy {
         }
         this.updateSprite(this.sprites.attack[this.attack_index]);
       } else {
-        this.updateSprite(this.sprites.idle);
         if (this.set_attack_index === false) {
           this.attack_index = getRandomArbitrary(0, last_index + 1);
           this.set_attack_index = true;
         }
+        this.updateSprite(this.sprites.idle);
+
         if (this.attack_cool_down-- <= 0) {
           this.attack_again = true;
           this.set_attack_index = false;

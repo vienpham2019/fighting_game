@@ -66,8 +66,8 @@ export class Player extends Character {
       w: 0,
     };
     this.enemys;
-    this.health = 100;
-    this.maxHealth = 100;
+    this.health = 10000;
+    this.maxHealth = 10000;
 
     this.shield = 100;
     this.maxShield = 100;

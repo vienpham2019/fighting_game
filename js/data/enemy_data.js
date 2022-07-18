@@ -677,6 +677,7 @@ const cerebes = {
         framesMax: 11,
         hitFrame: { [8]: true },
         damge: 35,
+        knockBack: 35,
         offset: [
           { x: 30, y: 45 },
           { x: 35, y: 52 },
@@ -735,12 +736,14 @@ const turtle = {
         framesMax: 9,
         hitFrame: { [5]: true },
         damge: 35,
+        knockBack: 40,
       },
       {
         imageSrc: "./img/bot/Turtle/Attack 2.png",
         framesMax: 11,
         hitFrame: { [5]: true, [7]: true },
         damge: 35,
+        knockBack: 5,
       },
     ],
     attack_effect: [
