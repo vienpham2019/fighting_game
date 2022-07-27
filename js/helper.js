@@ -14,6 +14,8 @@ import { GreenCornian } from "./enemy/physic_enemy/GreenCornian.js";
 import { DarkCornian } from "./enemy/physic_enemy/DarkCornian.js";
 import { Cerebes } from "./enemy/physic_enemy/Cerebes.js";
 import { Turtle } from "./enemy/physic_enemy/Turtle.js";
+import { KingBlueGoblin } from "./enemy/physic_enemy/KingBlueGoblin.js";
+import { Buffoon } from "./enemy/physic_enemy/Buffoon.js";
 
 // magic Enemy
 import { DarkDrake } from "./enemy/magic_enemy/DarkDrake.js";
@@ -164,6 +166,14 @@ export function createEnemy({ platform, enemy_name, enemy_type = "bot" }) {
       return new Turtle({
         ...obj_val,
       });
+    case "king_blue_goblin":
+      return new KingBlueGoblin({
+        ...obj_val,
+      });
+    case "buffoon":
+      return new Buffoon({
+        ...obj_val,
+      });
 
     // Boss
     case "inner_rage":
@@ -198,9 +208,11 @@ export function createEnemyByPlatform({ platforms, gameLevel }) {
     "bain",
     "cerebes",
     "turtle",
+    "king_blue_goblin",
+    "buffoon",
   ];
 
-  enemyOption = ["turtle"];
+  enemyOption = ["buffoon"];
 
   if (gameLevel === 1 && false) {
     enemyOption = [

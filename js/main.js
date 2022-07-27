@@ -29,7 +29,7 @@ let enemy = createEnemy({
     [{ x: 300, width: 500, offset: { x: 0, y: -252 } }],
     "platform"
   )[0],
-  enemy_name: "turtle",
+  enemy_name: "buffoon",
 });
 
 enemy.enemy = player;

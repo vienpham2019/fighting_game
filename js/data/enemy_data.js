@@ -761,6 +761,115 @@ const turtle = {
   },
 };
 
+const king_blue_goblin = {
+  height: 110,
+  width: 110,
+  imageSrc: "./img/bot/KingBlueGoblin/Idle.png",
+  scale: 1,
+  framesMax: 6,
+  framesHold: 7,
+  offset: { x: 120, y: 79 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 170,
+    height: 90,
+    offset: { x: 80, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/KingBlueGoblin/Idle.png",
+      framesMax: 6,
+    },
+    run: {
+      imageSrc: "./img/bot/KingBlueGoblin/Run.png",
+      framesMax: 6,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/KingBlueGoblin/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/KingBlueGoblin/Death.png",
+      framesMax: 12,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/KingBlueGoblin/Attack 1.png",
+        framesMax: 12,
+        hitFrame: { [6]: true },
+        damge: 40,
+        // knockBack: 40,
+      },
+    ],
+    attack_effect: [
+      {
+        height: 60,
+        width: 65,
+        imageSrc: "./img/bot/KingBlueGoblin/Attack Effect.png",
+        framesMax: 3,
+        framesHold: 8,
+        offset: { x: 120, y: 55 },
+        scale: 0.8,
+        trigger_frame: 6,
+      },
+    ],
+  },
+};
+
+const buffoon = {
+  height: 110,
+  width: 110,
+  imageSrc: "./img/bot/Buffoon/Idle.png",
+  scale: 1,
+  framesMax: 6,
+  framesHold: 7,
+  offset: { x: 50, y: 95 },
+  attack_box: {
+    position: { x: 0, y: 0 },
+    width: 120,
+    height: 90,
+    offset: { x: 90, y: 0 },
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/bot/Buffoon/Idle.png",
+      framesMax: 6,
+    },
+    run: {
+      imageSrc: "./img/bot/Buffoon/Run.png",
+      framesMax: 6,
+    },
+    takeHit: {
+      imageSrc: "./img/bot/Buffoon/Take Hit.png",
+      framesMax: 1,
+    },
+    death: {
+      imageSrc: "./img/bot/Buffoon/Death.png",
+      framesMax: 8,
+    },
+    attack: [
+      {
+        imageSrc: "./img/bot/Buffoon/Attack 1.png",
+        framesMax: 9,
+        hitFrame: { [6]: true },
+        damge: 30,
+      },
+    ],
+    attack_effect: [
+      {
+        height: 60,
+        width: 60,
+        imageSrc: "./img/bot/Buffoon/Attack Effect.png",
+        framesMax: 3,
+        framesHold: 8,
+        offset: { x: 60, y: 55 },
+        scale: 0.8,
+        trigger_frame: 6,
+      },
+    ],
+  },
+};
+
 export let enemy_data = {
   worm,
   skeleton,
@@ -776,4 +885,6 @@ export let enemy_data = {
   bain,
   cerebes,
   turtle,
+  king_blue_goblin,
+  buffoon,
 };
