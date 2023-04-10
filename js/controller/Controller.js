@@ -541,7 +541,7 @@ export class Controller {
     if (this.gameLevel <= 7) {
       this.handlePortal();
     }
-    this.player.update();
+
     // // Update player enemys
     if (this.player.enemys.length > 0 && this.gameLevel < 7) {
       // update each enemy
@@ -562,6 +562,9 @@ export class Controller {
         return !e.is_death;
       });
     }
+
+    this.player.update();
+
 
     c.stroke();
     // itemsObj

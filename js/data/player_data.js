@@ -57,13 +57,11 @@ const swordsman = {
 
 const warior = {
   name: "warior",
-  height: 88,
-  width: 52,
+  height: 110,
+  width: 70,
   imageSrc: "./img/player_character/warior/Idle.png",
-  scale: 1.9,
-  framesMax: 10,
-  framesHold: 4,
-  offset: { x: 130, y: 104 },
+  scale: 1,
+  framesHold: 2,
   attack_box: {
     position: { x: 0, y: 0 },
     width: 110,
@@ -74,8 +72,11 @@ const warior = {
   sprites: {
     idle: {
       imageSrc: "./img/player_character/warior/Idle.png",
-      framesMax: 10,
-    },
+      framesMax: 6,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+    }},
     run: {
       imageSrc: "./img/player_character/warior/Run.png",
       framesMax: 8,

@@ -204,10 +204,11 @@ export function int() {
     imageSrc: "../img/gameObj/portal.png",
   });
   obj.player = createPlayer({
-    position: { y: 395, x: 600 },
+    position: { y: 373, x: 600 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
     player_name: "warior",
+    flip: 1,
   });
 
   obj.player.platform = obj.platforms[0];

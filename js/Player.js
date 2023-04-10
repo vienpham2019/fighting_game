@@ -11,9 +11,7 @@ export class Player extends Character {
     height = 150,
     imageSrc,
     scale = 1,
-    framesMax = 1,
     framesHold = 1,
-    offset = { x: 0, y: 0 },
     sprites,
     flip = 1,
     attack_box,
@@ -28,9 +26,9 @@ export class Player extends Character {
       height,
       imageSrc,
       scale,
-      framesMax,
+      framesMax: sprites.idle.framesMax,
       framesHold,
-      offset,
+      offset: sprites.idle.offset[`${flip}`],
       sprites,
       flip,
       attack_box,
@@ -197,6 +195,11 @@ export class Player extends Character {
       }
       platform.color = "red";
     }
+  }
+
+  updateSprite(sprite){
+    this.offset = sprite.offset[this.flip];
+    super.updateSprite(sprite); 
   }
 
   move(m, camera) {

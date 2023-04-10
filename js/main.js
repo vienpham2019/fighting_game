@@ -34,11 +34,17 @@ let enemy = createEnemy({
 
 enemy.enemy = player;
 
+player.platform =  createPlatform(
+  [{ x: 300, width: 500, offset: { x: 0, y: -252 } }],
+  "platform"
+)[0]
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   endGame.isEndGame = controller.player.health <= 0;
+
   if (gameStart.isStartGame === false || controller.gameLevel === 8) {
     if (controller.gameLevel === 8) {
       reset();
@@ -55,7 +61,12 @@ function animate() {
     }
   }
 
-  // enemy.update();
+
+  // player box
+  c.beginPath();
+  c.rect(player.position.x, player.position.y, player.width, player.height);
+  c.stroke();
+
 }
 
 animate();
@@ -78,8 +89,8 @@ window.addEventListener("keydown", (e) => {
         player.attack();
         break;
 
-      case "r":
-        controller.resetPosition();
+      // case "r":
+      //   controller.resetPosition();
 
       case "p":
         controller.playerInfoPanel.open = !controller.playerInfoPanel.open;
