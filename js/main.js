@@ -61,7 +61,6 @@ function animate() {
     }
   }
 
-
   // player box
   c.beginPath();
   c.rect(player.position.x, player.position.y, player.width, player.height);

@@ -127,7 +127,7 @@ export class Controller {
         p.position.x += this.camera.x * -1;
       });
       // enemy
-      // enemy.handleGameMove({ position: { x: this.camera.x * -1 } });
+      // this.enemy.handleGameMove({ position: { x: this.camera.x * -1 } });
       this.player.enemys.forEach((e) => {
         e.handleGameMove({ x: this.camera.x * -1, y: 0 });
       });

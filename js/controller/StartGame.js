@@ -41,8 +41,8 @@ export class StartGame extends Sprite {
   }
 
   handleStartGame() {
-    this.player.velocity.x = 5;
-    this.player.updateSprite(this.player.sprites["run"]);
+    this.player.velocity.x = 3;
+    this.player.updateSprite(this.player.sprites["walk"]);
     this.openPortal = true;
   }
 
@@ -63,9 +63,11 @@ export class StartGame extends Sprite {
 
   run() {
     super.update();
+    // this.player.updateSprite(this.player.sprites["walk"]);
     if (this.openPortal) {
       this.portal.update();
     }
+
     this.player.update();
     this.handleStartGameAnimation();
     if (this.selectPlayer.open === true && !this.openPortal) {

@@ -11,7 +11,6 @@ export class Player extends Character {
     height = 150,
     imageSrc,
     scale = 1,
-    framesHold = 1,
     sprites,
     flip = 1,
     attack_box,
@@ -27,7 +26,7 @@ export class Player extends Character {
       imageSrc,
       scale,
       framesMax: sprites.idle.framesMax,
-      framesHold,
+      framesHold: sprites.idle.framesHold,
       offset: sprites.idle.offset[`${flip}`],
       sprites,
       flip,
@@ -198,7 +197,8 @@ export class Player extends Character {
   }
 
   updateSprite(sprite){
-    this.offset = sprite.offset[this.flip];
+    this.offset = sprite.offset[`${this.flip}`];
+    this.framesHold = sprite.framesHold;
     super.updateSprite(sprite); 
   }
 
@@ -214,6 +214,7 @@ export class Player extends Character {
 
       this.flip = -1;
       if (!this.is_jump) this.updateSprite(this.sprites["run"]);
+       
     } else if (this.keys[m.right].pressed && this.last_key[0] === m.right) {
       if (
         this.gameCurrentX <=
@@ -275,7 +276,8 @@ export class Player extends Character {
 
   handelAttack() {
     if (this.attack_sprite_count > 0) {
-      this.framesHold = Math.ceil((4 * (100 - this.info.attack_speed)) / 100);
+      // attack frame speed 
+      // this.framesHold = Math.ceil((4 * (100 - this.info.attack_speed)) / 100);
       let sprite =
         this.sprites.attack[
           this.sprites.attack.length - this.attack_sprite_count
@@ -310,7 +312,7 @@ export class Player extends Character {
         this.attack_sprite_count--;
       }
     } else {
-      this.framesHold = 4;
+      // this.framesHold = 4;
       this.is_attacking = false;
     }
   }
@@ -330,6 +332,13 @@ export class Player extends Character {
     this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
 
     this.handelAttack();
+
+    // only lap frame 1 for jump 
+    if(this.image === this.sprites.jump.image && this.frameCurrent >= this.sprites.jump.framesMax - 2){
+      this.frameCurrent = this.sprites.jump.framesMax - 2;
+    }
+
     super.update();
   }
+
 }

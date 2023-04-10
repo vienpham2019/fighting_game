@@ -61,7 +61,6 @@ const warior = {
   width: 70,
   imageSrc: "./img/player_character/warior/Idle.png",
   scale: 1,
-  framesHold: 2,
   attack_box: {
     position: { x: 0, y: 0 },
     width: 110,
@@ -73,6 +72,7 @@ const warior = {
     idle: {
       imageSrc: "./img/player_character/warior/Idle.png",
       framesMax: 6,
+      framesHold: 5,
       offset: {
         "1": { x: 76, y: 73 },
         "-1": { x: 160, y: 75 }
@@ -80,22 +80,56 @@ const warior = {
     run: {
       imageSrc: "./img/player_character/warior/Run.png",
       framesMax: 8,
+      framesHold: 7,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
+    },
+    walk: {
+      imageSrc: "./img/player_character/warior/Walk.png",
+      framesMax: 8,
+      framesHold: 7,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
     },
     jump: {
       imageSrc: "./img/player_character/warior/Jump.png",
       framesMax: 3,
+      framesHold: 5,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
     },
     fall: {
       imageSrc: "./img/player_character/warior/Fall.png",
       framesMax: 3,
+      framesHold: 7,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
     },
     takeHit: {
       imageSrc: "./img/player_character/warior/Take hit.png",
-      framesMax: 3,
+      framesMax: 4,
+      framesHold: 3,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
     },
     death: {
       imageSrc: "./img/player_character/warior/Death.png",
-      framesMax: 7,
+      framesMax: 8,
+      framesHold: 14,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
     },
     attack: [
       {
