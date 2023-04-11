@@ -63,7 +63,7 @@ export class StartGame extends Sprite {
 
   run() {
     super.update();
-    // this.player.updateSprite(this.player.sprites["walk"]);
+    this.player.updateSprite(this.player.sprites["skill1"]);
     if (this.openPortal) {
       this.portal.update();
     }
