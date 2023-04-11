@@ -140,6 +140,24 @@ const warior = {
         "-1": { x: 160, y: 75 }
       }
     }, 
+    skill2: {
+      imageSrc: "./img/player_character/warior/Attack Skill 2.png",
+      framesMax: 16,
+      framesHold: 5,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
+    }, 
+    skill3: {
+      imageSrc: "./img/player_character/warior/Attack Skill 3.png",
+      framesMax: 61,
+      framesHold: 5,
+      offset: {
+        "1": { x: 76, y: 73 },
+        "-1": { x: 160, y: 75 }
+      }
+    }, 
     attack: [
       {
         imageSrc: "./img/player_character/warior/Attack1.png",
