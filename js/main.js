@@ -118,6 +118,9 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
+  if(e.key === "1"){
+    player.handelAttack();
+  }
   if (player.health > 0 && controller.gameRun) {
     switch (e.key) {
       case "d":

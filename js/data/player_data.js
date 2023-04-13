@@ -138,6 +138,14 @@ const warior = {
       offset: {
         "1": { x: 76, y: 73 },
         "-1": { x: 160, y: 75 }
+      },
+      attack_box: {
+        1: {
+          position: { x: 0, y: 0 },
+          width: 110,
+          height: 50,
+          offset: { x: 60, y: 30 },
+        }
       }
     }, 
     skill2: {
