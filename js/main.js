@@ -66,6 +66,9 @@ function animate() {
   c.rect(player.position.x, player.position.y, player.width, player.height);
   c.stroke();
 
+  // attack box 
+  player.drawAttackBox(player.sprites.skill1.attack_box[5]);
+
 }
 
 animate();

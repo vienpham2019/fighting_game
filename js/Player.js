@@ -157,6 +157,18 @@ export class Player extends Character {
     );
   }
 
+  drawAttackBox(attackBox){
+    c.fillStyle = 'rgba(0,0,0,0.4)';
+    let ab_X = this.position.x + this.width + attackBox.offset.x; 
+    let ab_Y = this.position.y + attackBox.offset.y; 
+
+    if(this.flip === -1){
+      ab_X = this.position.x - attackBox.width - attackBox.offset.x; 
+    }
+
+    c.fillRect(ab_X , ab_Y, attackBox.width, attackBox.height);
+  }
+
   //   check collition with side of platform
   sideColition(w, camera) {
     let left = this.velocity.x < 0;
@@ -333,7 +345,7 @@ export class Player extends Character {
 
     this.handelAttack();
 
-    // only lap frame 1 for jump 
+    // only 1 lap frame for jump 
     if(this.image === this.sprites.jump.image && this.frameCurrent >= this.sprites.jump.framesMax - 2){
       this.frameCurrent = this.sprites.jump.framesMax - 2;
     }

@@ -64,7 +64,9 @@ export class StartGame extends Sprite {
   run() {
     super.update();
     this.player.updateSprite(this.player.sprites["skill1"]);
-    if(this.player.frameCurrent === 8) this.player.frameCurrent = 1
+
+
+    if(this.player.frameCurrent === 44) this.player.frameCurrent = 33
     if (this.openPortal) {
       this.portal.update();
     }

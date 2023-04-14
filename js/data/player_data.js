@@ -139,14 +139,40 @@ const warior = {
         "1": { x: 76, y: 73 },
         "-1": { x: 160, y: 75 }
       },
-      attack_box: {
-        1: {
-          position: { x: 0, y: 0 },
-          width: 110,
-          height: 50,
-          offset: { x: 60, y: 30 },
+      hitFrames: [
+        [4,5], 
+        [13,14], 
+        [24,25], 
+        [33,34], 
+        [36,45]
+      ], 
+      attack_box: [
+        {
+          width: 176,
+          height: 100,
+          offset: { x: -70, y: 0 },
+        },
+        {
+          width: 249,
+          height: 100,
+          offset: { x: -130, y: 0 },
+        },
+        {
+          width: 138,
+          height: 183,
+          offset: { x: 0, y: -45 },
+        },
+        {
+          width: 198,
+          height: 103,
+          offset: { x: -105, y: 0 },
+        },
+        {
+          width: 156,
+          height: 33,
+          offset: { x: -25, y: 30 },
         }
-      }
+      ]
     }, 
     skill2: {
       imageSrc: "./img/player_character/warior/Attack Skill 2.png",
