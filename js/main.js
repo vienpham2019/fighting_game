@@ -39,6 +39,7 @@ player.platform =  createPlatform(
   "platform"
 )[0]
 
+let current_attack_hit_frame_idx = 0; 
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -66,8 +67,23 @@ function animate() {
   c.rect(player.position.x, player.position.y, player.width, player.height);
   c.stroke();
 
+  if(player.frameCurrent === 0){
+    current_attack_hit_frame_idx = 0;
+  }
+
+  if(player.frameCurrent > player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]){
+    current_attack_hit_frame_idx += 1; 
+  }
+
   // attack box 
-  player.drawAttackBox(player.sprites.skill1.attack_box[5]);
+  if(
+    player.frameCurrent >= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][0] && 
+    player.frameCurrent <= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]
+    )
+    player.drawAttackBox(player.sprites.skill3.attack_box[current_attack_hit_frame_idx]);
+
+  // player.drawAttackBox(player.sprites.skill3.attack_box[8]);
+
 
 }
 
