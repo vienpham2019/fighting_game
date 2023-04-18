@@ -40,6 +40,20 @@ player.platform =  createPlatform(
 )[0]
 
 let current_attack_hit_frame_idx = 0; 
+
+import { player_data } from "./data/player_data.js";
+import { Sprite } from "./Sprite.js";
+
+let fly_bird = new Sprite({
+  position: { x: player.position.x, y: player.position.y },
+  ...player_data.warior.sprites.skill2.magic.explosion,
+});
+fly_bird.position.x = fly_bird.position.x - 100;
+fly_bird.position.y = fly_bird.position.y - 20;
+
+player.flip = -1;
+fly_bird.flip = -1;
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -67,23 +81,29 @@ function animate() {
   c.rect(player.position.x, player.position.y, player.width, player.height);
   c.stroke();
 
-  if(player.frameCurrent === 0){
-    current_attack_hit_frame_idx = 0;
-  }
+  c.beginPath();
+  c.rect(fly_bird.position.x, fly_bird.position.y, fly_bird.width, fly_bird.height);
+  c.stroke();
 
-  if(player.frameCurrent > player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]){
-    current_attack_hit_frame_idx += 1; 
-  }
 
-  // attack box 
-  if(
-    player.frameCurrent >= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][0] && 
-    player.frameCurrent <= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]
-    )
-    player.drawAttackBox(player.sprites.skill3.attack_box[current_attack_hit_frame_idx]);
+  // if(player.frameCurrent === 0){
+  //   current_attack_hit_frame_idx = 0;
+  // }
+
+  // if(player.frameCurrent > player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]){
+  //   current_attack_hit_frame_idx += 1; 
+  // }
+
+  // // attack box 
+  // if(
+  //   player.frameCurrent >= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][0] && 
+  //   player.frameCurrent <= player.sprites.skill3.hitFrames[current_attack_hit_frame_idx][1]
+  //   )
+  //   player.drawAttackBox(player.sprites.skill3.attack_box[current_attack_hit_frame_idx]);
 
   // player.drawAttackBox(player.sprites.skill3.attack_box[8]);
 
+  fly_bird.update();
 
 }
 

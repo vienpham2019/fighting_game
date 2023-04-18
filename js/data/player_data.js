@@ -181,6 +181,34 @@ const warior = {
       offset: {
         "1": { x: 76, y: 73 },
         "-1": { x: 160, y: 75 }
+      },
+      magic:{
+        fly_obj: {
+          height: 72,
+          width: 75,
+          imageSrc: "./img/player_character/warior/fly obj.png",
+          framesMax: 2,
+          framesHold: 4,
+          offset: { x: 10, y: 15 },
+          scale: 1,
+          pos_offset: {
+            "1": { x: 100, y: -20 },
+            "-1": { x: -100, y: -20 }
+          },
+        }, 
+        explosion: {
+          imageSrc: "./img/player_character/warior/expl.png",
+          height: 72,
+          width: 75,
+          framesMax: 4,
+          framesHold: 4,
+          offset: { x: 10, y: 15 },
+          scale: 1,
+          pos_offset: {
+            "1": { x: 76, y: 73 },
+            "-1": { x: 160, y: 75 }
+          },
+        }
       }
       
     }, 
