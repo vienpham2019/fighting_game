@@ -41,19 +41,6 @@ player.platform =  createPlatform(
 
 let current_attack_hit_frame_idx = 0; 
 
-import { player_data } from "./data/player_data.js";
-import { Sprite } from "./Sprite.js";
-
-let fly_bird = new Sprite({
-  position: { x: player.position.x, y: player.position.y },
-  ...player_data.warior.sprites.skill2.magic.explosion,
-});
-fly_bird.position.x = fly_bird.position.x - 100;
-fly_bird.position.y = fly_bird.position.y - 20;
-
-player.flip = -1;
-fly_bird.flip = -1;
-
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -81,9 +68,12 @@ function animate() {
   c.rect(player.position.x, player.position.y, player.width, player.height);
   c.stroke();
 
-  c.beginPath();
-  c.rect(fly_bird.position.x, fly_bird.position.y, fly_bird.width, fly_bird.height);
-  c.stroke();
+  player.handelMagicAttack();
+  player.handleMagicObj();
+
+  // c.beginPath();
+  // c.rect(fly_bird.position.x, fly_bird.position.y, fly_bird.width, fly_bird.height);
+  // c.stroke();
 
 
   // if(player.frameCurrent === 0){
@@ -103,7 +93,7 @@ function animate() {
 
   // player.drawAttackBox(player.sprites.skill3.attack_box[8]);
 
-  fly_bird.update();
+  // fly_bird.update();
 
 }
 

@@ -182,6 +182,7 @@ const warior = {
         "1": { x: 76, y: 73 },
         "-1": { x: 160, y: 75 }
       },
+      activate_frame: 13, 
       magic:{
         fly_obj: {
           height: 72,
@@ -191,6 +192,7 @@ const warior = {
           framesHold: 4,
           offset: { x: 10, y: 15 },
           scale: 1,
+          move_speed: 9, 
           pos_offset: {
             "1": { x: 100, y: -20 },
             "-1": { x: -100, y: -20 }
@@ -201,7 +203,7 @@ const warior = {
           height: 72,
           width: 75,
           framesMax: 4,
-          framesHold: 4,
+          framesHold: 5,
           offset: { x: 10, y: 15 },
           scale: 1,
           pos_offset: {

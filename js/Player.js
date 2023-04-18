@@ -1,6 +1,7 @@
 import { c, canvas } from "./main.js";
 import { Character } from "./Character.js";
 import { getCoordinate } from "./helper.js";
+import { Sprite } from "./Sprite.js";
 
 const gravity = 0.7;
 export class Player extends Character {
@@ -120,6 +121,7 @@ export class Player extends Character {
     this.totalCoints = 0;
 
     this.character_type = "player";
+    this.magic_objs = []; 
   }
 
   handleTakeHit(damge) {
@@ -284,6 +286,45 @@ export class Player extends Character {
       this.is_attacking = true;
       this.attack_sprite_count = this.sprites.attack.length;
     }
+  }
+
+  handelMagicAttack(){
+    if(this.frameCurrent === this.sprites.skill2.activate_frame){
+      let pos_offset = this.sprites.skill2.magic.fly_obj.pos_offset[`${this.flip}`]
+      this.magic_objs.push(
+        {
+          obj: new Sprite({
+            position: { x: this.position.x + pos_offset.x, y: this.position.y + pos_offset.y },
+            flip: this.flip, 
+            ...this.sprites.skill2.magic.fly_obj}), 
+          hit: new Sprite({
+            position: { x: this.position.x, y: this.position.y },
+            flip: this.flip, 
+            ...this.sprites.skill2.magic.explosion}), 
+        }
+      );
+    }
+  }
+
+  handleMagicObj(){
+    this.magic_objs.forEach( mo => {
+      if(Math.abs(mo.obj.position.x - this.position.x) <= 400){
+        mo.obj.position.x += this.flip * this.sprites.skill2.magic.fly_obj.move_speed; 
+        mo.obj.update(); 
+      }else{
+        mo.hit.position = mo.obj.position; 
+        mo.hit.update(); 
+      }
+    });
+
+    let i = 0; 
+    while(i < this.magic_objs.length){
+      if(this.magic_objs[i].hit.frameCurrent === this.magic_objs[i].hit.framesMax - 1){
+        this.magic_objs.splice(i , 1); 
+      }
+      i++; 
+    }
+
   }
 
   handelAttack() {
