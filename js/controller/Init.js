@@ -207,7 +207,7 @@ export function int() {
     position: { y: 373, x: 600 },
     velocity: { x: 0, y: 0 },
     moveSpeed: { x: 4, y: 15 },
-    player_name: "warior",
+    player_name: "swordsman",
     flip: 1,
   });
 

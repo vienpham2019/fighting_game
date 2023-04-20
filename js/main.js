@@ -68,8 +68,8 @@ function animate() {
   c.rect(player.position.x, player.position.y, player.width, player.height);
   c.stroke();
 
-  player.handelMagicAttack();
-  player.handleMagicObj();
+  // player.handelMagicAttack();
+  // player.handleMagicObj();
 
   // c.beginPath();
   // c.rect(fly_bird.position.x, fly_bird.position.y, fly_bird.width, fly_bird.height);
