@@ -30,15 +30,6 @@ const warior = {
         "-1": { x: 160, y: 75 }
       }
     },
-    walk: {
-      imageSrc: "./img/player_character/warior/Walk.png",
-      framesMax: 8,
-      framesHold: 7,
-      offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
-      }
-    },
     jump: {
       imageSrc: "./img/player_character/warior/Jump.png",
       framesMax: 3,
@@ -271,64 +262,55 @@ const swordsman = {
     run: {
       imageSrc: "./img/player_character/swordsman/Run.png",
       framesMax: 6,
-      framesHold: 7,
+      framesHold: 4,
       offset: {
         "1": { x: 55, y: 78 },
         "-1": { x: 104, y: 75 }
       }
     },
-    walk: {
-      imageSrc: "./img/player_character/warior/Walk.png",
-      framesMax: 8,
-      framesHold: 7,
-      offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
-      }
-    },
     jump: {
-      imageSrc: "./img/player_character/warior/Jump.png",
+      imageSrc: "./img/player_character/swordsman/Jump.png",
       framesMax: 3,
-      framesHold: 5,
+      framesHold: 4,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       }
     },
     fall: {
-      imageSrc: "./img/player_character/warior/Fall.png",
-      framesMax: 3,
-      framesHold: 7,
+      imageSrc: "./img/player_character/swordsman/Fall.png",
+      framesMax: 2,
+      framesHold: 6,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       }
     },
     takeHit: {
-      imageSrc: "./img/player_character/warior/Take hit.png",
-      framesMax: 4,
-      framesHold: 3,
+      imageSrc: "./img/player_character/swordsman/Take Hit.png",
+      framesMax: 2,
+      framesHold: 6,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       }
     },
     death: {
-      imageSrc: "./img/player_character/warior/Death.png",
-      framesMax: 8,
+      imageSrc: "./img/player_character/swordsman/Death.png",
+      framesMax: 5,
       framesHold: 14,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       }
     },
     skill1: {
-      imageSrc: "./img/player_character/warior/Attack Skill 1.png",
-      framesMax: 45,
+      imageSrc: "./img/player_character/swordsman/Attack Skill 1.png",
+      framesMax: 24,
       framesHold: 5,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       },
       hitFrames: [
         [4,5], 
@@ -366,40 +348,26 @@ const swordsman = {
       ]
     }, 
     skill2: {
-      imageSrc: "./img/player_character/warior/Attack Skill 2.png",
-      framesMax: 16,
-      framesHold: 5,
+      imageSrc: "./img/player_character/swordsman/Attack Skill 2.png",
+      framesMax: 14,
+      framesHold: 6,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       },
       activate_frame: 13, 
       magic:{
-        fly_obj: {
-          height: 72,
-          width: 75,
-          imageSrc: "./img/player_character/warior/fly obj.png",
-          framesMax: 2,
+        flame_obj: {
+          height: 90,
+          width: 425,
+          imageSrc: "./img/player_character/swordsman/Attack Skill 2 Effect.png",
+          framesMax: 20,
           framesHold: 4,
-          offset: { x: 10, y: 15 },
-          scale: 1,
-          move_speed: 9, 
+          offset: { x: 4, y: 35 },
+          scale: 0.6,
           pos_offset: {
             "1": { x: 100, y: -20 },
             "-1": { x: -100, y: -20 }
-          },
-        }, 
-        explosion: {
-          imageSrc: "./img/player_character/warior/expl.png",
-          height: 72,
-          width: 75,
-          framesMax: 4,
-          framesHold: 5,
-          offset: { x: 10, y: 15 },
-          scale: 1,
-          pos_offset: {
-            "1": { x: 76, y: 73 },
-            "-1": { x: 160, y: 75 }
           },
         }
       }

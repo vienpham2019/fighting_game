@@ -3,6 +3,7 @@ import { EndGame } from "./controller/EndGame.js";
 import { int, updatePlayer } from "./controller/Init.js";
 import { StartGame } from "./controller/StartGame.js";
 import { createEnemy, createPlatform } from "./helper.js";
+import { Sprite } from "./Sprite.js";
 
 export const canvas = document.querySelector("#canvas");
 export const c = canvas.getContext("2d");
@@ -40,7 +41,12 @@ player.platform =  createPlatform(
 )[0]
 
 let current_attack_hit_frame_idx = 0; 
-
+let pos_offset = player.sprites.skill2.magic.flame_obj.pos_offset["1"]; 
+let skill_obj = new Sprite({
+  position: { x: player.position.x + pos_offset.x , y: player.position.y + pos_offset.y },
+  flip: 1, 
+  ...player.sprites.skill2.magic.flame_obj
+})
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -71,9 +77,11 @@ function animate() {
   // player.handelMagicAttack();
   // player.handleMagicObj();
 
-  // c.beginPath();
-  // c.rect(fly_bird.position.x, fly_bird.position.y, fly_bird.width, fly_bird.height);
-  // c.stroke();
+  c.beginPath();
+  c.rect(skill_obj.position.x, skill_obj.position.y, skill_obj.width, skill_obj.height);
+  c.stroke();
+
+  skill_obj.update()
 
 
   // if(player.frameCurrent === 0){
