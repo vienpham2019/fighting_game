@@ -41,11 +41,11 @@ player.platform =  createPlatform(
 )[0]
 
 let current_attack_hit_frame_idx = 0; 
-let pos_offset = player.sprites.skill2.magic.flame_obj.pos_offset["1"]; 
+let pos_offset = player.sprites.skill3.magic.flame_obj.pos_offset["1"]; 
 let skill_obj = new Sprite({
   position: { x: player.position.x + pos_offset.x , y: player.position.y + pos_offset.y },
   flip: 1, 
-  ...player.sprites.skill2.magic.flame_obj
+  ...player.sprites.skill3.magic.flame_obj
 })
 function animate() {
   window.requestAnimationFrame(animate);

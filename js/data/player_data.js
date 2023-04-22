@@ -376,7 +376,7 @@ const swordsman = {
     skill3: {
       imageSrc: "./img/player_character/swordsman/Attack Skill 3.png",
       framesMax: 59,
-      framesHold: 5,
+      framesHold: 6,
       offset: {
         "1": { x: 55, y: 78 },
         "-1": { x: 104, y: 75 }
@@ -438,26 +438,24 @@ const swordsman = {
           height: 160,
           offset: { x: 20, y: -45 },
         }
-      ]
+      ], 
+      activate_frame: 13, 
+      magic:{
+        flame_obj: {
+          height: 130,
+          width: 205,
+          imageSrc: "./img/player_character/swordsman/Attack Skill 3 Effect.png",
+          framesMax: 10,
+          framesHold: 4,
+          offset: { x: 30, y: 10 },
+          scale: 0.6,
+          pos_offset: {
+            "1": { x: 100, y: -20 },
+            "-1": { x: -100, y: -20 }
+          },
+        }
+      }
     }, 
-    attack: [
-      {
-        imageSrc: "./img/player_character/warior/Attack1.png",
-        hitFrame: 5,
-        framesMax: 7,
-      },
-      {
-        imageSrc: "./img/player_character/warior/Attack2.png",
-        hitFrame: 3,
-        framesMax: 7,
-      },
-      {
-        imageSrc: "./img/player_character/warior/Attack3.png",
-        hitFrame: 5,
-        framesMax: 8,
-        heavyAttack: 1.4,
-      },
-    ],
   },
 };
 
