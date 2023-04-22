@@ -374,12 +374,12 @@ const swordsman = {
       
     }, 
     skill3: {
-      imageSrc: "./img/player_character/warior/Attack Skill 3.png",
-      framesMax: 61,
+      imageSrc: "./img/player_character/swordsman/Attack Skill 3.png",
+      framesMax: 59,
       framesHold: 5,
       offset: {
-        "1": { x: 76, y: 73 },
-        "-1": { x: 160, y: 75 }
+        "1": { x: 55, y: 78 },
+        "-1": { x: 104, y: 75 }
       },
       hitFrames: [
         [3,4], 
