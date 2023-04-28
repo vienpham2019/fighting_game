@@ -475,7 +475,7 @@ const hitman = {
   sprites: {
     idle: {
       imageSrc: "./img/player_character/hitman/Idle.png",
-      framesMax: 6,
+      framesMax: 5,
       framesHold: 5,
       offset: {
         "1": { x: 55, y: 78 },
@@ -483,7 +483,7 @@ const hitman = {
     }},
     run: {
       imageSrc: "./img/player_character/hitman/Run.png",
-      framesMax: 6,
+      framesMax: 8,
       framesHold: 4,
       offset: {
         "1": { x: 55, y: 78 },
@@ -501,7 +501,7 @@ const hitman = {
     },
     fall: {
       imageSrc: "./img/player_character/hitman/Fall.png",
-      framesMax: 2,
+      framesMax: 3,
       framesHold: 6,
       offset: {
         "1": { x: 55, y: 78 },
@@ -528,7 +528,7 @@ const hitman = {
     },
     skill1: {
       imageSrc: "./img/player_character/hitman/Attack Skill 1.png",
-      framesMax: 24,
+      framesMax: 44,
       framesHold: 5,
       offset: {
         "1": { x: 55, y: 78 },
@@ -597,7 +597,7 @@ const hitman = {
     }, 
     skill3: {
       imageSrc: "./img/player_character/hitman/Attack Skill 3.png",
-      framesMax: 59,
+      framesMax: 55,
       framesHold: 6,
       offset: {
         "1": { x: 55, y: 78 },
