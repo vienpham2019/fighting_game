@@ -526,6 +526,30 @@ const hitman = {
         "-1": { x: 104, y: 75 }
       }
     },
+    gunFire1: {
+      height: 90,
+      width: 50,
+      imageSrc: "./img/player_character/hitman/GunFire1.png",
+      framesMax: 5,
+      framesHold: 4,
+      offset: {   
+        "1": { x: 100, y: -20 },
+        "-1": { x: -100, y: -20 } 
+      },
+      scale: 0.6,
+     },
+    gunFire2: {
+      height: 90,
+      width: 50,
+      imageSrc: "./img/player_character/hitman/GunFire2.png",
+      framesMax: 4,
+      framesHold: 4,
+      offset: { 
+        "1": { x: 100, y: -20 },
+        "-1": { x: -100, y: -20 } 
+      },
+      scale: 0.6,
+     },
     skill1: {
       imageSrc: "./img/player_character/hitman/Attack Skill 1.png",
       framesMax: 44,
@@ -570,8 +594,8 @@ const hitman = {
       ]
     }, 
     skill2: {
-      // imageSrc: "./img/player_character/hitman/Attack Skill 2.png",
-      framesMax: 14,
+      imageSrc: "./img/player_character/hitman/Attack Skill 2.png",
+      framesMax: 12,
       framesHold: 6,
       offset: {
         "1": { x: 55, y: 78 },

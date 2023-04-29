@@ -41,12 +41,23 @@ player.platform =  createPlatform(
 )[0]
 
 let current_attack_hit_frame_idx = 0; 
-let pos_offset = player.sprites.skill3.magic.flame_obj.pos_offset["1"]; 
+let pos_offset = player.sprites.gunFire2.offset["1"]; 
 let skill_obj = new Sprite({
-  position: { x: player.position.x + pos_offset.x , y: player.position.y + pos_offset.y },
+  // position: { x: player.position.x + pos_offset.x , y: player.position.y + pos_offset.y },
+  position: player.position,
   flip: 1, 
-  ...player.sprites.skill3.magic.flame_obj
+  height: 90,
+      width: 50,
+      framesMax: 5,
+      framesHold: 4,
+      offset: {   
+        "1": { x: 0, y: 0 },
+        "-1": { x: 0, y: 0 } 
+      },
+      scale: 1,
+    imageSrc: player.sprites.gunFire2.imageSrc
 })
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -81,7 +92,7 @@ function animate() {
   c.rect(skill_obj.position.x, skill_obj.position.y, skill_obj.width, skill_obj.height);
   c.stroke();
 
-  skill_obj.update()
+  skill_obj.draw()
 
 
   // if(player.frameCurrent === 0){
