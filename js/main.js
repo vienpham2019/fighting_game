@@ -41,21 +41,12 @@ player.platform =  createPlatform(
 )[0]
 
 let current_attack_hit_frame_idx = 0; 
-let pos_offset = player.sprites.gunFire2.offset["1"]; 
-let skill_obj = new Sprite({
-  // position: { x: player.position.x + pos_offset.x , y: player.position.y + pos_offset.y },
-  position: player.position,
+let pos_offset = player.sprites.gunFire2.offset_fix["1"]; 
+let skill1 = new Sprite({
+  position: { x: player.position.x + pos_offset.x + 235, y: player.position.y + pos_offset.y + 7 },
+  offset: pos_offset,
   flip: 1, 
-  height: 90,
-      width: 50,
-      framesMax: 5,
-      framesHold: 4,
-      offset: {   
-        "1": { x: 0, y: 0 },
-        "-1": { x: 0, y: 0 } 
-      },
-      scale: 1,
-    imageSrc: player.sprites.gunFire2.imageSrc
+  ...player.sprites.gunFire2,
 })
 
 function animate() {
@@ -79,7 +70,6 @@ function animate() {
       controller.gameRun = false;
     }
   }
-
   // player box
   c.beginPath();
   c.rect(player.position.x, player.position.y, player.width, player.height);
@@ -89,10 +79,10 @@ function animate() {
   // player.handleMagicObj();
 
   c.beginPath();
-  c.rect(skill_obj.position.x, skill_obj.position.y, skill_obj.width, skill_obj.height);
+  c.rect(skill1.position.x, skill1.position.y, skill1.width, skill1.height);
   c.stroke();
 
-  skill_obj.draw()
+  skill1.update()
 
 
   // if(player.frameCurrent === 0){

@@ -10,6 +10,7 @@ export class Sprite {
     flip = 1,
     width = 50,
     height = 150,
+    rotate_angle = 0,
   }) {
     this.position = position;
     this.width = width;
