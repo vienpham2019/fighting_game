@@ -43,7 +43,7 @@ player.platform =  createPlatform(
 let current_attack_hit_frame_idx = 0; 
 let pos_offset = player.sprites.gunFire2.offset_fix["1"]; 
 let skill1 = new Sprite({
-  position: { x: player.position.x + pos_offset.x + 235, y: player.position.y + pos_offset.y + 7 },
+  position: { x: player.position.x + pos_offset.x + 220, y: player.position.y + pos_offset.y + 23 },
   offset: pos_offset,
   flip: 1, 
   ...player.sprites.gunFire2,
